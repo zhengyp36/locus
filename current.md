@@ -3,7 +3,7 @@
 ## 来源
 
 locus 框架于 2026-08-12 凌晨从 agent-study 工程的多 session 协作方式探索中孵化。
-详细设计过程见 agent-study/00-meta/collaboration-framework-design.md。
+设计过程文档已迁至 projects/locus-meta/（multi-session-workflow.md + collaboration-framework-design.md）。
 
 ## 核心设计决策
 
@@ -46,6 +46,8 @@ locus 框架于 2026-08-12 凌晨从 agent-study 工程的多 session 协作方�
 2. **将搭建工程移入 locus** ✅ — 2026-08-12 完成。两个文件已从
    agent-study/agent-study/00-meta/ 迁至 locus/projects/locus-meta/
    agent-study 留 LOCUS-MIGRATION.md 指向新位置。
+3. **kilo 权限移植** — agent-study 的 kilo.json 和 MCP 无需移植（权限已全局覆盖），
+   仅 spec-audit agent 列为待定：暂不移植，后续评估是否需要。
 
 ## 已发现问题
 
