@@ -98,3 +98,19 @@ locus 框架于 2026-08-12 凌晨从 agent-study 工程的多 session 协作方�
 已记录内容：
 - 用户代号：YZ
 - 工程性质：私有工程
+
+---
+
+## projects.md `约定:` 字段 — 工程约定自动加载（2026-08-12，CogOS 真实账号测试中产生）
+
+**问题**：讨论 CogOS 时发现 `commands.py` 的 `DESCRIPTION` 缺失新增命令，需要 AI 在操作工程前知道工程的开发约定。但 locus 和 CogOS 是独立工程，AI 不会主动加载 CogOS 的 `AGENTS.md`。
+
+**方案**：`projects.md` 新增 `约定:` 字段，指向对应工程的约定文件（如 `AGENTS.md`）。启动和话题切换时 AI 自动按字段加载。
+
+**具体改动（已写入 AGENTS.md 和 projects.md）**：
+- `AGENTS.md` 机制部分：启动后识别话题 → 查 `projects.md` → 有 `约定:` 字段则加载
+- `AGENTS.md` 话题切换部分：步骤 4 写入入口后，步骤 5 加载约定文件
+- `projects.md` CogOS 条目：`- 约定: ~/codex/cogos/AGENTS.md`
+- `~/codex/cogos/AGENTS.md`：新增命令需同步更新 DESCRIPTION
+
+**影响**：以后任何新工程只需在 `projects.md` 加一个 `约定:` 字段即可。

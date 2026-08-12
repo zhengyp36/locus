@@ -1,6 +1,7 @@
 ## cogos
 
 - 路径: `~/codex/cogos`
+- 约定: `~/codex/cogos/AGENTS.md`
 - 描述: 多 agent 运行时。飞书作为通信总线和人-agent 交互面。
 - 语言: Python 3.11
 - 测试: `python3.11 -m pytest tests/ -q`（330 pass）
