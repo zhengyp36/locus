@@ -1,5 +1,6 @@
 # 索引
 
+- 2026-08-14: 认知地图思路修订（目的优先、代码子集、树型维护循环、验收分工）→ projects/locus-meta/entries/2026-08-14-code-map-revision.md
 - 2026-08-14: 路径锚点约定（locus 内部指针从根写完整相对路径）→ projects/locus-meta/entries/2026-08-14-path-anchor-convention.md
 - 2026-08-14: 授权问题与权限简化 → projects/locus-meta/entries/2026-08-14-permission-simplification.md
 - 2026-08-14: 结构整理与两层模型 → projects/locus-meta/entries/2026-08-14-locus-meta-structure.md
