@@ -4,6 +4,7 @@ locus 自身设计与方法论的工程。
 
 - 类型: 话题工程
 - 本体路径: 无（locus 自身即本体）
+- remote: https://github.com/zhengyp36/locus
 
 ## 文件
 

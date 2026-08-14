@@ -2,6 +2,7 @@
 
 多 agent 运行时。飞书作为通信总线和人-agent 交互面。
 
+- remote: https://github.com/zhengyp36/cogos-dev
 - 本体路径: `~/codex/cogos`
 - 语言: Python 3.11（`.python-version` + `pyproject.toml` `requires-python = ">=3.11"`）
 - 测试: `python3.11 -m pytest tests/ -q`

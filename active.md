@@ -1,1 +1,1 @@
-cogos
+locus-meta
