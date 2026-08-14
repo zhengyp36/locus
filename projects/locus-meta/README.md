@@ -7,7 +7,14 @@ locus 自身设计与方法论的工程。
 
 ## 文件
 
-- minimal-memory.md — 极简记忆方案（当前记忆契约）
-- design-v2.md — 工程化印象层结构
-- multi-session-workflow.md — 原理：9 构想 + 5 实验
-- collaboration-framework-design.md — 框架设计：7 项关键决策
+工程管理：
+- CHANGELOG.md — 阶段/变更记录
+
+记忆：
+- current.md / index.md / entries/
+
+设计文档（本体，docs/）：
+- docs/minimal-memory.md — 极简记忆方案（当前记忆契约）
+- docs/design-v2.md — 工程化印象层结构
+- docs/multi-session-workflow.md — 原理：9 构想 + 5 实验
+- docs/collaboration-framework-design.md — 框架设计：7 项关键决策
