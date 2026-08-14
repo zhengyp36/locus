@@ -8,6 +8,7 @@
 - `timeline.md` — 最近聊过哪些工程
 - `scratch/` — 草稿
 - `projects/` — 各工程自己的目录
+- `tools/` — locus 自身工作流的工具（如飞书通知）
 
 ## 每个工程
 

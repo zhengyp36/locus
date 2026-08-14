@@ -1,5 +1,6 @@
 # 索引
 
+- 2026-08-14: 项目认知地图建图（目的轴 + 概念体系 + 设计文档核对 + 待裁决偏差 + 工作约定）→ projects/cogos/entries/2026-08-14-cogos-map.md
 - 2026-08-14: 代码认知地图（code-map，冷启动方案 b：纯搬运 + 待补）→ projects/cogos/entries/code-map.md
 - 2026-08-14: Phase C 联调 3 bug 修复（patch 授权步 + 落盘提前/重试可续 + 卡片按钮）→ projects/cogos/entries/2026-08-14-cogos-bugfix.md
 - 2026-08-12~13: Phase 0/1/A/C 实现 + provider 字段改造 + 联调 3 问题 → projects/cogos/entries/2026-08-12-cogos-setup.md
