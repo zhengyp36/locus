@@ -17,6 +17,6 @@
 
 ## 下一步
 
-- 实施 token 消耗方案（待讨论）：四方案 A 代码心智模型 / B subagent 隔离+记忆提取 / C 最小锚点 edit / D 分析落盘+清单式总结，已定稿 → projects/locus-meta/docs/token-cost-analysis.md；下一步讨论选哪几条、优先级、落点（AGENTS.md / agent 约定）。
+- 实施 token 消耗方案：四方案已定稿 → projects/locus-meta/docs/token-cost-analysis.md；实施计划草稿 → scratch/token-cost-implementation-plan.md（进度见草稿）。
 - 计划（ROADMAP）：核实对照前期原理探索，确认已实现/缺失，时间待定。
 - 遗留：过度思考 / 重复性工作 / agent 模式 system-prompt（见 projects/locus-meta/ISSUES.md）；read .env 收紧待定；locus_original 目录去留待定。
