@@ -21,6 +21,6 @@ locus 自身设计与方法论的工程。
 - projects/locus-meta/docs/design-v2.md — 工程化印象层结构
 - projects/locus-meta/docs/multi-session-workflow.md — 原理：9 构想 + 5 实验
 - projects/locus-meta/docs/collaboration-framework-design.md — 框架设计：7 项关键决策
-- projects/locus-meta/docs/token-cost-analysis.md — token 消耗归因 + 解决方案（5 方向 4 方案）
+- projects/locus-meta/docs/token-cost-analysis.md — token 消耗归因 + 解决方案（6 方向 5 方案）
 - projects/locus-meta/docs/language-token-cost.md — 中英文 token 消耗实测
 - projects/locus-meta/docs/path-anchor-convention.md — 路径锚点约定（locus 内部指针基准）

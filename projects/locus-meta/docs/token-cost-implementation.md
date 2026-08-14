@@ -74,3 +74,4 @@ cogos `~/codex/cogos/docs/code-structure.md`（08-09，G3c 基线）本质就是
 
 - 探索丢 subagent 细则 → 下次联调前定（projects/locus-meta/ISSUES.md）。
 - 传播方式（通用行为约束是否上探全局 config）→ 阶段 3 复盘再判断。
+- 方案 E（模型路由/便宜模型委派）→ 减单价正交轴，已记 projects/locus-meta/docs/token-cost-analysis.md 方案 E，落地推迟（候选模型价格比待查）。

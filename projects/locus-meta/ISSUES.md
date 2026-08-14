@@ -27,3 +27,9 @@
 - 内容：方案 B 的"读丢写留"——何时丢 subagent、怎么丢、摘要格式、触发阈值，操作动作尚未定。
 - 状态：留到 cogos 下次联调前定；骨架见 projects/locus-meta/docs/token-cost-analysis.md 方案 B。
 - 来源：scratch/token-cost-implementation-plan.md 阶段 2 讨论。
+
+## 模型路由 / 便宜模型委派（方案 E）
+
+- 内容：减单价轴（正交于减数量四方案 A–D）；任务分级 A/B/C/D；红线 D 类不下放；技术落点 agent `model:` 覆盖。
+- 遗留：① 候选模型价格比待查（便宜几倍能否覆盖返工 + subagent 重复读冗余）；② 落地时机推迟到阶段 3 复盘后。
+- 来源：projects/locus-meta/docs/token-cost-analysis.md 方案 E。
