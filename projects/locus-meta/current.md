@@ -10,14 +10,11 @@
 ## 已定结论
 
 - 记忆/管理协议：极简记忆契约（指令两条、更新=重写、摘要+索引、细节入 entries；projects 分工程 + active 指针 + timeline）+ 两层模型（管理层=确定锚、除 CHANGELOG 外可重写需慎重；记忆层=类人印象；大写=管理/小写=记忆）+ 目录整理（顶层 README 给 AI、docs/ 为本体）。→ projects/locus-meta/entries/2026-08-14-locus-meta-structure.md + projects/locus-meta/docs/minimal-memory.md + projects/locus-meta/docs/design-v2.md
-- 外部工程身份：README 记 remote URL + 本地本体路径两条（URL=稳定身份，本地路径=操作位置）；remote 从 git remote -v 实取、SSH 转 HTTPS。
-- 授权简化：权限白名单反转成黑名单（默认 allow + 枚举危险命令 deny/ask），匹配 last-match-wins。→ projects/locus-meta/entries/2026-08-14-permission-simplification.md
-- token 消耗（样本 cogos 联调 101K）：四条根因 + 四方案 A–D + 方案 E（模型路由，减单价正交轴，推迟）；中文比英文贵约 1.4x。→ projects/locus-meta/docs/token-cost-analysis.md + projects/locus-meta/docs/language-token-cost.md + projects/locus-meta/docs/token-cost-implementation.md（实施计划：阶段1完成、阶段2方案b冷启动已执行；后被「目的优先」反思取代 → entries/2026-08-14-code-map-revision.md）
 - 路径锚点约定：locus 内部文件指针一律从 locus 根写完整相对路径（projects/<工程>/...）；新会话 cwd 是 locus 根，相对工程目录的短路径会解析错。→ projects/locus-meta/docs/path-anchor-convention.md + projects/locus-meta/entries/2026-08-14-path-anchor-convention.md
-- 认知地图思路修订：地图以项目目的/设计为基准，代码是已实现子集（非从文件名/旧文档猜）；新增「状态」轴（已实现/未实现/折中/不合理）；树型+局部加载解决规模；维护=AI触发+人纠偏循环；验收=AI逐条验形式（可交subagent）+人通读验实质。→ projects/locus-meta/entries/2026-08-14-code-map-revision.md
+- 认知地图方法论：目的优先 + 状态轴，代码是已实现子集；维护=AI 触发+人纠偏；验收=AI 验形式+人验实质；八节骨架 + 建图过程（口述→文档核对→偏差清单→人工裁决→代码核验→成图）。→ projects/locus-meta/entries/2026-08-14-code-map-revision.md + projects/locus-meta/docs/project-map-method.md
 
 ## 下一步
 
-- cogos 用新方法建项目认知地图（目的优先，代码子集；焦点已切 cogos）→ 完成后回 locus-meta 总结通用方法论（样本=cogos 建图过程，升级方案 A 的「代码认知地图」为「项目认知地图」）。
+- 通用方法论已定稿（projects/locus-meta/docs/project-map-method.md）；新工程建图按此法（AI 触发 + 人纠偏）。
 - 计划（ROADMAP）：核实对照前期原理探索，确认已实现/缺失，时间待定。
 - 遗留：过度思考 / 重复性工作 / agent 模式 system-prompt（见 projects/locus-meta/ISSUES.md）；read .env 收紧待定；locus_original 目录去留待定。

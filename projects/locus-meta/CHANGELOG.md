@@ -1,5 +1,6 @@
 # CHANGELOG
 
+- 2026-08-15 — 项目认知地图方法论：以 cogos 建图过程为样本，把方案 A 的「代码认知地图」升级为「项目认知地图」（目的优先 + 状态轴 + 维护循环 + 验收分工，八节骨架 + 建图过程），落 projects/locus-meta/docs/project-map-method.md。
 - 2026-08-14 — 路径锚点约定：修复记忆层路径指针不自包含问题（相对工程目录短路径 → 从 locus 根写完整相对路径），覆盖 locus-meta/cogos 两工程 current/index/README + entries 跨引用；详见 projects/locus-meta/docs/path-anchor-convention.md。
 - 2026-08-14 — 权限简化定稿：人机配合授权问题解法（权限白名单反转成黑名单，默认 allow + 枚举危险命令 deny/ask），落 `~/.config/kilo/kilo.jsonc`。
 - 2026-08-14 — 目录/工程管理定稿：顶层补 README；locus-meta 引入 docs/；引入 CHANGELOG/ROADMAP/ISSUES，确立"管理/记忆"两层模型。
