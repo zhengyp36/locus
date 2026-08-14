@@ -87,7 +87,7 @@ OAuth 创建流程本身已验证过是通的，跳过创建，直接用已有 a
 
 stale workspace `run/sessions/cli_aaf6d61e9d78dd18/workspace/setup-COGOS001.json` status=done（A 阶段产物）。防重设计如此，删文件即可重跑。
 
-### Phase C 流程 3 个问题（已修 2026-08-14，见 entries/2026-08-14-cogos-bugfix.md）
+### Phase C 流程 3 个问题（已修 2026-08-14，见 projects/cogos/entries/2026-08-14-cogos-bugfix.md）
 
 1. **缺 patch+visibility 授权步骤（关键）**
    - OAuth registration 创建的 admin-bot 无 `application:application:patch` 权限。

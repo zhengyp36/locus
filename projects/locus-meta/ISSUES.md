@@ -20,4 +20,4 @@
 
 - 内容：模式=偏置档位；五档（发散/收敛/质疑/执行/转述）；与 Kilo 内置 agent 正交；agent.md=注入偏置的 system prompt，AGENTS.md=底座。
 - 结论：塑形被高估——结构（文件契约/权限）保留极简，话术（人格/偏置档位）砍掉；五档/agent 降级为未检验假设，暂不实现。
-- 来源：entries/history-260813-2014.discussion.md（单元 2–4）；agent-study collaboration-rules-draft.md。
+- 来源：projects/locus-meta/entries/history-260813-2014.discussion.md（单元 2–4）；agent-study collaboration-rules-draft.md。
