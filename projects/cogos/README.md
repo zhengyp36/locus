@@ -7,7 +7,7 @@
 - 语言: Python 3.11（`.python-version` + `pyproject.toml` `requires-python = ">=3.11"`）
 - 测试: `python3.11 -m pytest tests/ -q`
 - 入口: `cogos-feishu <command>`（`python3.11 -m cogos.feishu.cli`）
-- 约定: `~/codex/cogos/AGENTS.md`
+- AI 开发由 locus 接管（cogos 仓库 AGENTS.md 已改为接管声明）
 
 ## 前身 / 来源
 
@@ -34,6 +34,7 @@ cogos 的前身是 `~/codex/agent-study/` 下的代码。agent-study 是"先学 
 - 信号处理支持异步 graceful shutdown
 - bot/human JSON 增加可选 `provider` 字段，bs-bot 必填
 - `core.py` `add_members`: `member_id_type` 是 query param（`params=`），不是 body（`json=`）
+- 新增命令在 `cogos/feishu/commands.py` 的 `DESCRIPTION` 中补齐 help 文本（`@define` 注册后应出现在 `--help`）
 
 ## 外部文档
 
