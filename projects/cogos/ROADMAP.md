@@ -2,7 +2,7 @@
 
 ## 当前阶段
 
-通信层（comm）Phase 0/1/A/C 已完成并提交（HEAD `6e514fe`）。Phase C 联调发现 3 个待修问题（见 ISSUES.md）。
+通信层（comm）Phase 0/1/A/C 已完成，Phase C 联调 3 bug 已修已提交（`54394c4`），待联调验证。
 
 ## 下一阶段方向（来自实验 5 的 AI 独立评估，优先级降序）
 

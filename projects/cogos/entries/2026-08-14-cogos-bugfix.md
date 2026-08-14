@@ -1,6 +1,6 @@
 # CogOS — Phase C 联调 3 bug 修复
 
-> 2026-08-14。代码改动未提交，在 `~/codex/cogos`。三个问题是一条因果链，根子在问题 1。
+> 2026-08-14。代码改动已提交（`54394c4`），在 `~/codex/cogos`。三个问题是一条因果链，根子在问题 1。
 
 ## 根因
 
@@ -29,5 +29,5 @@
 
 ## 下一步
 
-- 联调验证 Phase C 全流程（3 bug 修复未提交，与 Phase C 一起验证）→ 提交。
+- 联调验证 Phase C 全流程（3 bug 修复已提交 `54394c4`，待验证）。
 - 待办仍在 ISSUES.md：speak 用 `user_id` 需 `contact:user.employee_id:readonly` 权限，建议 bs-bot 与管理员通信统一 `bot["open_id"]` + `receive_id_type="open_id"`。
