@@ -1,5 +1,7 @@
 # CHANGELOG
 
+- 2026-08-15 — agent 账号失效/刷新实现（`ae02c0b`）：`refresh_agent_account`（无返回值只写本地，active merge / 非 active 只写 status+expires_at）+ `add_agent` 补 `status`/`expires_at`；daemon `_agent_conns` key 改 `provider:number` + `_verify_pin` 重写（fail-closed）+ 心跳重校验（fail-open + 300s cooldown + inactive 断连）。弃 ensure→verify 改 refresh+load 判定；详细设计 `docs/agent-account-refresh-design.md`。全量 456 passed。
+- 2026-08-15 — agent-term 架子落地（`5094ba8`）：protocol channel + agent 命名空间、daemon 长连接（鉴权/踢旧/心跳超时）、client.agent_connect、term.py 交互终端、命令注册。send 仅裸 user_id 直发（`provider:Hxxxx` 前缀解析后置）。全量 440 passed（1 failed 为 test_workdir_switch 残留 daemon，与改动无关）。另定稿账号失效/刷新方案（`a7f8f5e` docs/agent-account-refresh.md，未实现）：ensure→verify + 12h 失效 + 心跳重校验。
 - 2026-08-15 — /resume cloud-first 重写（`a0e1092`）：drive API 列 bitable 取 token（不信本地 accounts），无账号跨设备恢复真机验证通过；半恢复已裁决推迟。全量 383 passed（1 failed 为 test_workdir_switch 残留 daemon，与改动无关）。
 - 2026-08-15 — 数据管理落地（`c540d15` `8b690be`）：/add-human（H 手动）/add-agent（A 自动 counter + PIN 生成 + agent-bot 卡片创建）/query-agent（云端查 agent_registry 取完整信息）+ /help 排首位并打印 bitable_url。全量 416 passed（1 failed 为 test_workdir_switch 残留 daemon，与改动无关）。
 - 2026-08-15 — provider.json 3 字段索引层落地（`d84660d`）：`_save_provider` 幂等 merge 写 `providers/{name}/provider.json`（provider/admin-bot/bs-bot 指针，删平级 `{name}.json`）；`setup-bs` 改 `bs-bot` 去前缀 merge；COGOS001~007 已迁移。另 test_workdir_switch 泄漏修复（`03854d0`）。全量 384 passed。

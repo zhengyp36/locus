@@ -35,16 +35,18 @@ inst.send("COGOS001:A0053", msg)
 inst.shutdown()
 ```
 
+> term 脚手架已落地底层通信通道（`cogos-feishu term <provider:number> <PIN>`：startup 鉴权 / send 裸 user_id / shutdown），但可 import 的 Python `startup()` API 仍 ⏳。
+
 ## 四、关键不变量（兑现状态）
 
 1. 每 provider 唯一 admin-bot；admin 只读写 bitable、不监听 WS。✅（daemon 不激活 admin、handler 无 admin 注册）
 2. 每 (provider, device) 一个独立 bs-bot；bs-bot 有真人管理员。⚠️（device 维度未绑定；provider.json `bs-bot` 单值，多设备折中）
 3. `/resume` 用 admin-bot 账号读 bitable 恢复多设备。✅（cloud-first：drive API 列 bitable 取 token，不信本地 accounts；跨设备验证通过）
 4. bot 间私聊 = 双 bot 群 + @all；群不解散、写 bitable。⏳
-5. add-agent 生成 PIN；一 agent-bot 一 Axxxx；一 agent 可持多 Axxxx。⚠️（PIN 生成 + agent-bot 创建 + Axxxx 注册已兑现；一 agent 持多 Axxxx 未实现）
+5. add-agent 生成 PIN；一 agent-bot 一 Axxxx；一 agent 可持多 Axxxx。⚠️（PIN 生成 + agent-bot 创建 + Axxxx 注册已兑现；startup PIN 鉴权已随 term 兑现；一 agent 持多 Axxxx 未实现）
 6. H/A 号码单 provider 内唯一（不并发保证）。⚠️（H 手动 `/add-human`、A 自动 counter `/add-agent` 已接；S 预留；唯一性仍使用者纪律非软件保证）
 7. 一人/agent 可持多 provider 号码；运营商不互通是折中。⚠️（结构预留、号码分配未实现）
-8. 接口层带前缀、内部裸号码。⚠️（前缀解析随 startup 一起未实现）
+8. 接口层带前缀、内部裸号码。⚠️（term 入口 `split_number` 已拆 `provider:number`；daemon 内部裸 number 定位；H 前缀→user_id 解析仍后置）
 9. 消息落地 = 本地文件目录模型。✅
 
 ## 五、状态轴总览
@@ -53,7 +55,9 @@ inst.shutdown()
 - ✅ /resume（cloud-first 重写；无账号跨设备恢复真机验证通过；半恢复已裁决推迟；重建账号 name/patch_granted 与 setup 有差异，待核）。
 - ✅ 号码分配已接：`/add-human`（H 手动）+ `/add-agent`（A 自动 counter + PIN 生成 + agent-bot 卡片创建），写 human/agent_registry + counter+1。
 - ✅ 号码查询/帮助：`/query-agent <Axxxx>`（云端查 agent_registry 取 name/app_id/app_secret/pin/status，与 resume cloud-first 一致）+ `/help`（排首位 + admin-bot 已建时打印 bitable_url）。
-- ⏳ 未实现：`startup/send/shutdown` 接口 + PIN 鉴权、双 bot 群自动建立、@all、bot↔bot 私聊。
+- ✅ agent-term 架子（`5094ba8`）：protocol channel + `proto.agent` 命名空间 + daemon 长连接（鉴权/踢旧/心跳超时）+ `client.agent_connect` + `term.py` 交互终端 + 注册；send 仅裸 user_id 直发。
+- ✅ 账号失效/刷新（`ae02c0b`）：`refresh_agent_account`（无返回值只写本地）+ 本地 `status`/`expires_at` + 12h TTL + 心跳重校验（fail-open 重试 / fail-closed 注销）+ `_agent_conns` key `provider:number`。详细设计 `docs/agent-account-refresh-design.md`。
+- ⏳ 未实现：可 import 的 Python `startup()` API、双 bot 群自动建立、@all、bot↔bot 私聊、`provider:Hxxxx` 前缀解析（→ 云端 human_registry）、revoke 命令（status 改 inactive 入口，失效机制真机验证前置）。
 - 预留未接线：bot_type `agent` 账号已可建（`/add-agent`），但 EventHandler 只注册 `test`/`bs`（agent 未激活、WS 不监听）；`admin` 已枚举不激活。
 
 ## 六、代码分层
@@ -62,10 +66,11 @@ inst.shutdown()
 - config.py — 全局配置（延迟加载，路径从 BASE_DIR 派生）。✅ 不变量：所有路径从 `BASE_DIR` 派生。测试 `test_config.py`。
 - commands.py — 命令注册框架（`@define`/`@on_done` + DESCRIPTION）。✅ 易错：新增命令须补 DESCRIPTION。测试 `test_commands.py`。
 - cli.py — CLI 入口（argparse + CLI/DAEMON 路由）。✅
-- client.py — Unix socket 客户端（CLI→daemon）。✅
-- daemon.py — daemon 进程（flock 防脑裂；启动自动激活 bs-bot，**不激活 admin**）。✅ 测试 `test_daemon.py`。
+- client.py — Unix socket 客户端（CLI→daemon；`agent_connect()` 长连接）。✅
+- term.py — agent 交互终端（`split_number` + reader/heartbeat/stdin 三 task）。✅ 测试 `test_term.py`。
+- daemon.py — daemon 进程（flock 防脑裂；启动自动激活 bs-bot，**不激活 admin**；channel 分派 + `_handle_agent_client` 长连接/鉴权/踢旧/心跳超时 + `_agent_conns`（key=`provider:number`，含 expires_at/next_revalidate_at）+ `_verify_pin`（fail-closed：缺失/过期→refresh→status→pin）+ 心跳重校验（fail-open + 300s cooldown + inactive break 断连）+ `_load_local_agent`）。✅ 测试 `test_daemon.py`。
 - monitor.py — monitor 守护（心跳 + 重启）。✅ 待补：`monitor on/off` 命令。测试 `test_monitor.py`。
-- protocol.py — IPC/心跳协议（JSON-lines）。✅ 测试 `test_protocol.py`。
+- protocol.py — IPC/心跳协议（JSON-lines；顶层 `channel` 路由 + `proto.agent` 命名空间 8 消息）。✅ 测试 `test_protocol.py`。
 - service.py — 进程管理（systemd/manual 统一）。✅ 测试 `test_service.py`。
 - entry.py — 消息/事件**数据模型**（`Entry` + 7 子类，frozen dataclass；`from_event` 覆盖 8 类事件）。✅（旧 map 误猜为「入口」）测试 `test_entry.py`。
 
@@ -83,7 +88,7 @@ inst.shutdown()
 - bs_workspace.py — setup 持久化工作区（`SESSIONS_DIR/<app_id>/workspace/setup-*.json`，原子写）。✅
 - bot_manifest.py — bot 清单/权限常量（`BOT_PATCH_PERMISSIONS` 已被调用）。✅
 - bitable_helper.py — Bitable 助手（建表/读写/list_apps/read_counter/increment_counter）。✅ 易错：列多维表格无 `/bitable/v1/apps` 接口，须用 drive `GET /drive/v1/files` 筛 `type=bitable`（`token`=app_token）。
-- bs_agent.py — 号码注册 `add_human`/`add_agent`（读 counter → OAuth 建 agent-bot → patch/scopes → 事件订阅 → PIN → 写账号 + agent_registry + counter+1）+ `query_agent`（云端查 agent_registry）+ `_load_admin`（provider→admin 账号）+ `AgentWorkspace`。✅ 测试 `test_bs_agent.py`。
+- bs_agent.py — 号码注册 `add_human`/`add_agent`（读 counter → OAuth 建 agent-bot → patch/scopes → 事件订阅 → PIN → 写账号 + agent_registry + counter+1 + `status`/`expires_at`）+ `query_agent`/`query_agent_fields`（云端查 agent_registry）+ `refresh_agent_account`（失效刷新，无返回值只写本地：active merge / 非 active 只写 status+expires_at；`AGENT_ACCOUNT_TTL=12*3600`）+ `_load_admin`（provider→admin 账号）+ `AgentWorkspace`。✅ 测试 `test_bs_agent.py`。
 - bs_agent_card.py — add-agent 卡片（`agent_start`/`agent_confirm_patch`/`agent_confirm_events`/`agent_cancel` 3 态），镜像 bs_card。✅ 测试 `test_bs_agent.py`。
 
 ### G4 账号 / bot / 事件

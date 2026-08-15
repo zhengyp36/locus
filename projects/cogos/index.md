@@ -1,5 +1,8 @@
 # 索引
 
+- 2026-08-15: agent 账号失效/刷新实现（refresh 无返回值 + load 判定，弃 ensure→verify；456 passed，`ae02c0b`）→ entries/2026-08-15-cogos-agent-refresh-impl.md
+- 2026-08-15: agent-term 架子实现（6 步 subagent 工作流）+ 账号失效/刷新方案定稿（ensure→verify + 12h 失效，未实现）→ entries/2026-08-15-cogos-agent-term-impl.md
+- 2026-08-15: agent-term 方案定稿（daemon=agent 通信代理 + channel 协议 + term 脚手架，产出 docs/agent-term-design.md，无代码）→ entries/2026-08-15-cogos-agent-term-design.md
 - 2026-08-15: /help 调整（排首位 + bitable_url）+ /query-agent（云端查 agent_registry）真机验证通过（8b690be）→ entries/2026-08-15-cogos-help-query-agent.md
 - 2026-08-15: /add-human /add-agent 实现（号码分配 + counter 接线 + PIN + agent-bot 卡片创建，已提交 c540d15）→ entries/2026-08-15-cogos-add-agent.md
 - 2026-08-15: resume cloud-first 重写（drive API 列 bitable）+ 跨设备验证通过（`a0e1092`）→ entries/2026-08-15-cogos-resume-verify.md

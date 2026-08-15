@@ -39,6 +39,7 @@ cogos 的前身是 `~/codex/agent-study/` 下的代码。agent-study 是"先学 
 ## 外部文档
 
 - 通信层完整设计: `~/codex/cogos/docs/comm-full-design.md`
+- agent 账号失效/刷新: `docs/agent-account-refresh.md`（方案）+ `docs/agent-account-refresh-design.md`（详细设计）
 - 实施计划: `~/codex/cogos/docs/comm-impl-plan.md`
 - 进度树 / 完整 TODO: `~/codex/agent-study/discussions/project-tree.md`
 - 早期卡片/Session 设计（08-10，疑被 comm 线取代）: `docs/G3f-card-design.md` `docs/ws-session-design.md` `docs/G3f-todo.md`
