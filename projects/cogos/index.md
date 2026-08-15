@@ -1,5 +1,9 @@
 # 索引
 
+- 2026-08-15: /help 调整（排首位 + bitable_url）+ /query-agent（云端查 agent_registry）真机验证通过（8b690be）→ entries/2026-08-15-cogos-help-query-agent.md
+- 2026-08-15: /add-human /add-agent 实现（号码分配 + counter 接线 + PIN + agent-bot 卡片创建，已提交 c540d15）→ entries/2026-08-15-cogos-add-agent.md
+- 2026-08-15: resume cloud-first 重写（drive API 列 bitable）+ 跨设备验证通过（`a0e1092`）→ entries/2026-08-15-cogos-resume-verify.md
+- 2026-08-15: provider.json 3 字段索引层落地（`d84660d`）+ resume 验证 gap + test_workdir_switch 修复（`03854d0`）→ entries/2026-08-15-cogos-provider-resume.md
 - 2026-08-15: setup 流程真机调通 + 3 项修复（done 去重 / finish 失效 / pin 列）→ entries/2026-08-15-cogos-setup-verify.md
 - 2026-08-15: 项目认知地图成图（目的轴 + 概念体系 + 状态轴 + G1-G5 分层 + 映射）→ projects/cogos/entries/project-map.md；建图过程 → entries/2026-08-14-cogos-map.md
 - 2026-08-14: Phase C 联调 3 bug 修复（patch 授权步 + 落盘提前/重试可续 + 卡片按钮）→ projects/cogos/entries/2026-08-14-cogos-bugfix.md

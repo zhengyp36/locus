@@ -2,6 +2,11 @@
 
 ## 遗留（待处理）
 
+### resume 重建账号与 setup 账号的字段差异
+
+- `name`：resume 用 provider_name，setup 用 app 真实名（如 `COGOS008-ADMIN`）；是否还原 app 真实名待定。
+- `patch_granted`：resume 无法从云端恢复（registry 未存），重建账号缺失；无功能风险，重走 setup 会再次引导 patch 授权。
+
 ### speak 用 user_id 发消息需额外权限
 
 - `speak` 命令用 `user_id` 发消息需 `contact:user.employee_id:readonly` 权限；bs-bot 与管理员通信应统一用 `bot["open_id"]` + `receive_id_type="open_id"`。
