@@ -1,6 +1,6 @@
 # cogos
 
-多 agent 运行时，飞书作通信总线，前身是 agent-study。通信层 Phase 0/1/A/C 已提交；setup 真机调通；provider.json 3 字段索引层落地；/resume cloud-first 跨设备验证；数据管理（/add-human /add-agent /query-agent /help）已落地。agent-term 架子已实现（channel 协议 + daemon 长连接 + term 交互终端 + startup PIN 鉴权，`5094ba8`）；账号失效/刷新已实现（refresh 无返回值 + load 判定，弃 ensure→verify，`docs/agent-account-refresh-design.md`，456 passed，`ae02c0b`）。agent 账号 id = 号码（bot-Axxxx.json）。
+多 agent 运行时，飞书作通信总线，前身是 agent-study。通信层 Phase 0/1/A/C 已提交；setup 真机调通；provider.json 3 字段索引层落地；/resume cloud-first 跨设备验证；数据管理（/add-human /add-agent /query-agent /help）已落地。agent-term 架子已实现（channel 协议 + daemon 长连接 + term 交互终端 + startup PIN 鉴权，`5094ba8`）；账号失效/刷新已实现（refresh 无返回值 + load 判定，弃 ensure→verify，`docs/agent-account-refresh-design.md`，456 passed，`ae02c0b`）。agent 账号 id = provider-number（bot-COGOS008-A0001.json，跨 provider 不冲突）。
 
 ## 锚点
 

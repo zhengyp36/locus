@@ -23,7 +23,7 @@
 - **群成员视觉一致**：真人 nickname=`Hxxxx`（`张三(H1284)`），bot 名=`name(Axxxx)`（`李四(A2736)`）。
 - **PIN**：add-agent 生成（`secrets.token_hex(4)` 随机串），startup 鉴权。✅ 生成已接，startup 鉴权 ⏳。
 - **bot↔bot 私聊**：飞书不支持 bot 互通 → 建**双 bot 群 + @all**，不解散、写 bitable。⏳
-- **号码全名只在接口层**：`运营商前缀+号码`（`COGOS001:A1328`）；内部定位 provider 后只用裸号码，代码 key 一律裸号码。
+- **号码全名只在接口层**：`运营商前缀+号码`（冒号 `COGOS001:A1328`）；本地账号文件 id 用连字符 `provider-number`（`bot-COGOS008-A0001.json`，`accounts.agent_account_id` 收敛拼接）；内存 conn key 用冒号 `provider:number`。
 - **消息落地**：本地文件 `SESSIONS_DIR/<app_id>/<chat_id>/stream|history|cards`；收发都先落 stream，处理后进 history（`pick` 改名 `.doing` → `done` 移到 history）；文件名 `{ts}_{rand4}_{type}.json`。
 
 ## 三、Python 接口（agent 侧，设计目标，⏳ 未实现）
@@ -46,7 +46,7 @@ inst.shutdown()
 5. add-agent 生成 PIN；一 agent-bot 一 Axxxx；一 agent 可持多 Axxxx。⚠️（PIN 生成 + agent-bot 创建 + Axxxx 注册已兑现；startup PIN 鉴权已随 term 兑现；一 agent 持多 Axxxx 未实现）
 6. H/A 号码单 provider 内唯一（不并发保证）。⚠️（H 手动 `/add-human`、A 自动 counter `/add-agent` 已接；S 预留；唯一性仍使用者纪律非软件保证）
 7. 一人/agent 可持多 provider 号码；运营商不互通是折中。⚠️（结构预留、号码分配未实现）
-8. 接口层带前缀、内部裸号码。⚠️（term 入口 `split_number` 已拆 `provider:number`；daemon 内部裸 number 定位；H 前缀→user_id 解析仍后置）
+8. 接口层带前缀、内部裸号码。⚠️（term 入口 `split_number` 拆 `provider:number`；daemon 内部 `provider`+`number` 二元组；账号文件 `agent_account_id` 拼 `provider-number`；H 前缀→user_id 解析仍后置）
 9. 消息落地 = 本地文件目录模型。✅
 
 ## 五、状态轴总览
@@ -92,7 +92,7 @@ inst.shutdown()
 - bs_agent_card.py — add-agent 卡片（`agent_start`/`agent_confirm_patch`/`agent_confirm_events`/`agent_cancel` 3 态），镜像 bs_card。✅ 测试 `test_bs_agent.py`。
 
 ### G4 账号 / bot / 事件
-- accounts.py — 账号管理（create_bot/save_account/Speaker/get_bot_by_app_id）。✅ 测试 `test_accounts.py`。
+- accounts.py — 账号管理（create_bot/save_account/Speaker/get_bot_by_app_id/agent_account_id）。✅ 测试 `test_accounts.py`。
 - botmgr.py — bot 生命周期 `add-bot`/`remove-bot`/`list-bot`（daemon 内）。✅
 - handler.py — 事件回调注册（仅 `test`/`bs`；`_handle_card_action` 返回 TOAST 回执）。`handle_bs` = bs 入口：`CardActionTriggered → _handle_card_action`，按 action 前缀分派 `agent_* → bs_agent_card`，其余 `→ bs_card`；`loop.create_task` 异步。✅（admin/agent 未注册，兑现不变量 1）
 - groupmgr.py — 群管理 `create-group`/`invite-members`/`leave-group`/`destroy-group`（仅手动）。✅ 易错：`add_members` query param。测试 `test_groupmgr.py`。

@@ -1,5 +1,6 @@
 # 索引
 
+- 2026-08-15: agent 账号 id 加 provider 前缀（agent_account_id 拼 provider-number，文件 bot-COGOS008-A0001.json，存量改名迁移，`2381ffc`）→ entries/2026-08-15-cogos-agent-account-id.md
 - 2026-08-15: agent 账号失效/刷新实现（refresh 无返回值 + load 判定，弃 ensure→verify；456 passed，`ae02c0b`）→ entries/2026-08-15-cogos-agent-refresh-impl.md
 - 2026-08-15: agent-term 架子实现（6 步 subagent 工作流）+ 账号失效/刷新方案定稿（ensure→verify + 12h 失效，未实现）→ entries/2026-08-15-cogos-agent-term-impl.md
 - 2026-08-15: agent-term 方案定稿（daemon=agent 通信代理 + channel 协议 + term 脚手架，产出 docs/agent-term-design.md，无代码）→ entries/2026-08-15-cogos-agent-term-design.md

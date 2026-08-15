@@ -1,5 +1,6 @@
 # CHANGELOG
 
+- 2026-08-15 — agent 账号 id 加 provider 前缀（`2381ffc`）：`agent_account_id(provider, number)` 拼 `provider-number`，账号文件 `bot-COGOS008-A0001.json`（原 `bot-A0001.json` 跨 provider 冲突覆盖）；接口层冒号 `COGOS001:A0001` 不变；daemon 透传 provider；存量 3 文件读 provider 字段改名迁移。全量 456 passed。
 - 2026-08-15 — agent 账号失效/刷新实现（`ae02c0b`）：`refresh_agent_account`（无返回值只写本地，active merge / 非 active 只写 status+expires_at）+ `add_agent` 补 `status`/`expires_at`；daemon `_agent_conns` key 改 `provider:number` + `_verify_pin` 重写（fail-closed）+ 心跳重校验（fail-open + 300s cooldown + inactive 断连）。弃 ensure→verify 改 refresh+load 判定；详细设计 `docs/agent-account-refresh-design.md`。全量 456 passed。
 - 2026-08-15 — agent-term 架子落地（`5094ba8`）：protocol channel + agent 命名空间、daemon 长连接（鉴权/踢旧/心跳超时）、client.agent_connect、term.py 交互终端、命令注册。send 仅裸 user_id 直发（`provider:Hxxxx` 前缀解析后置）。全量 440 passed（1 failed 为 test_workdir_switch 残留 daemon，与改动无关）。另定稿账号失效/刷新方案（`a7f8f5e` docs/agent-account-refresh.md，未实现）：ensure→verify + 12h 失效 + 心跳重校验。
 - 2026-08-15 — /resume cloud-first 重写（`a0e1092`）：drive API 列 bitable 取 token（不信本地 accounts），无账号跨设备恢复真机验证通过；半恢复已裁决推迟。全量 383 passed（1 failed 为 test_workdir_switch 残留 daemon，与改动无关）。
