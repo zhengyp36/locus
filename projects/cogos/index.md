@@ -1,5 +1,6 @@
 # 索引
 
+- 2026-08-15: setup 流程真机调通 + 3 项修复（done 去重 / finish 失效 / pin 列）→ entries/2026-08-15-cogos-setup-verify.md
 - 2026-08-15: 项目认知地图成图（目的轴 + 概念体系 + 状态轴 + G1-G5 分层 + 映射）→ projects/cogos/entries/project-map.md；建图过程 → entries/2026-08-14-cogos-map.md
 - 2026-08-14: Phase C 联调 3 bug 修复（patch 授权步 + 落盘提前/重试可续 + 卡片按钮）→ projects/cogos/entries/2026-08-14-cogos-bugfix.md
 - 2026-08-12~13: Phase 0/1/A/C 实现 + provider 字段改造 + 联调 3 问题 → projects/cogos/entries/2026-08-12-cogos-setup.md

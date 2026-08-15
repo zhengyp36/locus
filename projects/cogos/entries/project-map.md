@@ -49,8 +49,8 @@ inst.shutdown()
 
 ## 五、状态轴总览
 
-- ✅ 已实现：飞书通信基础 = ws / send / 监听收消息（7 类事件落盘）/ 收发卡片；命令框架（CLI + 消息命令）；环境/设备/账号/清理。
-- 🔧 调试中：setup 流程（OAuth 建 admin-bot → 配 scope → 建 bitable 7 表 → 写 admin_registry）+ /resume。
+- ✅ 已实现：飞书通信基础 = ws / send / 监听收消息（7 类事件落盘）/ 收发卡片；命令框架（CLI + 消息命令）；环境/设备/账号/清理；setup 流程（卡片驱动：OAuth 建 admin-bot → 配 scope → 建 bitable 7 表 → 写 admin_registry，已真机调通）。
+- 🔧 调试中：/resume（代码完整、待真机验证）。
 - ⏳ 未实现：号码分配（三张号码注册表已建、无命令无写入、counter 未接线）、PIN、`startup/send/shutdown` 接口、双 bot 群自动建立、@all、`/add-human` `/add-agent`。
 - 预留未接线：bot_type `agent`/`admin` 已枚举，EventHandler 只注册 `test`/`bs`。
 
@@ -70,12 +70,12 @@ inst.shutdown()
 ### G2 飞书 API / 连接 / 会话
 - core.py — 飞书 API 积木（url + Lib）。✅ 易错：OAuth `PersonalAgent` 建的 bot 无 patch 自管理权限（PATCH scope 前须先 `url.auth(app_id, BOT_PATCH_PERMISSIONS)` 引导授权）；`add_members` 的 `member_id_type` 是 query param。
 - ws.py — WebSocket 管理（WSClient + WSManager，daemon 启动自动恢复）。✅
-- session.py — Session（持 bot dict）；**消息落地兑现者**（`save_entry`/`pick`/`done`/`drain`，`SESSIONS_DIR/<app_id>/<chat_id>/stream|history|cards`）。✅ 不变量：bot_id 不可变（文件名 stem）、name 可变。
+- session.py — Session（持 bot dict）+ `EventHandler.register/get`；**统一事件入口 = `EventHandler.get().on_event` 闭包**（dedup → 取 bot → 建 Session → `from_event` 解析 → 卡片活性检查 → `save_entry` 落地 → 调 registered 回调）；**消息落地兑现者**（`save_entry`/`pick`/`done`/`drain`，`SESSIONS_DIR/<app_id>/<chat_id>/stream|history|cards`）。✅ 不变量：bot_id 不可变（文件名 stem）、name 可变。`cards/{message_id}` = 卡片**活性标记**：send_card 写 stem、finish_card 删，`is_card_active()` 判断；on_event 对已失效卡片事件直接返回"卡片已失效" toast（不写 stream、不触发业务）。
 
 ### G3 通信线 / Provider（bs_*）
 - provider.py — provider 管理命令 `setup-bs`/`switch-provider`。✅（OAuth 创建 bs-bot 待真机）测试 `test_provider.py`。
-- bs_provider.py — provider 设置流程 `setup_provider`/`resume_provider`（OAuth → scope → bitable 7 表 → 落盘）。🔧 易错（一条因果链）：patch 授权步须在 `_configure_admin_bot` 前；OAuth 后立即 `_save_admin_account` 落盘（重试不泄漏）；`bot-{bot_id}.json` 前缀勿漏。测试 `test_bs_provider.py`。
-- bs_card.py — 设置卡片交互（`awaiting_patch` 态 + `on_patch_permission` Event）。🔧 测试 `test_bs_card.py`。
+- bs_provider.py — provider 设置流程 `setup_provider`（✅ 已调通）/`resume_provider`（🔧 待真机）（OAuth → scope → bitable 7 表 → 落盘）。易错（一条因果链）：patch 授权步须在 `_configure_admin_bot` 前；OAuth 后立即 `_save_admin_account` 落盘（重试不泄漏）；`bot-{bot_id}.json` 前缀勿漏；resume 只跳 OAuth/patch 不跳 `_configure_admin_bot` + 建表——成功后重复触发仍重跑建表（表泄漏）。测试 `test_bs_provider.py`。
+- bs_card.py — 设置卡片交互（`awaiting_patch` 态 + `on_patch_permission` Event）。✅ 易错：`handle_card_action` 的 `start` 分支须先判 `status==done`（patch 回终态卡片 + toast，不再重跑）再判 `running`；`in_progress`+`running=False` 是正常首点不能挡。测试 `test_bs_card.py`。
 - bs_setup.py — bs 消息命令 `/setup` `/resume` `/help`（`admin_only`）。✅ 测试 `test_bs_cmd.py`。
 - bs_cmd.py — 消息命令框架（`@msg_command` + `dispatch`）。✅
 - bs_workspace.py — setup 持久化工作区（`SESSIONS_DIR/<app_id>/workspace/setup-*.json`，原子写）。✅
@@ -85,7 +85,7 @@ inst.shutdown()
 ### G4 账号 / bot / 事件
 - accounts.py — 账号管理（create_bot/save_account/Speaker/get_bot_by_app_id）。✅ 测试 `test_accounts.py`。
 - botmgr.py — bot 生命周期 `add-bot`/`remove-bot`/`list-bot`（daemon 内）。✅
-- handler.py — 事件回调注册（仅 `test`/`bs`；`_handle_card_action` 返回 TOAST 回执）。✅（admin/agent 未注册，兑现不变量 1）
+- handler.py — 事件回调注册（仅 `test`/`bs`；`_handle_card_action` 返回 TOAST 回执）。`handle_bs` = bs 入口：`CardActionTriggered → _handle_card_action → bs_card.handle_card_action`，`loop.create_task` 异步。✅（admin/agent 未注册，兑现不变量 1）
 - groupmgr.py — 群管理 `create-group`/`invite-members`/`leave-group`/`destroy-group`（仅手动）。✅ 易错：`add_members` query param。测试 `test_groupmgr.py`。
 
 ### G5 环境 / 设备 / 调试 / 工具

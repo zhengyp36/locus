@@ -1,6 +1,6 @@
 # cogos
 
-多 agent 运行时，飞书作通信总线，前身是 agent-study。通信层 Phase 0/1/A/C 已提交（`6e514fe`），Phase C 联调 3 bug 已修已提交（`54394c4`），待联调验证。
+多 agent 运行时，飞书作通信总线，前身是 agent-study。通信层 Phase 0/1/A/C 已提交，setup 流程（卡片驱动 provider 创建）已真机调通；`/resume` 代码完整、待真机验证。调通中修 3 点已提交（`19cf32b`）。
 
 ## 锚点
 
@@ -13,7 +13,7 @@
 
 ## 下一步
 
-- 联调验证 Phase C 全流程（3 bug 已提交 `54394c4`，待验证）。
+- `/resume` 真机验证。
 - 之后按 ROADMAP：可靠性/可观测性 → 持久化 → 认知树 + InferNode → agent 运行时 → 权限。
 - 地图维护：改动改变不变量/易错点/状态轴时，更新 project-map.md（AI 触发 + 人纠偏）。
 - 遗留：speak 用 user_id 需额外权限。
