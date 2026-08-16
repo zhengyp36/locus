@@ -1,6 +1,6 @@
 # cogos
 
-多 agent 运行时，飞书作通信总线，前身 agent-study。通信层已真机调通；agent-term 架子、账号失效/刷新、agent 账号 id 加 provider 前缀、AccountRef 号码解析（三级缓存）+ agent send 发 human 均已完成。细节见锚点与 entries。
+多 agent 运行时，飞书作通信总线，前身 agent-study。通信层已真机调通；agent-term 架子、账号失效/刷新、agent 账号 id 加 provider 前缀、AccountRef 号码解析（三级缓存）+ agent send 发 human 均已完成。Telecom 通信接口（agent↔daemon 面向对象重构）已实现并提交（`88d34d4`）：FeishuTelecomClient 四方法 + daemon user_id→H 号反查 + term 迁移。群聊 send（target=Chat）、to_targets @、群内 bot 消息 app_id 反查留空待讨论。细节见锚点与 entries。
 
 ## 锚点
 

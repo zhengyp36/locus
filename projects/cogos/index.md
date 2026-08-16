@@ -1,5 +1,7 @@
 # 索引
 
+- 2026-08-17: Telecom 接口实现（startup/send/listen/shutdown）+ term 迁移 → entries/2026-08-17-cogos-telecom-impl.md
+- 2026-08-16: Telecom 通信接口抽象定稿（ABC + Contact/Chat + 异常，编码待开始）→ entries/2026-08-16-cogos-telecom-interface.md
 - 2026-08-16: AccountRef 号码解析（三级缓存）+ agent send 发 human → entries/2026-08-16-cogos-account-ref.md
 - 2026-08-15: agent 账号 id 加 provider 前缀 + 存量改名迁移 → entries/2026-08-15-cogos-agent-account-id.md
 - 2026-08-15: agent 账号失效/刷新实现（refresh + load 判定）→ entries/2026-08-15-cogos-agent-refresh-impl.md
