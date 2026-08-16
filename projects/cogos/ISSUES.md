@@ -7,14 +7,10 @@
 - `name`：resume 用 provider_name，setup 用 app 真实名（如 `COGOS008-ADMIN`）；是否还原 app 真实名待定。
 - `patch_granted`：resume 无法从云端恢复（registry 未存），重建账号缺失；无功能风险，重走 setup 会再次引导 patch 授权。
 
-### speak 用 user_id 发消息需额外权限
-
-- `speak` 命令用 `user_id` 发消息需 `contact:user.employee_id:readonly` 权限；bs-bot 与管理员通信应统一用 `bot["open_id"]` + `receive_id_type="open_id"`。
-
 ### 账号失效机制的两处遗留（机制已实现，缺口仍在）
 
 - **注销是最终一致、非强保证**：离线设备靠 fail-open（云端不可达不主动失效、5 分钟重试）可无限期续命，最坏失效延迟 = 12h TTL + 重试窗口。与「号码唯一性=纪律非软件保证」同类折中，需人知悉。
-- **无 revoke 命令**：`agent_registry.status` 目前只有 `"active"`，没有把 status 改为 inactive 的入口，失效机制真机端到端不可触发（只能 mock 单测）。revoke 命令是下一步真机验证入口。
+- **无 revoke 命令**（暂不实现，短期无失效必要）：`agent_registry.status` 目前只有 `"active"`，没有把 status 改为 inactive 的入口，失效机制真机端到端不可触发（只能 mock 单测）。
 
 ## 已解决
 
