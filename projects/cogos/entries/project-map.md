@@ -1,9 +1,9 @@
 # cogos 项目认知地图
 
-> 更新：2026-08-15（新方法：目的优先 + 状态轴）| 本体：`~/codex/cogos`
+> 更新：2026-08-16（新方法：目的优先 + 状态轴）| 本体：`~/codex/cogos`
 > 入口：`cogos-feishu <command>`（`python3.11 -m cogos.feishu.cli`）| 测试：`python3.11 -m pytest tests/ -q`
 > 用法：读「一~五」建整体理解 → grep 目标模块标题 → read 对应小节。写时同步：改动改变不变量/易错点/调用关系/入口/测试命令才重写对应小节（重写式，非追加）。
-> 状态轴标记：✅ 已实现 · 🔧 调试中（代码完整、待真机）· ⏳ 未实现/预留 · ⚠️ 折中/待核（留人判，不擅断）
+> 状态轴标记：✅ 已实现 · 🔧 调试中（代码完整、待真机）· ⏳ 未实现/预留 · ⚠️ 折中/待核（待 YZ 裁决，不擅断）
 
 ## 一、项目目的（认知层）
 
@@ -46,18 +46,19 @@ inst.shutdown()
 5. add-agent 生成 PIN；一 agent-bot 一 Axxxx；一 agent 可持多 Axxxx。⚠️（PIN 生成 + agent-bot 创建 + Axxxx 注册已兑现；startup PIN 鉴权已随 term 兑现；一 agent 持多 Axxxx 未实现）
 6. H/A 号码单 provider 内唯一（不并发保证）。⚠️（H 手动 `/add-human`、A 自动 counter `/add-agent` 已接；S 预留；唯一性仍使用者纪律非软件保证）
 7. 一人/agent 可持多 provider 号码；运营商不互通是折中。⚠️（结构预留、号码分配未实现）
-8. 接口层带前缀、内部裸号码。⚠️（term 入口 `split_number` 拆 `provider:number`；daemon 内部 `provider`+`number` 二元组；账号文件 `agent_account_id` 拼 `provider-number`；H 前缀→user_id 解析仍后置）
+8. 接口层带前缀、内部裸号码。⚠️（term 入口 `split_number` 拆 `provider:number`；daemon 内部 `provider`+`number` 二元组；账号文件 `agent_account_id` 拼 `provider-number`；H 前缀→user_id 解析已兑现 AccountRef.HumanRef；A 前缀→open_id 仍后置）
 9. 消息落地 = 本地文件目录模型。✅
 
 ## 五、状态轴总览
 
 - ✅ 已实现：飞书通信基础 = ws / send / 监听收消息（7 类事件落盘）/ 收发卡片；命令框架（CLI + 消息命令）；环境/设备/账号/清理；setup 流程（卡片驱动：OAuth 建 admin-bot → 配 scope → 建 bitable 7 表 → 写 admin_registry，已真机调通）；provider.json = 3 字段索引层（provider/admin-bot/bs-bot 指针，`_save_provider` 幂等 merge + `setup-bs` merge，删平级 `{name}.json`）。
-- ✅ /resume（cloud-first 重写；无账号跨设备恢复真机验证通过；半恢复已裁决推迟；重建账号 name/patch_granted 与 setup 有差异，待核）。
+- ✅ /resume（cloud-first 重写；无账号跨设备恢复真机验证通过；半恢复已裁决推迟；重建账号 name/patch_granted 与 setup 有差异，待 YZ 裁决）。
 - ✅ 号码分配已接：`/add-human`（H 手动）+ `/add-agent`（A 自动 counter + PIN 生成 + agent-bot 卡片创建），写 human/agent_registry + counter+1。
 - ✅ 号码查询/帮助：`/query-agent <Axxxx>`（云端查 agent_registry 取 name/app_id/app_secret/pin/status，与 resume cloud-first 一致）+ `/help`（排首位 + admin-bot 已建时打印 bitable_url）。
 - ✅ agent-term 架子（`5094ba8`）：protocol channel + `proto.agent` 命名空间 + daemon 长连接（鉴权/踢旧/心跳超时）+ `client.agent_connect` + `term.py` 交互终端 + 注册；send 仅裸 user_id 直发。
 - ✅ 账号失效/刷新（`ae02c0b`）：`refresh_agent_account`（无返回值只写本地）+ 本地 `status`/`expires_at` + 12h TTL + 心跳重校验（fail-open 重试 / fail-closed 注销）+ `_agent_conns` key `provider:number`。详细设计 `docs/agent-account-refresh-design.md`。
-- ⏳ 未实现：可 import 的 Python `startup()` API、双 bot 群自动建立、@all、bot↔bot 私聊、`provider:Hxxxx` 前缀解析（→ 云端 human_registry）、revoke 命令（status 改 inactive 入口，失效机制真机验证前置）。
+- ✅ AccountRef 号码解析（`f7cfd1a`）：`account_ref.py` 三级缓存（内存 15min / 本地 6h / 云端）+ `AgentRef`/`HumanRef` 按首字母分派 + agent send 发 human（仅 HumanRef）。
+- ⏳ 未实现：可 import 的 Python `startup()` API、双 bot 群自动建立、@all、bot↔bot 私聊、agent send 的 A 目标（open_id）解析、revoke 命令（status 改 inactive 入口，失效机制真机验证前置）。
 - 预留未接线：bot_type `agent` 账号已可建（`/add-agent`），但 EventHandler 只注册 `test`/`bs`（agent 未激活、WS 不监听）；`admin` 已枚举不激活。
 
 ## 六、代码分层
@@ -93,6 +94,7 @@ inst.shutdown()
 
 ### G4 账号 / bot / 事件
 - accounts.py — 账号管理（create_bot/save_account/Speaker/get_bot_by_app_id/agent_account_id）。✅ 测试 `test_accounts.py`。
+- account_ref.py — 号码→账号解析（`AccountRef` 基类 + `AgentRef`/`HumanRef`，三级缓存 + `ensure`/`_refresh`/`_validate`）。✅
 - botmgr.py — bot 生命周期 `add-bot`/`remove-bot`/`list-bot`（daemon 内）。✅
 - handler.py — 事件回调注册（仅 `test`/`bs`；`_handle_card_action` 返回 TOAST 回执）。`handle_bs` = bs 入口：`CardActionTriggered → _handle_card_action`，按 action 前缀分派 `agent_* → bs_agent_card`，其余 `→ bs_card`；`loop.create_task` 异步。✅（admin/agent 未注册，兑现不变量 1）
 - groupmgr.py — 群管理 `create-group`/`invite-members`/`leave-group`/`destroy-group`（仅手动）。✅ 易错：`add_members` query param。测试 `test_groupmgr.py`。
@@ -115,12 +117,12 @@ inst.shutdown()
 | 5 PIN + 一 agent-bot 一 Axxxx | bs_agent / bitable_helper | 部分（一 agent 持多 Axxxx 未实现）|
 | 6 H/A 唯一 | bs_agent / bitable_helper | 部分（唯一性仍是纪律非软件保证）|
 | 7 多 provider 号码 | config / accounts / provider | 部分 |
-| 8 前缀→裸号码 | accounts / session / bs_workspace | 部分 |
+| 8 前缀→裸号码 | accounts / account_ref / session / bs_workspace | 部分 |
 | 9 消息落地目录 | session / config | 兑现 |
 
-## 八、已裁决 / 折中 / 待核
+## 八、已裁决 / 折中 / 待 YZ 裁决
 
 - **已裁决（2026-08-14）**：agent-bot 由 bs-bot 触发创建（编排），bitable 读写全程走 admin-bot 账号（数据）；管理员数量不限制；号码前缀 H/A/S 三类（H 手动、A 自动 counter、S 预留不分配）。
 - **已裁决（2026-08-15）**：provider.json = 3 字段索引层（provider/admin-bot/bs-bot account-id 指针，凭据在 accounts/，消费端 `load_bot` 读）；bitable 写只用 `bitable_token`，`bitable_url` 派生展示。
-- **折中（⚠️ 留人判）**：号码唯一性 = 使用者纪律保证，非软件保证（InstanceLock 无法跨设备）；运营商不互通是折中非设计。
-- **待核**：device 与 bs-bot 的绑定（当前 account 无 device 字段）；`S` 号码是否真的永不分配。
+- **折中（⚠️ 待 YZ 裁决）**：号码唯一性 = 使用者纪律保证，非软件保证（InstanceLock 无法跨设备）；运营商不互通是折中非设计。
+- **待 YZ 裁决**：device 与 bs-bot 的绑定（当前 account 无 device 字段）；`S` 号码是否真的永不分配。
