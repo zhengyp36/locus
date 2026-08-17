@@ -1,6 +1,6 @@
 # cogos
 
-多 agent 运行时，飞书作通信总线，前身 agent-study。通信层已真机调通；agent-term 架子、账号失效/刷新、agent 账号 id 加 provider 前缀、AccountRef 号码解析（三级缓存）+ agent send 发 human 均已完成。Telecom 通信接口（agent↔daemon 面向对象重构）已实现并提交（`88d34d4`）：FeishuTelecomClient 四方法 + daemon user_id→H 号反查 + term 迁移。群聊 send（target=Chat）、to_targets @、群内 bot 消息 app_id 反查留空待讨论。`a7dabac` 补 agent startup deny reason + 账号过期 60s 缓冲 + term 改名。Phone 抽象（TelecomClient 之上领域层：卡/联系人/会话/消息状态 + 本地目录）已定稿待编码。细节见锚点与 entries。
+多 agent 运行时，飞书作通信总线，前身 agent-study。通信层已真机调通；agent-term、账号失效/刷新、AccountRef 号码解析、Telecom 通信接口（FeishuTelecomClient 四方法）均已完成；Phone 抽象（卡/联系人/会话/消息状态 + 本地目录）已定稿待编码。群操作落地（`eb68ceb`）：飞书封死 app 拉 app bot（invite 报 230003），自动化拉 bot 唯一路径 me_join（需 public 群），路径=建群 private→拉真人 user_id→改 public→各 bot me_join→改回 private。agent-bot 创建流程（`8ab7420`）：status 写 init + 每 agent 建 Contact bitable。群内 bot↔bot 消息、to_targets @ 留空待讨论。细节见锚点与 entries。
 
 ## 锚点
 
