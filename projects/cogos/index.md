@@ -1,5 +1,6 @@
 # 索引
 
+- 2026-08-17: Phone 抽象设计定稿（卡/联系人/send/listen/会话/消息状态，待编码）→ entries/2026-08-17-cogos-phone-design.md
 - 2026-08-17: Telecom 接口实现（startup/send/listen/shutdown）+ term 迁移 → entries/2026-08-17-cogos-telecom-impl.md
 - 2026-08-16: Telecom 通信接口抽象定稿（ABC + Contact/Chat + 异常，编码待开始）→ entries/2026-08-16-cogos-telecom-interface.md
 - 2026-08-16: AccountRef 号码解析（三级缓存）+ agent send 发 human → entries/2026-08-16-cogos-account-ref.md

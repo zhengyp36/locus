@@ -2,6 +2,12 @@
 
 ## 遗留（待处理）
 
+### Phone 抽象待讨论点（设计定稿，见 entries/2026-08-17-cogos-phone-design.md）
+
+- 会话项是否暴露号码：一个联系人两个号 → 两个同名 p2p 会话，光看 title 分不清；是否在会话项额外暴露 `number` 字段待定。
+- 群聊链路：`send(chat)` 依赖通信层群发，而通信层「群聊 send / to_targets @ / 群内 bot 消息 app_id 反查」仍留空；群会话「已绑定卡」机制未定；主动建群（create group）暂缺。
+- 本地目录数据模型 + 对象字段（Msg/Chat/Contact/Card）：实现时再讨论。
+
 ### resume 重建账号与 setup 账号的字段差异
 
 - `name`：resume 用 provider_name，setup 用 app 真实名（如 `COGOS008-ADMIN`）；是否还原 app 真实名待定。
