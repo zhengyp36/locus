@@ -24,7 +24,7 @@
 - **PIN**：add-agent 生成（`secrets.token_hex(4)` 随机串），startup 鉴权。✅ 生成已接，startup 鉴权 ⏳。
 - **bot↔bot 私聊**：飞书不支持 bot 互通 → 建**双 bot 群 + @all**，不解散、写 bitable。⏳
 - **号码全名只在接口层**：`运营商前缀+号码`（冒号 `COGOS001:A1328`）；本地账号文件 id 用连字符 `provider-number`（`bot-COGOS008-A0001.json`，`accounts.agent_account_id` 收敛拼接）；内存 conn key 用冒号 `provider:number`。
-- **消息落地**：本地文件 `SESSIONS_DIR/<app_id>/<chat_id>/stream|history|cards`；收发都先落 stream，处理后进 history（`pick` 改名 `.doing` → `done` 移到 history）；文件名 `{ts}_{rand4}_{type}.json`。
+- **消息落地**：本地文件 `SESSIONS_DIR/<app_id>/by_chat_id/<chat_id>/stream|history|cards`，上叠 p2p/group 软链接分类视图 + `providers/<provider>/<number>` 软链接；收发都先落 stream，处理后进 history（`pick` 改名 `.doing` → `done` 移到 history）；文件名 `{ts}_{rand4}_{type}.json`。
 
 ## 三、Python 接口（agent 侧，设计目标，⏳ 未实现）
 
@@ -57,7 +57,7 @@ inst.shutdown()
 - ✅ 号码查询/帮助：`/query-agent <Axxxx>`（云端查 agent_registry 取 name/app_id/app_secret/pin/status，与 resume cloud-first 一致）+ `/help`（排首位 + admin-bot 已建时打印 bitable_url）。
 - ✅ agent-term 架子（`5094ba8`）：protocol channel + `proto.agent` 命名空间 + daemon 长连接（鉴权/踢旧/心跳超时）+ `client.agent_connect` + `term.py` 交互终端 + 注册；send 仅裸 user_id 直发。
 - ✅ 账号失效/刷新（`ae02c0b`）：`refresh_agent_account`（无返回值只写本地）+ 本地 `status`/`expires_at` + 12h TTL + 心跳重校验（fail-open 重试 / fail-closed 注销）+ `_agent_conns` key `provider:number`。详细设计 `docs/agent-account-refresh-design.md`。
-- ✅ AccountRef 号码解析（`f7cfd1a`）：`account_ref.py` 三级缓存（内存 15min / 本地 6h / 云端）+ `AgentRef`/`HumanRef` 按首字母分派 + agent send 发 human（仅 HumanRef）。
+- ✅ AccountRef 号码解析（`f7cfd1a`）：`accounts.py` 三级缓存（内存 15min / 本地 6h / 云端）+ `AgentRef`/`HumanRef` 按首字母分派 + agent send 发 human（仅 HumanRef）。
 - ✅ p2p 激活（`/activate <Axxx>`）：`activate_agent` 三步（建群→/MEET 收集 open_id→汇总写 Contact bitable + 置 active），WS 临时监听 + 超时 600s。
 - ✅ contact-refresh（`/refresh-contact <Axxx>`）：已激活 agent 补齐更高号新激活 agent 的通信录（`_list_contact_numbers` 取 max_idx → `_peer_chat_id` 从对方 contact 查 chat_id，连续区间）。
 - ⏳ 未实现：可 import 的 Python `startup()` API、agent send 的 A 目标（open_id）直发、revoke 命令（status 改 inactive 入口，失效机制真机验证前置）。
@@ -80,7 +80,9 @@ inst.shutdown()
 ### G2 飞书 API / 连接 / 会话
 - core.py — 飞书 API 积木（url + Lib）。✅ 易错：OAuth `PersonalAgent` 建的 bot 无 patch 自管理权限（PATCH scope 前须先 `url.auth(app_id, BOT_PATCH_PERMISSIONS)` 引导授权）；`add_members` 的 `member_id_type` 是 query param。
 - ws.py — WebSocket 管理（WSClient + WSManager，daemon 启动自动恢复）。✅
-- session.py — Session（持 bot dict）+ `EventHandler.register/get`；**统一事件入口 = `EventHandler.get().on_event` 闭包**（dedup → 取 bot → 建 Session → `from_event` 解析 → 卡片活性检查 → `save_entry` 落地 → 调 registered 回调）；**消息落地兑现者**（`save_entry`/`pick`/`done`/`drain`，`SESSIONS_DIR/<app_id>/<chat_id>/stream|history|cards`）。✅ 不变量：bot_id 不可变（文件名 stem）、name 可变。`cards/{message_id}` = 卡片**活性标记**：send_card 写 stem、finish_card 删，`is_card_active()` 判断；on_event 对已失效卡片事件直接返回"卡片已失效" toast（不写 stream、不触发业务）。
+- session.py — Session（持 bot dict）+ `EventHandler.register/get`；**统一事件入口 = `EventHandler.get().on_event` 闭包**（dedup → 取 bot → 建 Session → `from_event` 解析 → 卡片活性检查 → `save_entry` 落地 → 调 registered 回调）；**消息落地兑现者**（`save_entry`/`pick`/`done`/`drain`，`SESSIONS_DIR/<app_id>/by_chat_id/<chat_id>/stream|history|cards`，软链接挂 `_sync_links`）。✅ 不变量：bot_id 不可变（文件名 stem）、name 可变。`cards/{message_id}` = 卡片**活性标记**：send_card 写 stem、finish_card 删，`is_card_active()` 判断；on_event 对已失效卡片事件直接返回"卡片已失效" toast（不写 stream、不触发业务）。
+- session_naming.py — 会话软链接视图：`by_chat_id` 真目录 + p2p/group 分类链 + `providers/<provider>/<number>` 链（`bot_to_number`/`app_id_to_number`/`classify_chat`/`ensure_chat_link`/`ensure_provider_link`/`sync_provider_links`/`fix_group_p2p`，group-p2p 在 activate/refresh 收尾转 p2p 链）。✅
+- session_links.py — CLI 命令 `sync-session-links`：随时补 providers 链（无会话时提前建 dangling 链）。✅
 
 ### G3 通信线 / Provider（bs_*）
 - provider.py — provider 管理命令 `setup-bs`/`switch-provider`。✅ `setup-bs` 读 device.json 校验 init，`bot_id={provider}-BS`/`name={provider}-BS-{device_name}`，写 `providers/{name}/provider.json` 的 `bs-bot`=bot_id（幂等 merge）。（OAuth 创建 bs-bot 待真机）测试 `test_provider.py`。
@@ -95,8 +97,7 @@ inst.shutdown()
 - bs_agent_card.py — add-agent 卡片（`agent_start`/`agent_confirm_patch`/`agent_confirm_events`/`agent_cancel` 3 态），镜像 bs_card。✅ 测试 `test_bs_agent.py`。
 
 ### G4 账号 / bot / 事件
-- accounts.py — 账号管理（create_bot/save_account/Speaker/get_bot_by_app_id/agent_account_id）。✅ 测试 `test_accounts.py`。
-- account_ref.py — 号码→账号解析（`AccountRef` 基类 + `AgentRef`/`HumanRef`，三级缓存 + `ensure`/`_refresh`/`_validate`）。✅
+- accounts.py — 账号管理（create_bot/save_account/Speaker/get_bot_by_app_id/agent_account_id）+ AccountRef 号码→账号解析（`AccountRef` 基类 + `AgentRef`/`HumanRef`，三级缓存 + `ensure`/`_refresh`/`_validate`；原 account_ref.py 已并入本模块）。✅ 测试 `test_accounts.py`。
 - botmgr.py — bot 生命周期 `add-bot`/`remove-bot`/`list-bot`（daemon 内）。✅
 - handler.py — 事件回调注册（仅 `test`/`bs`；`_handle_card_action` 返回 TOAST 回执）。`handle_bs` = bs 入口：`CardActionTriggered → _handle_card_action`，按 action 前缀分派 `agent_* → bs_agent_card`，其余 `→ bs_card`；`loop.create_task` 异步。✅（admin/agent 未注册，兑现不变量 1）
 - groupmgr.py — 群管理 `create-group`/`invite-members`/`leave-group`/`destroy-group`（仅手动）。✅ 易错：`add_members` query param。测试 `test_groupmgr.py`。
