@@ -3,7 +3,7 @@
 多 agent 运行时，飞书作通信总线，前身 agent-study。通信层已真机调通。
 
 - 已完成：agent-term、账号失效/刷新、AccountRef 号码解析、Telecom 通信接口（FeishuTelecomClient 四方法）；Phone 抽象已定稿待编码。
-- 群操作（`eb68ceb`）：app 拉 app bot 被封（invite 230003），唯一路径 me_join（需 public 群）：建群 private→拉真人 user_id→改 public→各 bot me_join→改回 private。
+- 群操作（`eb68ceb`）：app 拉 app bot 被封（invite 230003），唯一路径 me_join（需 public 群）：建群 private→拉真人 user_id→改 public→各 bot me_join→改回 private。修 bug（`bfae959`）：invite-members 拉真人从未真正执行——`Chat.add` 按 `h.get('type')=='human'` 过滤但 human 账号无 type 字段恒空；改显式 humans/bots + `_add_humans` 先查证再重试 + `Lib.list_members`（分页）。
 - agent-bot 创建（`8ab7420`）：status 写 init + 每 agent 建 Contact bitable。
 - p2p 激活（`/activate <Axxx>`）：奇偶选群主建双 bot 群 + `@all /MEET` 收 open_id + 写 Contact bitable + 置 active；bot↔bot p2p 收发已落地（1624136）。
 - contact-refresh（`608ecef`）：`/refresh-contact <Axxx>` 补齐更高号新激活 agent（连续区间，读对方 contact 查 chat_id）。
