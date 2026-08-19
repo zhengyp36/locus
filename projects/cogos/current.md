@@ -1,6 +1,15 @@
 # cogos
 
-多 agent 运行时，飞书作通信总线，前身 agent-study。通信层已真机调通；agent-term、账号失效/刷新、AccountRef 号码解析、Telecom 通信接口（FeishuTelecomClient 四方法）均已完成；Phone 抽象（卡/联系人/会话/消息状态 + 本地目录）已定稿待编码。群操作落地（`eb68ceb`）：飞书封死 app 拉 app bot（invite 报 230003），自动化拉 bot 唯一路径 me_join（需 public 群），路径=建群 private→拉真人 user_id→改 public→各 bot me_join→改回 private。agent-bot 创建流程（`8ab7420`）：status 写 init + 每 agent 建 Contact bitable。p2p 激活落地（`/activate <Axxx>`）：按奇偶选群主建双 bot 群 + 对方发 `@all /MEET` 收集 open_id + 写 Contact bitable + 置 active；bot↔bot 消息收发本身、to_targets @ 待接。细节见锚点与 entries。
+多 agent 运行时，飞书作通信总线，前身 agent-study。通信层已真机调通。
+
+- 已完成：agent-term、账号失效/刷新、AccountRef 号码解析、Telecom 通信接口（FeishuTelecomClient 四方法）；Phone 抽象已定稿待编码。
+- 群操作（`eb68ceb`）：app 拉 app bot 被封（invite 230003），唯一路径 me_join（需 public 群）：建群 private→拉真人 user_id→改 public→各 bot me_join→改回 private。
+- agent-bot 创建（`8ab7420`）：status 写 init + 每 agent 建 Contact bitable。
+- p2p 激活（`/activate <Axxx>`）：奇偶选群主建双 bot 群 + `@all /MEET` 收 open_id + 写 Contact bitable + 置 active；bot↔bot p2p 收发已落地（1624136）。
+- contact-refresh（`608ecef`）：`/refresh-contact <Axxx>` 补齐更高号新激活 agent（连续区间，读对方 contact 查 chat_id）。工作区未提交：AccountRef `is_active`→`available`、send_p2p 加 provider 校验 + init 拒绝 startup。
+- 待接：agent 目标 open_id、OnMsg 返回 Chat、send_chat、to_targets @。
+
+细节见锚点与 entries。
 
 ## 锚点
 
