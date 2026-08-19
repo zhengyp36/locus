@@ -1,5 +1,6 @@
 # 索引
 
+- 2026-08-19: p2p 激活流程落地（/activate 命令 + 建群 + /MEET 收集 open_id + 写 Contact bitable + 置 active）→ entries/2026-08-19-cogos-p2p-activate.md
 - 2026-08-18: 群操作落地（update_chat/join_chat/me_join + account 列表 invite；飞书封死 app 拉 app bot）→ entries/2026-08-18-cogos-group-mejoin.md；实验脚本 entries/2026-08-18-cogos-group.py / exp-group / exp-invite
 - 2026-08-18: agent-bot 创建流程改 init 状态 + 每 agent 建 Contact bitable → entries/2026-08-18-cogos-agent-contact-bitable.md
 - 2026-08-17: Phone 抽象设计定稿（卡/联系人/send/listen/会话/消息状态，待编码）→ entries/2026-08-17-cogos-phone-design.md

@@ -42,7 +42,7 @@ inst.shutdown()
 1. 每 provider 唯一 admin-bot；admin 只读写 bitable、不监听 WS。✅（daemon 不激活 admin、handler 无 admin 注册）
 2. 每 (provider, device) 一个独立 bs-bot；bs-bot 有真人管理员。⚠️（device 维度未绑定；provider.json `bs-bot` 单值，多设备折中）
 3. `/resume` 用 admin-bot 账号读 bitable 恢复多设备。✅（cloud-first：drive API 列 bitable 取 token，不信本地 accounts；跨设备验证通过）
-4. bot 间私聊 = 双 bot 群 + @all；群不解散、写 bitable。⏳
+4. bot 间私聊 = 双 bot 群 + @all；群不解散、写 bitable。⚠️（`/activate` 已落地：按奇偶选群主建双 bot 群 + `@all /MEET` 收集 open_id + 写 Contact bitable；bot↔bot 消息收发本身待接）
 5. add-agent 生成 PIN；一 agent-bot 一 Axxxx；一 agent 可持多 Axxxx。⚠️（PIN 生成 + agent-bot 创建 + Axxxx 注册已兑现；startup PIN 鉴权已随 term 兑现；一 agent 持多 Axxxx 未实现）
 6. H/A 号码单 provider 内唯一（不并发保证）。⚠️（H 手动 `/add-human`、A 自动 counter `/add-agent` 已接；S 预留；唯一性仍使用者纪律非软件保证）
 7. 一人/agent 可持多 provider 号码；运营商不互通是折中。⚠️（结构预留、号码分配未实现）
@@ -58,7 +58,8 @@ inst.shutdown()
 - ✅ agent-term 架子（`5094ba8`）：protocol channel + `proto.agent` 命名空间 + daemon 长连接（鉴权/踢旧/心跳超时）+ `client.agent_connect` + `term.py` 交互终端 + 注册；send 仅裸 user_id 直发。
 - ✅ 账号失效/刷新（`ae02c0b`）：`refresh_agent_account`（无返回值只写本地）+ 本地 `status`/`expires_at` + 12h TTL + 心跳重校验（fail-open 重试 / fail-closed 注销）+ `_agent_conns` key `provider:number`。详细设计 `docs/agent-account-refresh-design.md`。
 - ✅ AccountRef 号码解析（`f7cfd1a`）：`account_ref.py` 三级缓存（内存 15min / 本地 6h / 云端）+ `AgentRef`/`HumanRef` 按首字母分派 + agent send 发 human（仅 HumanRef）。
-- ⏳ 未实现：可 import 的 Python `startup()` API、双 bot 群自动建立、@all、bot↔bot 私聊、agent send 的 A 目标（open_id）解析、revoke 命令（status 改 inactive 入口，失效机制真机验证前置）。
+- ✅ p2p 激活（`/activate <Axxx>`）：`activate_agent` 三步（建群→/MEET 收集 open_id→汇总写 Contact bitable + 置 active），WS 临时监听 + 超时 600s。
+- ⏳ 未实现：可 import 的 Python `startup()` API、bot↔bot 私聊（消息收发本身）、agent send 的 A 目标（open_id）解析、revoke 命令（status 改 inactive 入口，失效机制真机验证前置）。
 - 预留未接线：bot_type `agent` 账号已可建（`/add-agent`），但 EventHandler 只注册 `test`/`bs`（agent 未激活、WS 不监听）；`admin` 已枚举不激活。
 
 ## 六、代码分层
@@ -89,7 +90,7 @@ inst.shutdown()
 - bs_workspace.py — setup 持久化工作区（`SESSIONS_DIR/<app_id>/workspace/setup-*.json`，原子写）。✅
 - bot_manifest.py — bot 清单/权限常量（`BOT_PATCH_PERMISSIONS` 已被调用）。✅
 - bitable_helper.py — Bitable 助手（建表/读写/list_apps/read_counter/increment_counter）。✅ 易错：列多维表格无 `/bitable/v1/apps` 接口，须用 drive `GET /drive/v1/files` 筛 `type=bitable`（`token`=app_token）。
-- bs_agent.py — 号码注册 `add_human`/`add_agent`（读 counter → OAuth 建 agent-bot → patch/scopes → 事件订阅 → PIN → 写账号 + agent_registry + counter+1 + `status`/`expires_at`）+ `query_agent`/`query_agent_fields`（云端查 agent_registry）+ `refresh_agent_account`（失效刷新，无返回值只写本地：active merge / 非 active 只写 status+expires_at；`AGENT_ACCOUNT_TTL=12*3600`）+ `_load_admin`（provider→admin 账号）+ `AgentWorkspace`。✅ 测试 `test_bs_agent.py`。
+- bs_agent.py — 号码注册 `add_human`/`add_agent`（读 counter → OAuth 建 agent-bot → patch/scopes → 事件订阅 → PIN → 写账号 + agent_registry + counter+1 + `status`/`expires_at`）+ `query_agent`/`query_agent_fields`（云端查 agent_registry）+ `refresh_agent_account`（失效刷新，无返回值只写本地：active merge / 非 active 只写 status+expires_at；`AGENT_ACCOUNT_TTL=12*3600`）+ `activate_agent`（`/activate`：`_activate_agent_setup_p2p_group`/`_setup_meet`/`_finish`，见 entries/2026-08-19-cogos-p2p-activate.md）+ `_load_admin`（provider→admin 账号）+ `AgentWorkspace`。✅ 测试 `test_bs_agent.py`。
 - bs_agent_card.py — add-agent 卡片（`agent_start`/`agent_confirm_patch`/`agent_confirm_events`/`agent_cancel` 3 态），镜像 bs_card。✅ 测试 `test_bs_agent.py`。
 
 ### G4 账号 / bot / 事件
@@ -113,7 +114,7 @@ inst.shutdown()
 | 1 admin 唯一 + 不监听 WS | bs_provider / handler / daemon / ws | 兑现 |
 | 2 (provider,device) 一 bs-bot | accounts / bs_cmd / provider | 部分（device 未绑定）|
 | 3 /resume 读 bitable | bs_setup / bs_provider | 兑现 |
-| 4 双 bot 群 + @all | groupmgr（仅手动）/ core（无 @all）| 未实现 |
+| 4 双 bot 群 + @all | bs_agent（建群/MEET）/ groupmgr（手动）/ core（无 @all 发）| 部分（bot↔bot 消息收发待接）|
 | 5 PIN + 一 agent-bot 一 Axxxx | bs_agent / bitable_helper | 部分（一 agent 持多 Axxxx 未实现）|
 | 6 H/A 唯一 | bs_agent / bitable_helper | 部分（唯一性仍是纪律非软件保证）|
 | 7 多 provider 号码 | config / accounts / provider | 部分 |
