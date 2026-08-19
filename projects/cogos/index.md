@@ -1,5 +1,6 @@
 # 索引
 
+- 2026-08-19: bot 命名规范 + bs_registry 自检（删 S 计数器 / tenant 回填 / device_name 区分 bs-bot）→ entries/2026-08-19-cogos-bot-naming.md
 - 2026-08-19: contact-refresh 落地（/refresh-contact 命令 + 连续区间补齐高号 agent + activate/refresh 重构共享）→ entries/2026-08-19-cogos-contact-refresh.md
 - 2026-08-19: p2p 激活流程落地（/activate 命令 + 建群 + /MEET 收集 open_id + 写 Contact bitable + 置 active）→ entries/2026-08-19-cogos-p2p-activate.md
 - 2026-08-18: p2p 消息实现 checkpoint（bot↔bot 收发检视 + 7 文件修正提交 1624136）→ entries/2026-08-18-cogos-p2p-impl.md

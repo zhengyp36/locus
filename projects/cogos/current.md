@@ -6,8 +6,9 @@
 - 群操作（`eb68ceb`）：app 拉 app bot 被封（invite 230003），唯一路径 me_join（需 public 群）：建群 private→拉真人 user_id→改 public→各 bot me_join→改回 private。
 - agent-bot 创建（`8ab7420`）：status 写 init + 每 agent 建 Contact bitable。
 - p2p 激活（`/activate <Axxx>`）：奇偶选群主建双 bot 群 + `@all /MEET` 收 open_id + 写 Contact bitable + 置 active；bot↔bot p2p 收发已落地（1624136）。
-- contact-refresh（`608ecef`）：`/refresh-contact <Axxx>` 补齐更高号新激活 agent（连续区间，读对方 contact 查 chat_id）。工作区未提交：AccountRef `is_active`→`available`、send_p2p 加 provider 校验 + init 拒绝 startup。
-- 待接：agent 目标 open_id、OnMsg 返回 Chat、send_chat、to_targets @。
+- contact-refresh（`608ecef`）：`/refresh-contact <Axxx>` 补齐更高号新激活 agent（连续区间，读对方 contact 查 chat_id）。
+- bot 命名规范（`951c32a`）：admin `{provider}-ADMIN` / bs `{provider}-BS`（name 含 device_name）/ agent `{provider}-Axxxx`；删 S 计数器；bs_registry 字段 device/app_id/app_secret/status，setup/resume 后按 app_id 自检 upsert + 回填 tenant。
+- 待接：agent 目标 open_id、OnMsg 返回 Chat、send_chat、to_targets @；run/sessions 目录整改（下个会话讨论）。
 
 细节见锚点与 entries。
 

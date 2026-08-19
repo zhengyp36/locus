@@ -15,10 +15,10 @@
 
 - **设备（device）**：实体设备（一台电脑），`init` 生成设备信息。一台设备可加入多个 provider。⚠️ bs-bot 账号暂未绑定 device（account 无 device 字段；device 现仅用于 /resume 写 devices/instances 表）。
 - **provider（运营商）**：一个飞书租户下的号码域，可命名（`COGOS001`）；= **唯一 admin-bot + 若干 bs-bot**，维护 `Axxxx`/`Hxxxx`。支持多运营商；**不互通是折中而非设计**。
-- **bs-bot（基站）**：一个 **(provider, device)** 对应一个飞书 bot 账号，`setup-bs --provider X` 由真人授权创建。每 bs-bot 一个**真人管理员**（谁扫码创建谁管理），只响应管理员消息。
+- **bs-bot（基站）**：一个 **(provider, device)** 对应一个飞书 bot 账号，`setup-bs --provider X` 由真人授权创建；`bot_id={provider}-BS`、`name={provider}-BS-{device_name}`（device_name 来自 device.json）。每 bs-bot 一个**真人管理员**（谁扫码创建谁管理），只响应管理员消息。
 - **admin-bot**：provider 唯一，有一个 **bitable**；账号**只读写 bitable、不监听 WS**（收发是 bs-bot 的职责）；所有 bs-bot 共用同一 admin-bot 账号读写 bitable，无权限问题。
 - **多设备**：换设备再 `setup-bs` → `/resume <admin-bot-app-id> <admin-bot-app-secret>` 用 admin-bot 账号读 bitable 恢复。
-- **号码**：真人 `Hxxxx`（手动填、无 counter）、agent `Axxxx`（自动 counter）、bs-bot `Sxxxx`（预留、当前不分配）。**H/A 有 name 字段**。号码在**单 provider 内**唯一（不并发创建保证，使用者纪律，⚠️非软件保证）。
+- **号码**：真人 `Hxxxx`（手动填、无 counter）、agent `Axxxx`（自动 counter）；**S 计数器已删**（bs-bot 不用号码，用 device_name 区分）。**H/A 有 name 字段**。号码在**单 provider 内**唯一（不并发创建保证，使用者纪律，⚠️非软件保证）。
 - **agent-bot vs agent**：agent-bot = 飞书 app（app-id/app-secret），一个 agent-bot 对应一个 `Axxxx`；agent = **独立认知个体**，一个 agent **可持多个 agent 号码**（像人多手机号）。
 - **群成员视觉一致**：真人 nickname=`Hxxxx`（`张三(H1284)`），bot 名=`name(Axxxx)`（`李四(A2736)`）。
 - **PIN**：add-agent 生成（`secrets.token_hex(4)` 随机串），startup 鉴权。✅ 生成已接，startup 鉴权 ⏳。
@@ -40,11 +40,11 @@ inst.shutdown()
 ## 四、关键不变量（兑现状态）
 
 1. 每 provider 唯一 admin-bot；admin 只读写 bitable、不监听 WS。✅（daemon 不激活 admin、handler 无 admin 注册）
-2. 每 (provider, device) 一个独立 bs-bot；bs-bot 有真人管理员。⚠️（device 维度未绑定；provider.json `bs-bot` 单值，多设备折中）
+2. 每 (provider, device) 一个独立 bs-bot；bs-bot 有真人管理员。⚠️（bs-bot account 已绑 device 字段 + name 含 device；provider.json `bs-bot` 单值，多设备折中仍在）
 3. `/resume` 用 admin-bot 账号读 bitable 恢复多设备。✅（cloud-first：drive API 列 bitable 取 token，不信本地 accounts；跨设备验证通过）
 4. bot 间私聊 = 双 bot 群 + @all；群不解散、写 bitable。⚠️（`/activate` 建双 bot 群 + `@all /MEET` 收 open_id + 写 Contact bitable；bot↔bot p2p 收发已落地 `1624136`；`/refresh-contact` `608ecef` 补齐高号新激活 agent；agent 目标 open_id 直发仍后置）
 5. add-agent 生成 PIN；一 agent-bot 一 Axxxx；一 agent 可持多 Axxxx。⚠️（PIN 生成 + agent-bot 创建 + Axxxx 注册已兑现；startup PIN 鉴权已随 term 兑现；一 agent 持多 Axxxx 未实现）
-6. H/A 号码单 provider 内唯一（不并发保证）。⚠️（H 手动 `/add-human`、A 自动 counter `/add-agent` 已接；S 预留；唯一性仍使用者纪律非软件保证）
+6. H/A 号码单 provider 内唯一（不并发保证）。⚠️（H 手动 `/add-human`、A 自动 counter `/add-agent` 已接；S 计数器已删；唯一性仍使用者纪律非软件保证）
 7. 一人/agent 可持多 provider 号码；运营商不互通是折中。⚠️（结构预留、号码分配未实现）
 8. 接口层带前缀、内部裸号码。⚠️（term 入口 `split_number` 拆 `provider:number`；daemon 内部 `provider`+`number` 二元组；账号文件 `agent_account_id` 拼 `provider-number`；H 前缀→user_id 解析已兑现 AccountRef.HumanRef；A 前缀→open_id 仍后置）
 9. 消息落地 = 本地文件目录模型。✅
@@ -83,8 +83,8 @@ inst.shutdown()
 - session.py — Session（持 bot dict）+ `EventHandler.register/get`；**统一事件入口 = `EventHandler.get().on_event` 闭包**（dedup → 取 bot → 建 Session → `from_event` 解析 → 卡片活性检查 → `save_entry` 落地 → 调 registered 回调）；**消息落地兑现者**（`save_entry`/`pick`/`done`/`drain`，`SESSIONS_DIR/<app_id>/<chat_id>/stream|history|cards`）。✅ 不变量：bot_id 不可变（文件名 stem）、name 可变。`cards/{message_id}` = 卡片**活性标记**：send_card 写 stem、finish_card 删，`is_card_active()` 判断；on_event 对已失效卡片事件直接返回"卡片已失效" toast（不写 stream、不触发业务）。
 
 ### G3 通信线 / Provider（bs_*）
-- provider.py — provider 管理命令 `setup-bs`/`switch-provider`。✅ `setup-bs` 写 `providers/{name}/provider.json` 的 `bs-bot`（去 `bot-` 前缀、幂等 merge）。（OAuth 创建 bs-bot 待真机）测试 `test_provider.py`。
-- bs_provider.py — provider 设置流程 `setup_provider`（✅ 已调通）/`resume_provider`（✅ 已调通）（OAuth → scope → bitable 7 表 → 落盘）。`_save_provider` 幂等 merge 写 `providers/{name}/provider.json` 3 字段（provider/admin-bot/bs-bot 指针，凭据在 accounts/ 由 `load_bot` 读），删平级 `{name}.json`。易错（一条因果链）：patch 授权步须在 `_configure_admin_bot` 前；OAuth 后立即 `_save_admin_account` 落盘（重试不泄漏）；`bot-{bot_id}.json` 前缀勿漏；resume 只跳 OAuth/patch 不跳 `_configure_admin_bot` + 建表——成功后重复触发仍重跑建表（表泄漏）。测试 `test_bs_provider.py`。
+- provider.py — provider 管理命令 `setup-bs`/`switch-provider`。✅ `setup-bs` 读 device.json 校验 init，`bot_id={provider}-BS`/`name={provider}-BS-{device_name}`，写 `providers/{name}/provider.json` 的 `bs-bot`=bot_id（幂等 merge）。（OAuth 创建 bs-bot 待真机）测试 `test_provider.py`。
+- bs_provider.py — provider 设置流程 `setup_provider`（✅ 已调通）/`resume_provider`（✅ 已调通）（OAuth → scope → bitable 7 表 → 落盘）。`_save_provider` 幂等 merge 写 `providers/{name}/provider.json` 3 字段（provider/admin-bot/bs-bot 指针，凭据在 accounts/ 由 `load_bot` 读），删平级 `{name}.json`。admin bot_id `{provider}-ADMIN`；bs_registry 字段 device/app_id/app_secret/status；`_ensure_bs_registry` 按 app_id 自检 upsert + 回填 tenant（best-effort）；COUNTER_RECORDS 只 A。易错（一条因果链）：patch 授权步须在 `_configure_admin_bot` 前；OAuth 后立即 `_save_admin_account` 落盘（重试不泄漏）；`bot-{bot_id}.json` 前缀勿漏；resume 只跳 OAuth/patch 不跳 `_configure_admin_bot` + 建表——成功后重复触发仍重跑建表（表泄漏）。测试 `test_bs_provider.py`。
 - bs_card.py — 设置卡片交互（`awaiting_patch` 态 + `on_patch_permission` Event）。✅ 易错：`handle_card_action` 的 `start` 分支须先判 `status==done`（patch 回终态卡片 + toast，不再重跑）再判 `running`；`in_progress`+`running=False` 是正常首点不能挡。测试 `test_bs_card.py`。
 - bs_setup.py — bs 消息命令 `/setup` `/resume` `/add-human` `/add-agent` `/query-agent` `/activate` `/refresh-contact` `/help`（`admin_only`；/help 排首位 + 打印 bitable_url）。✅ 测试 `test_bs_cmd.py`。
 - bs_cmd.py — 消息命令框架（`@msg_command` + `dispatch`）。✅
@@ -126,5 +126,5 @@ inst.shutdown()
 
 - **已裁决（2026-08-14）**：agent-bot 由 bs-bot 触发创建（编排），bitable 读写全程走 admin-bot 账号（数据）；管理员数量不限制；号码前缀 H/A/S 三类（H 手动、A 自动 counter、S 预留不分配）。
 - **已裁决（2026-08-15）**：provider.json = 3 字段索引层（provider/admin-bot/bs-bot account-id 指针，凭据在 accounts/，消费端 `load_bot` 读）；bitable 写只用 `bitable_token`，`bitable_url` 派生展示。
-- **折中（⚠️ 待 YZ 裁决）**：号码唯一性 = 使用者纪律保证，非软件保证（InstanceLock 无法跨设备）；运营商不互通是折中非设计。
-- **待 YZ 裁决**：device 与 bs-bot 的绑定（当前 account 无 device 字段）；`S` 号码是否真的永不分配。
+- **待 YZ 裁决**：号码唯一性 = 使用者纪律保证，非软件保证（InstanceLock 无法跨设备）；运营商不互通是折中非设计。
+- **已裁决（2026-08-19）**：bs-bot 用 device_name 区分（`name={provider}-BS-{device_name}`，account 加 device 字段）；S 计数器删除（不再分配 S 号码）。
