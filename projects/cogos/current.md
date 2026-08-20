@@ -14,6 +14,7 @@
 - 已实施 account refactor：删 agent 账号三字段（bitable_url/open_id/patch_granted）、bitable_token 改 `_ensure_contact_token` 按需重建、term `_load_pin` 改 `AgentRef.ensure`、`_configure_admin_bot` open_id 可空；追加修 `AgentRef._refresh` 补 bot_type/type/id/provider/tenant（否则 /resume 恢复的 agent 本地文件缺 bot_type，ws.add 失败）；真机验证 token 重建命中 `A0001-Contact` + startup OK；459 测试通过 → entries/2026-08-20-cogos-account-refactor-done.md
 - 讨论中（未实施，待 YZ 定方向）：load_bot 与 AccountRef.ensure 分层错位（`_peer_chat_id` 读 peer token 仍 load_bot）→ entries/2026-08-20-cogos-load-bot-vs-ensure.md
 - 待接：send_chat、to_targets @、OnMsg 返回 Chat、可 import 的 Python startup() API。
+- 群历史实验（未接入代码）：tenant token 拉 im/v1/messages 全量/增量，sender bot=app_id、真人=open_id、system=展示名；open_id 是 per-app 的，身份锚 user_id；群成员 API 只含真人，bot 靠解析历史进群/退群 system 消息；结论入本体 docs/feishu-group-history.md + scripts/exp_group_history.py。群聊方案讨论待新会话定。→ entries/2026-08-20-cogos-group-history.md
 
 细节见锚点与 entries。
 
