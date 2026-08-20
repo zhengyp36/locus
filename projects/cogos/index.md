@@ -1,5 +1,7 @@
 # 索引
 
+- 2026-08-20: account refactor 实施（删 agent 三字段 + token 重建 + term ensure + open_id 可空 + AgentRef._refresh 补固有字段，459 测试过）→ entries/2026-08-20-cogos-account-refactor-done.md
+- 2026-08-20: load_bot vs ensure 分层 + agent 账号本地特有字段去留（bitable_token 重建 / bitable_url·open_id·patch_granted 删）→ entries/2026-08-20-cogos-load-bot-vs-ensure.md、entries/2026-08-20-cogos-account-refactor.md
 - 2026-08-20: bot 间消息发送落地（make_session/resolve_target 目标缓存 + route_message 按 chat_type 分派 + meta peer_number + 修 3 bug）→ entries/2026-08-20-cogos-bot-send.md
 - 2026-08-19: bot 命名规范 + bs_registry 自检（删 S 计数器 / tenant 回填 / device_name 区分 bs-bot）→ entries/2026-08-19-cogos-bot-naming.md
 - 2026-08-19: contact-refresh 落地（/refresh-contact 命令 + 连续区间补齐高号 agent + activate/refresh 重构共享）→ entries/2026-08-19-cogos-contact-refresh.md

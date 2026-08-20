@@ -10,6 +10,8 @@
 - bot 命名规范（`951c32a`）：admin `{provider}-ADMIN` / bs `{provider}-BS`（name 含 device_name）/ agent `{provider}-Axxxx`；删 S 计数器；bs_registry 字段 device/app_id/app_secret/status，setup/resume 后按 app_id 自检 upsert + 回填 tenant。
 - sessions 目录整改：落盘改 `SESSIONS_DIR/<app_id>/by_chat_id/<chat_id>/`，叠加 p2p/group 软链接分类视图 + `providers/<provider>/<number>` 软链接；group-p2p 由 activate/refresh 收尾转 p2p 链；`sync-session-links` 命令随时补 providers 链。新增 `session_naming.py`、`session_links.py`、`accounts.get_human_by_user_id`/`list_bot_accounts`。
 - bot 间消息发送：`AgentConn.make_session`（self.account 当 bot dict，弃 load_bot）+ `resolve_target`（目标缓存 20 FIFO key provider:number；H→user_id / A→自己 contact 查 chat_id）+ daemon `_handle_agent_send_p2p` 重写；接收 `route_message` 按 chat_type 分派（p2p→human、group-p2p→meta `peer_number`）；`_resolve_human` 本地优先。修 3 bug：chat_id 传裸号、human provider 校验、发送失败不断连。
+- 已实施 account refactor：删 agent 账号三字段（bitable_url/open_id/patch_granted）、bitable_token 改 `_ensure_contact_token` 按需重建、term `_load_pin` 改 `AgentRef.ensure`、`_configure_admin_bot` open_id 可空；追加修 `AgentRef._refresh` 补 bot_type/type/id/provider/tenant（否则 /resume 恢复的 agent 本地文件缺 bot_type，ws.add 失败）；真机验证 token 重建命中 `A0001-Contact` + startup OK；459 测试通过 → entries/2026-08-20-cogos-account-refactor-done.md
+- 讨论中（未实施，待 YZ 定方向）：load_bot 与 AccountRef.ensure 分层错位（`_peer_chat_id` 读 peer token 仍 load_bot）→ entries/2026-08-20-cogos-load-bot-vs-ensure.md
 - 待接：send_chat、to_targets @、OnMsg 返回 Chat、可 import 的 Python startup() API。
 
 细节见锚点与 entries。
