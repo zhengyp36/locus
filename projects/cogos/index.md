@@ -1,5 +1,6 @@
 # 索引
 
+- 2026-08-20: bot p2p 真机调通 + group-p2p 迁移修复（sync-group-p2p 命令补 peer_number + bot p2p 去 @_all 前缀）→ entries/2026-08-20-cogos-p2p-debug.md
 - 2026-08-20: account refactor 实施（删 agent 三字段 + token 重建 + term ensure + open_id 可空 + AgentRef._refresh 补固有字段，459 测试过）→ entries/2026-08-20-cogos-account-refactor-done.md
 - 2026-08-20: load_bot vs ensure 分层 + agent 账号本地特有字段去留（bitable_token 重建 / bitable_url·open_id·patch_granted 删）→ entries/2026-08-20-cogos-load-bot-vs-ensure.md、entries/2026-08-20-cogos-account-refactor.md
 - 2026-08-20: bot 间消息发送落地（make_session/resolve_target 目标缓存 + route_message 按 chat_type 分派 + meta peer_number + 修 3 bug）→ entries/2026-08-20-cogos-bot-send.md

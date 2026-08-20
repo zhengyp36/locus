@@ -1,6 +1,6 @@
 # cogos 项目认知地图
 
-> 更新：2026-08-19（新方法：目的优先 + 状态轴）| 本体：`~/codex/cogos`
+> 更新：2026-08-20（新方法：目的优先 + 状态轴）| 本体：`~/codex/cogos`
 > 入口：`cogos-feishu <command>`（`python3.11 -m cogos.feishu.cli`）| 测试：`python3.11 -m pytest tests/ -q`
 > 用法：读「一~五」建整体理解 → grep 目标模块标题 → read 对应小节。写时同步：改动改变不变量/易错点/调用关系/入口/测试命令才重写对应小节（重写式，非追加）。
 > 状态轴标记：✅ 已实现 · 🔧 调试中（代码完整、待真机）· ⏳ 未实现/预留 · ⚠️ 折中/待核（待 YZ 裁决，不擅断）
@@ -22,7 +22,7 @@
 - **agent-bot vs agent**：agent-bot = 飞书 app（app-id/app-secret），一个 agent-bot 对应一个 `Axxxx`；agent = **独立认知个体**，一个 agent **可持多个 agent 号码**（像人多手机号）。
 - **群成员视觉一致**：真人 nickname=`Hxxxx`（`张三(H1284)`），bot 名=`name(Axxxx)`（`李四(A2736)`）。
 - **PIN**：add-agent 生成（`secrets.token_hex(4)` 随机串），startup 鉴权。✅ 生成已接，startup 鉴权 ⏳。
-- **bot↔bot 私聊**：飞书不支持 bot 互通 → 建**双 bot 群 + @all**，不解散、写 bitable。✅（发送走自己 contact bitable 查 chat_id；接收走 meta `peer_number`）
+- **bot↔bot 私聊**：飞书不支持 bot 互通 → 建**双 bot 群 + @all**，不解散、写 bitable。✅（发送走自己 contact bitable 查 chat_id；接收走 meta `peer_number`，内容去 `@_all` 前缀）
 - **号码全名只在接口层**：`运营商前缀+号码`（冒号 `COGOS001:A1328`）；本地账号文件 id 用连字符 `provider-number`（`bot-COGOS008-A0001.json`，`accounts.agent_account_id` 收敛拼接）；内存 conn key 用冒号 `provider:number`。
 - **消息落地**：本地文件 `SESSIONS_DIR/<app_id>/by_chat_id/<chat_id>/stream|history|cards`，上叠 p2p/group 软链接分类视图 + `providers/<provider>/<number>` 软链接；收发都先落 stream，处理后进 history（`pick` 改名 `.doing` → `done` 移到 history）；文件名 `{ts}_{rand4}_{type}.json`。
 
@@ -42,7 +42,7 @@ inst.shutdown()
 1. 每 provider 唯一 admin-bot；admin 只读写 bitable、不监听 WS。✅（daemon 不激活 admin、handler 无 admin 注册）
 2. 每 (provider, device) 一个独立 bs-bot；bs-bot 有真人管理员。⚠️（bs-bot account 已绑 device 字段 + name 含 device；provider.json `bs-bot` 单值，多设备折中仍在）
 3. `/resume` 用 admin-bot 账号读 bitable 恢复多设备。✅（cloud-first：drive API 列 bitable 取 token，不信本地 accounts；跨设备验证通过）
-4. bot 间私聊 = 双 bot 群 + @all；群不解散、写 bitable。✅（发送：`resolve_target` 查自己 contact chat_id + `make_session` 发群；接收：`route_message` 读 meta `peer_number` 解析对端；`/activate` 建群 + `@all /MEET` 收 open_id + 写 Contact bitable；`/refresh-contact` 补齐高号新激活 agent）
+4. bot 间私聊 = 双 bot 群 + @all；群不解散、写 bitable。✅（发送：`resolve_target` 查自己 contact chat_id + `make_session` 发群；接收：`route_message` 读 meta `peer_number` 解析对端；`/activate` 建群 + `@all /MEET` 收 open_id + 写 Contact bitable；`/refresh-contact` 补齐高号新激活 agent；`sync-group-p2p` 补老群 peer_number 迁移）
 5. add-agent 生成 PIN；一 agent-bot 一 Axxxx；一 agent 可持多 Axxxx。⚠️（PIN 生成 + agent-bot 创建 + Axxxx 注册已兑现；startup PIN 鉴权已随 term 兑现；一 agent 持多 Axxxx 未实现）
 6. H/A 号码单 provider 内唯一（不并发保证）。⚠️（H 手动 `/add-human`、A 自动 counter `/add-agent` 已接；S 计数器已删；唯一性仍使用者纪律非软件保证）
 7. 一人/agent 可持多 provider 号码；运营商不互通是折中。⚠️（结构预留、号码分配未实现）
@@ -61,6 +61,7 @@ inst.shutdown()
 - ✅ p2p 激活（`/activate <Axxx>`）：`activate_agent` 三步（建群→/MEET 收集 open_id→汇总写 Contact bitable + 置 active），WS 临时监听 + 超时 600s。
 - ✅ contact-refresh（`/refresh-contact <Axxx>`）：已激活 agent 补齐更高号新激活 agent 的通信录（`_list_contact_numbers` 取 max_idx → `_peer_chat_id` 从对方 contact 查 chat_id，连续区间）。
 - ✅ bot 间消息发送/接收：`AgentConn.make_session`（self.account 作 bot dict，弃 load_bot）+ `resolve_target`（目标缓存 20 FIFO key `provider:number`；H→user_id / A→自己 contact 查 chat_id）+ daemon `_handle_agent_send_p2p` 重写；接收 `route_message` 按 chat_type 分派（p2p→human、group-p2p→meta `peer_number`）；`_resolve_human` 本地优先云端兜底；修 human 目标 provider 校验 + 发送失败不 disconnect + chat_id 传裸号。
+- ✅ bot p2p 真机调通 + group-p2p 迁移修复：老群缺 group-p2p 元数据 → `sync-group-p2p` 命令（`_list_contact_rows`/`sync_group_p2p_links` 从 contact bitable 补 peer_number + 转 p2p 链）；bot p2p 接收去 `@_all` 前缀。
 - ⏳ 未实现：可 import 的 Python `startup()` API、send_chat、to_targets @、revoke 命令（status 改 inactive 入口，失效机制真机验证前置）。
 - 预留未接线：bot_type `agent` 账号已可建（`/add-agent`），但 EventHandler 只注册 `test`/`bs`（agent 未激活、WS 不监听）；`admin` 已枚举不激活。
 
@@ -73,7 +74,7 @@ inst.shutdown()
 - client.py — Unix socket 客户端（CLI→daemon；`agent_connect()` 长连接）。✅
 - term.py — agent 交互终端（`split_number` + reader/heartbeat/stdin 三 task）。✅ 测试 `test_term.py`。
 - daemon.py — daemon 进程（flock 防脑裂；启动自动激活 bs-bot，**不激活 admin**；channel 分派 + `_handle_agent_client` 长连接/鉴权/踢旧/心跳超时 + `_agent_conns`（key=`provider:number`，含 expires_at/next_revalidate_at）+ `_verify_pin`（fail-closed：缺失/过期→refresh→status→pin）+ 心跳重校验（fail-open + 300s cooldown + inactive break 断连）+ `_load_local_agent`）。✅ 测试 `test_daemon.py`。
-- agent_conn.py — AgentConn（agent 长连接状态 ref/sock/account + `make_session`（self.account 作 bot dict，弃 load_bot）+ `resolve_target`（目标缓存 20 FIFO key `provider:number`；H→user_id / A→自己 contact 查 chat_id）+ `route_message`（MessageSent 回显 / MessageReceived 按 chat_type 分派：p2p→`_resolve_human`、group-p2p→meta `peer_number`）+ `revalidate`）+ AgentConnManager（by_key/by_app_id 注册表）+ `_human_cache`（user_id→HumanRef）/`_target_cache`（provider:number→(receive_id,type)）/`_resolve_human`（本地 `get_human_by_user_id` 优先云端兜底）。✅
+- agent_conn.py — AgentConn（agent 长连接状态 ref/sock/account + `make_session`（self.account 作 bot dict，弃 load_bot）+ `resolve_target`（目标缓存 20 FIFO key `provider:number`；H→user_id / A→自己 contact 查 chat_id）+ `route_message`（MessageSent 回显 / MessageReceived 按 chat_type 分派：p2p→`_resolve_human`、group-p2p→meta `peer_number` + 去 `@_all` 前缀）+ `revalidate`）+ AgentConnManager（by_key/by_app_id 注册表）+ `_human_cache`（user_id→HumanRef）/`_target_cache`（provider:number→(receive_id,type)）/`_resolve_human`（本地 `get_human_by_user_id` 优先云端兜底）。✅
 - monitor.py — monitor 守护（心跳 + 重启）。✅ 待补：`monitor on/off` 命令。测试 `test_monitor.py`。
 - protocol.py — IPC/心跳协议（JSON-lines；顶层 `channel` 路由 + `proto.agent` 命名空间 8 消息）。✅ 测试 `test_protocol.py`。
 - service.py — 进程管理（systemd/manual 统一）。✅ 测试 `test_service.py`。
@@ -84,7 +85,7 @@ inst.shutdown()
 - ws.py — WebSocket 管理（WSClient + WSManager，daemon 启动自动恢复）。✅
 - session.py — Session（持 bot dict）+ `EventHandler.register/get`；**统一事件入口 = `EventHandler.get().on_event` 闭包**（dedup → 取 bot → 建 Session → `from_event` 解析 → 卡片活性检查 → `save_entry` 落地 → 调 registered 回调）；**消息落地兑现者**（`save_entry`/`pick`/`done`/`drain`，`SESSIONS_DIR/<app_id>/by_chat_id/<chat_id>/stream|history|cards`，软链接挂 `_sync_links`）。✅ 不变量：bot_id 不可变（文件名 stem）、name 可变。`cards/{message_id}` = 卡片**活性标记**：send_card 写 stem、finish_card 删，`is_card_active()` 判断；on_event 对已失效卡片事件直接返回"卡片已失效" toast（不写 stream、不触发业务）。
 - session_naming.py — 会话软链接视图：`by_chat_id` 真目录 + p2p/group 分类链 + `providers/<provider>/<number>` 链（`bot_to_number`/`app_id_to_number`/`classify_chat`/`ensure_chat_link`/`ensure_provider_link`/`sync_provider_links`/`fix_group_p2p`，group-p2p 在 activate/refresh 收尾转 p2p 链）。✅
-- session_links.py — CLI 命令 `sync-session-links`：随时补 providers 链（无会话时提前建 dangling 链）。✅
+- session_links.py — CLI 命令 `sync-session-links`：随时补 providers 链（无会话时提前建 dangling 链）+ `sync-group-p2p`：补老群 group-p2p 元数据（调 `bs_agent.sync_group_p2p_links`）。✅
 
 ### G3 通信线 / Provider（bs_*）
 - provider.py — provider 管理命令 `setup-bs`/`switch-provider`。✅ `setup-bs` 读 device.json 校验 init，`bot_id={provider}-BS`/`name={provider}-BS-{device_name}`，写 `providers/{name}/provider.json` 的 `bs-bot`=bot_id（幂等 merge）。（OAuth 创建 bs-bot 待真机）测试 `test_provider.py`。
@@ -95,7 +96,7 @@ inst.shutdown()
 - bs_workspace.py — setup 持久化工作区（`SESSIONS_DIR/<app_id>/workspace/setup-*.json`，原子写）。✅
 - bot_manifest.py — bot 清单/权限常量（`BOT_PATCH_PERMISSIONS` 已被调用）。✅
 - bitable_helper.py — Bitable 助手（建表/读写/list_apps/read_counter/increment_counter）。✅ 易错：列多维表格无 `/bitable/v1/apps` 接口，须用 drive `GET /drive/v1/files` 筛 `type=bitable`（`token`=app_token）。
-- bs_agent.py — 号码注册 `add_human`/`add_agent`（读 counter → OAuth 建 agent-bot → patch/scopes → 事件订阅 → PIN → 写账号 + agent_registry + counter+1 + `status`/`expires_at`）+ `query_agent`/`query_agent_fields`（云端查 agent_registry）+ `refresh_agent_account`（失效刷新，无返回值只写本地：active merge / 非 active 只写 status+expires_at；`AGENT_ACCOUNT_TTL=12*3600`）+ `activate_agent`（`/activate`：`_activate_agent_setup_p2p_group`/`_collect_meet_openids`/`_activate_agent_finish`，见 entries/2026-08-19-cogos-p2p-activate.md）+ `refresh_contact`（`/refresh-contact`：连续区间补齐高号 agent，见 entries/2026-08-19-cogos-contact-refresh.md）+ `query_contact_chat_id`（查自己 contact 表 number→chat_id，供 agent→agent 发送）+ `_load_admin`（provider→admin 账号）+ `AgentWorkspace`。✅ 测试 `test_bs_agent.py`。
+- bs_agent.py — 号码注册 `add_human`/`add_agent`（读 counter → OAuth 建 agent-bot → patch/scopes → 事件订阅 → PIN → 写账号 + agent_registry + counter+1 + `status`/`expires_at`）+ `query_agent`/`query_agent_fields`（云端查 agent_registry）+ `refresh_agent_account`（失效刷新，无返回值只写本地：active merge / 非 active 只写 status+expires_at；`AGENT_ACCOUNT_TTL=12*3600`）+ `activate_agent`（`/activate`：`_activate_agent_setup_p2p_group`/`_collect_meet_openids`/`_activate_agent_finish`，见 entries/2026-08-19-cogos-p2p-activate.md）+ `refresh_contact`（`/refresh-contact`：连续区间补齐高号 agent，见 entries/2026-08-19-cogos-contact-refresh.md）+ `query_contact_chat_id`（查自己 contact 表 number→chat_id，供 agent→agent 发送）+ `_list_contact_rows`/`sync_group_p2p_links`（迁移老群 group-p2p 元数据）+ `_load_admin`（provider→admin 账号）+ `AgentWorkspace`。✅ 测试 `test_bs_agent.py`。
 - bs_agent_card.py — add-agent 卡片（`agent_start`/`agent_confirm_patch`/`agent_confirm_events`/`agent_cancel` 3 态），镜像 bs_card。✅ 测试 `test_bs_agent.py`。
 
 ### G4 账号 / bot / 事件
