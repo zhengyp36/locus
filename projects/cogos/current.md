@@ -13,8 +13,9 @@
 - bot p2p 真机调通 + group-p2p 迁移修复（`32a2940`/`665ddda`）：老群（08-19 激活、早于 fix_group_p2p 落地）缺 `chat_type:group-p2p` + `peer_number` 元数据 → route_message 不路由、群错在 group/。修：新增 `sync-group-p2p` 命令（`_list_contact_rows` + `sync_group_p2p_links` 从 contact bitable 补 peer_number + 转 p2p 链）+ bot p2p 去 `@_all` 前缀（`_strip_at_all`，仅 group-p2p）→ entries/2026-08-20-cogos-p2p-debug.md
 - 已实施 account refactor：删 agent 账号三字段（bitable_url/open_id/patch_granted）、bitable_token 改 `_ensure_contact_token` 按需重建、term `_load_pin` 改 `AgentRef.ensure`、`_configure_admin_bot` open_id 可空；追加修 `AgentRef._refresh` 补 bot_type/type/id/provider/tenant（否则 /resume 恢复的 agent 本地文件缺 bot_type，ws.add 失败）；真机验证 token 重建命中 `A0001-Contact` + startup OK；459 测试通过 → entries/2026-08-20-cogos-account-refactor-done.md
 - 讨论中（未实施，待 YZ 定方向）：load_bot 与 AccountRef.ensure 分层错位（`_peer_chat_id` 读 peer token 仍 load_bot）→ entries/2026-08-20-cogos-load-bot-vs-ensure.md
-- 待接：send_chat、to_targets @、OnMsg 返回 Chat、可 import 的 Python startup() API。
-- 群历史实验（未接入代码）：tenant token 拉 im/v1/messages 全量/增量，sender bot=app_id、真人=open_id、system=展示名；open_id 是 per-app 的，身份锚 user_id；群成员 API 只含真人，bot 靠解析历史进群/退群 system 消息；结论入本体 docs/feishu-group-history.md + scripts/exp_group_history.py。群聊方案讨论待新会话定。→ entries/2026-08-20-cogos-group-history.md
+- 群聊（Telecom 真群）方案已定 + 块 1-4 已实施（未提交）：1-3 = Chat 普通类（id/name/client，title→name）+ Message 数据模型 + OnMsg 改 Message + protocol 新帧（create_chat/add_members/get_members + ack）+ FeishuTelecomClient 请求-响应机制；4 = daemon 四 handler（create_chat/add_members/get_members/send_chat）+ add_members 编排（复用 groupmgr.Chat.add：群主拉真人→改public→bot me_join→改private，同步 ack）+ core.Lib.user_open_id（@真人）。真机验证：非 owner bot 拉真人 232011 失败只能群主拉；WS 群消息 sender.sender_id 带 user_id 无需转换。块 5-6 待接（真群 sender/mentions 解析 / 历史解析模块）→ entries/2026-08-20-cogos-group-chat-telecom.md + entries/2026-08-21-cogos-group-chat-block4.md + 本体 docs/group-chat-telecom.md
+- 待接：群聊 5-6（真群 sender/mentions 解析 + 历史解析模块，含 bot @）、可 import 的 Python startup() API。
+- 群历史实验（未接入代码）：tenant token 拉 im/v1/messages 全量/增量，sender bot=app_id、真人=open_id、system=展示名；open_id 是 per-app 的，身份锚 user_id；群成员 API 只含真人，bot 靠解析历史进群/退群 system 消息；结论入本体 docs/feishu-group-history.md + scripts/exp_group_history.py。→ entries/2026-08-20-cogos-group-history.md
 
 细节见锚点与 entries。
 

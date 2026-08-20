@@ -1,5 +1,6 @@
 # 索引
 
+- 2026-08-20~21: 群聊（Telecom 真群）方案定稿 + 1-4 实施（1-3 protocol 帧 / Chat·Message 数据模型 / FeishuTelecomClient 请求-响应；4 daemon 四 handler + add_members 编排 + 真机验证两行为点；5-6 待接）→ entries/2026-08-20-cogos-group-chat-telecom.md + entries/2026-08-21-cogos-group-chat-block4.md + 本体 docs/group-chat-telecom.md
 - 2026-08-20: 群历史拉取实验（im/v1/messages 全量/增量 + sender 表示 + 群成员解析 + open_id→user_id）→ entries/2026-08-20-cogos-group-history.md
 - 2026-08-20: bot p2p 真机调通 + group-p2p 迁移修复（sync-group-p2p 命令补 peer_number + bot p2p 去 @_all 前缀）→ entries/2026-08-20-cogos-p2p-debug.md
 - 2026-08-20: account refactor 实施（删 agent 三字段 + token 重建 + term ensure + open_id 可空 + AgentRef._refresh 补固有字段，459 测试过）→ entries/2026-08-20-cogos-account-refactor-done.md
