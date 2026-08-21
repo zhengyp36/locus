@@ -12,6 +12,10 @@
 - 群聊链路：`send(chat)` 依赖通信层群发，而通信层「群聊 send / to_targets @ / 群内 bot 消息 app_id 反查」仍留空；群会话「已绑定卡」机制未定；主动建群（create group）暂缺。
 - 本地目录数据模型 + 对象字段（Msg/Chat/Contact/Card）：实现时再讨论。
 
+### 未登记真人消息被静默丢弃
+
+- 群聊里真人 sender 经 `_resolve_human` 解析 `user_id`→number（本地 human-*.json → 云端 human bitable），三级都查不到就返回 `None`，`route_message` 直接丢消息；未登记的群内真人发消息，agent 收不到且无日志/提示。是否对未知真人降级处理（如用 user_id 兜底、记录告警）待定。
+
 ### resume 重建账号与 setup 账号的字段差异
 
 - `name`：resume 用 provider_name，setup 用 app 真实名（如 `COGOS008-ADMIN`）；是否还原 app 真实名待定。
