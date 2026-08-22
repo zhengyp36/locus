@@ -1,5 +1,6 @@
 # 索引
 
+- 2026-08-22: COGOS002 真机验证 L1 + 8 处修复（建 provider/agent + 建真群 + get_members 双源/rebuild/过滤 leave + /ENTER 公告）→ entries/2026-08-22-cogos-live-verification.md（checkpoint 见 projects/cogos/checkpoint/）
 - 2026-08-22: 群实时事件公告（/ENTER /LEAVE /REMOVE + remove/leave 链路）+ 群成员 tracker（members.json + build 历史回放 + add_event 单调 + GC）→ entries/2026-08-22-cogos-group-tracker.md + entries/2026-08-22-cogos-group-event.md
 - 2026-08-21: 群聊 5 落地——收发打通（Telecom 发送拆分 + mentions 解析 + 接收三缓存）/ chat_registry + 群主解析 / 命令机制 + add-ws 引用计数 / group 区分 contact.json → entries/2026-08-21-cogos-group-chat-send-recv.md + entries/2026-08-21-cogos-chat-registry-owner.md + entries/2026-08-21-cogos-agent-cmd.md + entries/2026-08-21-cogos-group-distinguish.md
 - 2026-08-20~21: 群聊（Telecom 真群）方案定稿 + 1-4 实施（1-3 protocol 帧 / Chat·Message 数据模型 / FeishuTelecomClient 请求-响应；4 daemon 四 handler + add_members 编排 + 真机验证两行为点；5-6 待接）→ entries/2026-08-20-cogos-group-chat-telecom.md + entries/2026-08-21-cogos-group-chat-block4.md + 本体 docs/group-chat-telecom.md
