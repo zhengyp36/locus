@@ -38,9 +38,8 @@
 
 - 两个不同概念，不混淆：本地目录是**手机自己的**，与通信层无关；通信层数据与手机无关。各管各。
 - 讨论手机时**不应看见 bitable**；通信层是黑盒。
-- 本地目录存什么：待定，思路是"需要什么存什么"。
-- 目前能想到的：电话卡 / 联系人 / 会话（私聊、群聊，都是 Chat）。
-- 数据怎么存是实现细节，实现时再讨论。
+- 本地目录存什么：待定（2026-08-22 已定稿，见下「持久化」）→ 电话卡 / 联系人 / 会话（私聊、群聊，都是 Chat）。
+- 数据怎么存是实现细节（2026-08-22 已定稿，见下「持久化」）。
 
 ## listen（收消息）
 
@@ -78,8 +77,27 @@
 - `rm_card` / `rm_contact` 先不做（暂无删除场景）。
 - 备忘（将来做 rm 时遵循）：删卡不删会话，只标记卡状态。
 
-## 待讨论（见 ISSUES.md）
+## 待讨论（已裁决，2026-08-22）
 
-- 会话项是否暴露号码（区分同名会话）
-- 群聊链路（send(chat) 的绑卡机制、群会话产生、主动建群）
-- 本地目录数据模型 / 对象字段（Msg/Chat/Contact/Card）
+三待讨论点已裁决定稿，见本体 docs/phone-design.md：
+
+- 会话项暴露 `number`：p2p 会话对外主键 = number，title 只作显示名。
+- 群聊链路：`send(chat)` 走 `bound_card` 惰性绑定；群会话产生照搬惰性规则；补 `create_group`（建群卡 = 群主卡）。
+- 数据模型字段已定；身份边界——Phone 层不出现 `open_id`/`app_id`/`user_id`/`oc_xxx`。
+
+## 持久化（2026-08-22 定稿）
+
+与 cogos-feishu 分离。入口 `Phone(config_path="/path/phone.json")`，phone.json 只存 `data_dir`（相对路径时相对 phone.json 解析）。
+
+```
+data_dir/
+  cards.json            # [{number, provider, pin, status, is_default}]，default_card 落 is_default
+  contacts.json         # 联系人全量
+  chats/<chat_id>.json  # 会话元数据 + 内嵌 messages，惰性加载
+```
+
+- 落库必须 + 原子写（tmp→rename，沿用 `TmpFilePair`）。
+- pin 独立存 cards.json，不读 feishu accounts（双份 pin 不一致代价已接受）。
+- 消息内嵌 chat 文件，先不拆独立 messages 目录（YAGNI）。
+
+完整见本体 docs/phone-design.md「持久化」章。
