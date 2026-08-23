@@ -4,7 +4,7 @@
 
 ## 入口
 
-- 本体 `~/codex/cogos`；入口 `python3.11 -m cogos.feishu.cli`
+- 本体 `../cogos`；入口 `python3.11 -m cogos.feishu.cli`
 - 测试 `python3.11 -m pytest tests/ -q`
 - 数据 `~/.cogos/feishu/default/run/sessions`
 - 账号 `~/.cogos/feishu/accounts/bot-<provider>-<number>.json`（含 `pin` 字段）、`human-<provider>-<number>.json`

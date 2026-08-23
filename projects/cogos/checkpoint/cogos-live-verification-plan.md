@@ -125,7 +125,7 @@ await c.shutdown()
 
 ## 九、工作流（checkpoint 约定）
 
-采用 `locus/scratch/checkpoint-rule.md` 规则（凝练可恢复、锚点优先），checkpoint 落 `/tmp/kilo/locus/checkpoint/`（locus 工程之外，`/undo` 不回退）。
+采用 `locus/scratch/checkpoint-rule.md` 规则（凝练可恢复、锚点优先），checkpoint 落 `../checkpoint/`（locus 工程之外，`/undo` 不回退）。
 
 三个文件职责：
 - `cogos-live-verification-plan.md`：验证计划（目标/阶段/分层/分工/必测点/工作流），相对稳定，只改计划本身

@@ -3,7 +3,7 @@
 多 agent 运行时。飞书作为通信总线和人-agent 交互面。
 
 - remote: https://github.com/zhengyp36/cogos-dev
-- 本体路径: `~/codex/cogos`
+- 本体路径: `../cogos`
 - 语言: Python 3.11（`.python-version` + `pyproject.toml` `requires-python = ">=3.11"`）
 - 测试: `python3.11 -m pytest tests/ -q`
 - 入口: `cogos-feishu <command>`（`python3.11 -m cogos.feishu.cli`）
@@ -11,11 +11,11 @@
 
 ## 前身 / 来源
 
-cogos 的前身是 `~/codex/agent-study/` 下的代码。agent-study 是"先学 agent 后开发 agent"的工程，cogos 是其中"开发 agent"的落点。
+cogos 的前身是 `../agent-study/` 下的代码。agent-study 是"先学 agent 后开发 agent"的工程，cogos 是其中"开发 agent"的落点。
 
-- `~/codex/agent-study/agent-study/agi-core/agi_body/feishu_gateway` — 飞书网关，用于 agent 通信（未完整实现）
-- `~/codex/agent-study/agent-study/cogos/` — 前身工程（含旧设计文档 `comm/`）
-- `~/codex/agent-study/cogos-code/` — 前身代码
+- `../agent-study/agent-study/agi-core/agi_body/feishu_gateway` — 飞书网关，用于 agent 通信（未完整实现）
+- `../agent-study/agent-study/cogos/` — 前身工程（含旧设计文档 `comm/`）
+- `../agent-study/cogos-code/` — 前身代码
 
 ## 关键文件
 
@@ -38,8 +38,8 @@ cogos 的前身是 `~/codex/agent-study/` 下的代码。agent-study 是"先学 
 
 ## 外部文档
 
-- 通信层完整设计: `~/codex/cogos/docs/comm-full-design.md`
+- 通信层完整设计: `../cogos/docs/comm-full-design.md`
 - agent 账号失效/刷新: `docs/agent-account-refresh.md`（方案）+ `docs/agent-account-refresh-design.md`（详细设计）
-- 实施计划: `~/codex/cogos/docs/comm-impl-plan.md`
-- 进度树 / 完整 TODO: `~/codex/agent-study/discussions/project-tree.md`
+- 实施计划: `../cogos/docs/comm-impl-plan.md`
+- 进度树 / 完整 TODO: `../agent-study/discussions/project-tree.md`
 - 早期卡片/Session 设计（08-10，疑被 comm 线取代）: `docs/G3f-card-design.md` `docs/ws-session-design.md` `docs/G3f-todo.md`

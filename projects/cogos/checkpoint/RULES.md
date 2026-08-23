@@ -1,6 +1,6 @@
 # Checkpoint 工作流规则
 
-采用 `locus/scratch/checkpoint-rule.md` 规则（凝练可恢复、锚点优先），但 checkpoint 落本目录（`/tmp/kilo/locus/checkpoint/`），避免 `/undo` 回退草稿文档。
+采用 `locus/scratch/checkpoint-rule.md` 规则（凝练可恢复、锚点优先），但 checkpoint 落本目录（`../checkpoint/`），避免 `/undo` 回退草稿文档。
 
 ## 文件职责
 

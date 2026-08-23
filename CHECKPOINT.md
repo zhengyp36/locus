@@ -10,13 +10,13 @@
 
 /undo 回退的是 locus 工作区的文件变更 + 会话消息。checkpoint 的价值就是"跨 /undo 存活",故:
 
-- checkpoint 正文写 `/tmp/kilo/locus/checkpoint/`(locus 之外,/undo 不回退)。
+- checkpoint 正文写 `../checkpoint/`(locus 之外,/undo 不回退)。
 - locus 内只留锚点(`scratch/README.md`、`scratch/checkpoint-rule.md`)指向该路径与本文。
 - 本文是长期规则,随 locus git 固化(写完需 commit,否则同样被 /undo 回退)。
 
 ## 路径
 
-活文档 `/tmp/kilo/locus/checkpoint/`:
+活文档 `../checkpoint/`:
 
 - `status.md` — 当前状态入口,新会话只读它 + `codebase.md`
 - `codebase.md` — 代码认知基线,append 式累积
@@ -48,5 +48,5 @@
 
 ## 固化节奏
 
-- /tmp 重启即失。每个里程碑收口后,把活文档固化进 `projects/<工程>/checkpoint/` 并 commit。
-- 活文档(/tmp)是唯一权威;git 内固化快照只增不改,单向覆盖(codebase.md 以 /tmp 版为准)。
+- checkpoint 常驻工位目录,不随重启丢失。每个里程碑收口后,可把关键结论固化进 `projects/<工程>/checkpoint/` 并 commit(可选,便于跨工位共享)。
+- 活文档(`../checkpoint/`)是唯一权威;git 内固化快照只增不改,单向覆盖(codebase.md 以活文档版为准)。

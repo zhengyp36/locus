@@ -2,17 +2,16 @@ function locus-checkpoint () {
     if [ "$1" == "backup" ]; then
         echo "########################################"
         echo "backup"
-        mkdir -p /tmp/locus-scratch-checkpoint
-        cp -rv ~/locus/scratch/* /tmp/locus-scratch-checkpoint/
+        mkdir -p ../checkpoint/scratch-backup
+        cp -rv ./scratch/* ../checkpoint/scratch-backup/
     elif [ "$1" == "restore" ]; then
         echo "########################################"
         echo "restore"
-        mkdir -p /tmp/locus-scratch-checkpoint
-        cp -rv /tmp/locus-scratch-checkpoint/* ~/locus/scratch/
-        rm -rfv /tmp/locus-scratch-checkpoint/*
+        mkdir -p ./scratch
+        cp -rv ../checkpoint/scratch-backup/* ./scratch/
+        rm -rfv ../checkpoint/scratch-backup/*
     else
         echo "usage: locus-checkpoint <backup|restore>"
         return 1
     fi
 }
-
