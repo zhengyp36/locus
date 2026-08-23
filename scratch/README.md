@@ -1,5 +1,6 @@
 # scratch
 
-临时草稿目录。讨论过程中存放未成形的草稿、中间版本。
+锚点目录。checkpoint 正文在 `/tmp/kilo/locus/checkpoint/`(locus 之外,/undo 不回退),本目录只留指向它的锚点。
 
-- 正式结论整理后移入对应工程目录，草稿删除。
+- 工作方法 + checkpoint 路径 + 规则见根目录 `CHECKPOINT.md`。
+- 本目录不放草稿正文。
