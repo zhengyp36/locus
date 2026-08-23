@@ -3,7 +3,8 @@
 多 agent 运行时，飞书作通信总线，前身 agent-study。通信层已真机调通。
 
 - 已完成：agent-term、账号失效/刷新、AccountRef 号码解析、Telecom 通信接口（FeishuTelecomClient 四方法）；Phone 完整定稿（接口 + 三待讨论点裁决 + 持久化分离，见本体 docs/phone-design.md + docs/phone-usage.md）+ impl-plan 落地（docs/phone-impl-plan.md）。
-- Phone 阶段 A 已落地并提交（`5f62bd8`+`599abf5`）：`cogos/phone/` 四文件 model/store/fake/phone + 50 测试 + 全量 601 passed；只依赖 telecom 抽象，身份零交叉。阶段 B 接 FeishuTelecomClient（`self._factory` 单点注入）待新会话讨论 → entries/2026-08-22-cogos-phone-stage-a-done.md
+- Phone 阶段 A 已落地并提交（`5f62bd8`+`599abf5`）：`cogos/phone/` 四文件 model/store/fake/phone + 50 测试 + 全量 601 passed；只依赖 telecom 抽象，身份零交叉。阶段 B 接 FeishuTelecomClient 已完成 → entries/2026-08-22-cogos-phone-stage-a-done.md
+- Phone 接入真实 Telecom 全链路完成并提交（`1e48652`+`a6e7cfc`+`44ab65c`）：send 同步化（等 send-ack + 服务器 create_time 落库）/ 群成员变化 members_changed 帧（diff 权威列表）/ client_factory 注入 / 收消息链路真机全绿（修 group-p2p 透传 + 真群 bot sender 两 bug）/ list_chats RPC + sync_groups + members 空则拉 / 异常感知（断连 ConnectionLost 透传 + 自动延时重连 + members_error）/ /LEAVE 事件即事实 + group-p2p 转义对称。真机场景 6~18 全绿，单测 642 passed。过程见 projects/cogos/checkpoint/checkpoint-14~22.md + codebase.md
 - 群操作（`eb68ceb`）：app 拉 app bot 被封（invite 230003），唯一路径 me_join（需 public 群）：建群 private→拉真人 user_id→改 public→各 bot me_join→改回 private。修 bug（`bfae959`）：invite-members 拉真人从未真正执行——`Chat.add` 按 `h.get('type')=='human'` 过滤但 human 账号无 type 字段恒空；改显式 humans/bots + `_add_humans` 先查证再重试 + `Lib.list_members`（分页）。
 - agent-bot 创建（`8ab7420`）：status 写 init + 每 agent 建 Contact bitable。
 - p2p 激活（`/activate <Axxx>`）：奇偶选群主建双 bot 群 + `@all /MEET` 收 open_id + 写 Contact bitable + 置 active；bot↔bot p2p 收发已落地（1624136）。

@@ -1,5 +1,6 @@
 # 索引
 
+- 2026-08-23: Phone 接入 Telecom 完成（send 同步 / 群成员变化 / 收消息链路 / list_chats sync / 异常感知 / /LEAVE 事件即事实，`1e48652`+`a6e7cfc`+`44ab65c`）→ projects/cogos/checkpoint/checkpoint-14~22.md + codebase.md「Phone/Telecom 发送链路」
 - 2026-08-22: Phone 阶段 A 落地并提交（`5f62bd8`+`599abf5`，model/store/fake/phone 四文件 + 50 测试 + 全量 601 passed；阶段 B 接 FeishuTelecomClient 待讨论）→ entries/2026-08-22-cogos-phone-stage-a-done.md
 - 2026-08-22: Phone 实现策略定稿 + impl-plan 落地（阶段 A 领域层+持久化+FakeTelecomClient 待实现，阶段 B 接 telecom）→ entries/2026-08-22-cogos-phone-impl-plan.md + 本体 docs/phone-impl-plan.md
 - 2026-08-22: COGOS002 真机验证 L1 + 8 处修复（建 provider/agent + 建真群 + get_members 双源/rebuild/过滤 leave + /ENTER 公告）→ entries/2026-08-22-cogos-live-verification.md（checkpoint 见 projects/cogos/checkpoint/）
