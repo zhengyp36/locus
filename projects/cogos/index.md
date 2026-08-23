@@ -1,5 +1,6 @@
 # 索引
 
+- 2026-08-24 phone-term TUI 落地 + 真机问题修复 → 活文档 ../checkpoint/checkpoint-5~6.md
 - 2026-08-23 Phone 可用性收口 + get_members 30s 自阻塞根治 → checkpoint/checkpoint-23~28.md
 - 2026-08-23 phone-term 提案（待讨论）→ entries/2026-08-23-cogos-phone-term.md
 - 2026-08-23 Phone 接入 Telecom 完成 → checkpoint/checkpoint-14~22.md + checkpoint/codebase.md

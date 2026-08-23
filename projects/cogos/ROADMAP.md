@@ -6,9 +6,8 @@
 
 ## 待 YZ 讨论的候选方向（优先级降序）
 
-1. phone-term（Phone 交互终端 TUI）→ entries/2026-08-23-cogos-phone-term.md
-2. 可靠性 / 可观测性
-3. 持久化
-4. 认知树 + InferNode
-5. agent 运行时
-6. 权限
+1. 可靠性 / 可观测性
+2. 持久化
+3. 认知树 + InferNode
+4. agent 运行时
+5. 权限

@@ -10,11 +10,12 @@
 - 会话 1~5 真机验证收尾全绿（真人进退群驱动 members 增减），过程见 checkpoint/。
 - 群聊（Telecom 真群）已落地（`835bc3e`）：收发 / chat_registry / agent_cmd / group 区分 / tracker / group_event。
 - Phone 即 agent 侧可 import API（`Phone()` → `add_card(number, pin)` → `listen`，`send`/`create_group`/`sync_groups`/`shutdown` 齐备）；旧裸 `startup(号码, on_msg, PIN)` 草图已废弃。
+- phone-term TUI 落地并提交（`71dcdd0`，668 passed）：命令集 11 个 + 群消息 @ / 成员管理；真机试用问题修复——p2p send 按 type 分流、群名 fallback、@ 占位符 key 透传替换、发送 @ 渲染、events.log `ts_local`、daemon `@_all`→`@all`。
 
 ## 未决
 
 - load_bot 与 AccountRef.ensure 分层错位（未实施）→ entries/2026-08-20-cogos-load-bot-vs-ensure.md
-- phone-term（Phone 交互终端 TUI）待 YZ 讨论 → ROADMAP.md + entries/2026-08-23-cogos-phone-term.md
+- phone-term 真机验证待做（发群 @ 渲染 / list_members / add_members / p2p 裸文字 / ts_local / @all 解析）→ 活文档 ../checkpoint/checkpoint-5~6.md
 - 真机验证 2A 未做（真人进退群驱动 members_changed，确认 30s 消失）→ checkpoint/checkpoint-28.md
 
 ## 锚点
