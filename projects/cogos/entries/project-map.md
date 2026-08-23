@@ -21,21 +21,27 @@
 - **号码**：真人 `Hxxxx`（手动填、无 counter）、agent `Axxxx`（自动 counter）；**S 计数器已删**（bs-bot 不用号码，用 device_name 区分）。**H/A 有 name 字段**。号码在**单 provider 内**唯一（不并发创建保证，使用者纪律，⚠️非软件保证）。
 - **agent-bot vs agent**：agent-bot = 飞书 app（app-id/app-secret），一个 agent-bot 对应一个 `Axxxx`；agent = **独立认知个体**，一个 agent **可持多个 agent 号码**（像人多手机号）。
 - **群成员视觉一致**：真人 nickname=`Hxxxx`（`张三(H1284)`），bot 名=`name(Axxxx)`（`李四(A2736)`）。
-- **PIN**：add-agent 生成（`secrets.token_hex(4)` 随机串），startup 鉴权。✅ 生成已接，startup 鉴权 ⏳。
+- **PIN**：add-agent 生成（`secrets.token_hex(4)` 随机串），startup 鉴权。✅ 生成已接，startup 鉴权已随 term 兑现。
 - **bot↔bot 私聊**：飞书不支持 bot 互通 → 建**双 bot 群 + @all**，不解散、写 bitable。✅（发送走自己 contact bitable 查 chat_id；接收走 meta `peer_number`，内容去 `@_all` 前缀）
 - **号码全名只在接口层**：`运营商前缀+号码`（冒号 `COGOS001:A1328`）；本地账号文件 id 用连字符 `provider-number`（`bot-COGOS008-A0001.json`，`accounts.agent_account_id` 收敛拼接）；内存 conn key 用冒号 `provider:number`。
 - **消息落地**：本地文件 `SESSIONS_DIR/<app_id>/by_chat_id/<chat_id>/stream|history|cards`，上叠 p2p/group 软链接分类视图 + `providers/<provider>/<number>` 软链接；收发都先落 stream，处理后进 history（`pick` 改名 `.doing` → `done` 移到 history）；文件名 `{ts}_{rand4}_{type}.json`。
 
-## 三、Python 接口（agent 侧，设计目标，⏳ 未实现）
+## 三、Python 接口（agent 侧）
+
+Phone 本身就是可 import 的 agent 侧 API（`cogos/phone/phone.py`，默认接真机，checkpoint-23）：
 
 ```python
-inst = startup("COGOS001:A1328", on_msg, PIN)
-inst.send("COGOS001:H2049", msg)
-inst.send("COGOS001:A0053", msg)
-inst.shutdown()
+from cogos.phone import Phone
+
+phone = Phone()
+await phone.add_card("A1328", pin)   # 内部 client.startup()，pin 从账号文件读
+await phone.listen(on_msg=..., on_members_changed=...)
+await phone.send("H2049", msg)
+await phone.shutdown()
 ```
 
-> term 脚手架已落地底层通信通道（`cogos-feishu term <provider:number> <PIN>`：startup 鉴权 / send 裸 user_id / shutdown），但可 import 的 Python `startup()` API 仍 ⏳。
+- 生命周期：`Phone()` → `add_card(number, pin)`（内部 `client.startup()`，PIN 不暴露到顶层）→ `listen`；`send`/`create_group`/`sync_groups`/`reconnect`/`shutdown` 齐备。
+- 旧设计草图 `startup("COGOS001:A1328", on_msg, PIN)` 已废弃（单账号 + 显式 PIN 与 Phone 多卡模型矛盾）。
 
 ## 四、关键不变量（兑现状态）
 
@@ -62,7 +68,7 @@ inst.shutdown()
 - ✅ contact-refresh（`/refresh-contact <Axxx>`）：已激活 agent 补齐更高号新激活 agent 的通信录（`_list_contact_numbers` 取 max_idx → `_peer_chat_id` 从对方 contact 查 chat_id，连续区间）。
 - ✅ bot 间消息发送/接收：`AgentConn.make_session`（self.account 作 bot dict，弃 load_bot）+ `resolve_target`（目标缓存 20 FIFO key `provider:number`；H→user_id / A→自己 contact 查 chat_id）+ daemon `_handle_agent_send_p2p` 重写；接收 `route_message` 按 chat_type 分派（p2p→human、group-p2p→meta `peer_number`）；`_resolve_human` 本地优先云端兜底；修 human 目标 provider 校验 + 发送失败不 disconnect + chat_id 传裸号。
 - ✅ bot p2p 真机调通 + group-p2p 迁移修复：老群缺 group-p2p 元数据 → `sync-group-p2p` 命令（`_list_contact_rows`/`sync_group_p2p_links` 从 contact bitable 补 peer_number + 转 p2p 链）；bot p2p 接收去 `@_all` 前缀。
-- ⏳ 未实现：可 import 的 Python `startup()` API、send_chat、to_targets @、revoke 命令（status 改 inactive 入口，失效机制真机验证前置）。
+- ⏳ 未实现：send_chat、to_targets @、revoke 命令（status 改 inactive 入口，失效机制真机验证前置）。
 - 预留未接线：bot_type `agent` 账号已可建（`/add-agent`），但 EventHandler 只注册 `test`/`bs`（agent 未激活、WS 不监听）；`admin` 已枚举不激活。
 
 ## 六、代码分层

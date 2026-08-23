@@ -409,3 +409,25 @@ Phone `sync_groups()` → `client.list_chats()` → `_request(proto.agent.list_c
   `_ensure_group_session` 的 get_members 兜底（加 `skip_pull` 参数）；仅收群消息路径
   （`_make_on_msg`）保留兜底。
 
+## 30s 根因修正 + 2A 异步分发（checkpoint-28 新增）
+
+### 30s 真根因（修正 checkpoint-22 的「串行排队」）
+- 真机时间线坐实：phone 侧 telecom `_reader` 单协程（telecom.py:441），`await
+  on_members_changed` 回调里同步 `get_members` → `_request` → `await wait_for(fut, 30)`
+  （telecom.py:396），而 ack 必须由同一 reader 协程 `_handle_ack` 读回（:474）→
+  **自阻塞**，ack 躺 socket 无人读直到 30s 超时。非 daemon 慢/排队/HTTP 长尾。
+- 证据：daemon get_members handler 1.387s 即回 ack，phone 发请求后 30s 才超时，中间
+  28.6s ack 无人读，超时后积压帧批量释放。
+
+### 2A 修复（reader 回调异步分发）
+- `FeishuTelecomClient.__init__` 增 `_callback_tasks`（telecom.py:254）。
+- `_spawn_callback`（telecom.py:427）：`create_task` + 进 `_callback_tasks` + done_callback；
+  `_on_callback_done`（:432）：移除跟踪、cancelled 跳过、异常 warning。
+- `_reader`（:456-464）：members_changed / message 回调由 `await` 改 `_spawn_callback`；
+  ack 帧仍同步 `_handle_ack`，reader 保持读 ack 能力 → 自阻塞解除，get_members 兜底恢复。
+- `shutdown`（:536-546）：cancel/await `_callback_tasks`（与 `_tasks` 合并）。
+- 决策：只做 2A、不做 skip_pull（1），接受 first-message+members 空时双拉 RPC。
+- 写并发无虞：`SockFile.write` 单次 `writer.write()` 无 await（protocol.py:278），事件循环
+  内原子，多任务并发写不 interleave。
+
+

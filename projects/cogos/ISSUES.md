@@ -16,13 +16,9 @@
 - **注销是最终一致、非强保证**：离线设备靠 fail-open（云端不可达不主动失效、5 分钟重试）可无限期续命，最坏失效延迟 = 12h TTL + 重试窗口。与「号码唯一性=纪律非软件保证」同类折中，需 YZ 知悉。
 - **无 revoke 命令**（暂不实现，短期无失效必要）：`agent_registry.status` 目前只有 `"active"`，没有把 status 改为 inactive 的入口，失效机制真机端到端不可触发（只能 mock 单测）。
 
-### Phone get_members 兜底在并发成员事件下的排队超时（未优化）
-
-- 真机（checkpoint-21/22）：真人进退群连发 `user.added/deleted_v1`，每个触发 `emit_members_changed` → `resolve_group_members` → `tracker.rebuild()`（`_build_lock` 串行），叠加 phone 侧 `_ensure_group_session` 又发 get_members，多个 rebuild 锁上排队累积到 30s（REQUEST_TIMEOUT），members 更新拖慢 ~30s；正确性无碍（members_changed 帧 added 兜底）。实测单次 HTTP 快（get_members 2.73s / list_messages 0.51s / list_members 0.36s），归因是串行排队而非单次回放慢。
-- 优化方向（未实施）：`_make_on_members_changed` 已有 added/removed，可跳过 `_ensure_group_session` 的 get_members 兜底（加 `skip_pull` 参数），仅收群消息路径保留兜底。
-
 ## 已解决
 
+- get_members 30s 超时 → **根因自阻塞**（checkpoint-27 坐实，非此前「串行排队」）：phone 侧 telecom `_reader` 单协程 `await` 回调里同步 get_members 等 ack，而 ack 须同一 reader 读回 → 自阻塞 30s。已用 2A 修复（checkpoint-28，`3976401`）：reader 回调改 `asyncio.create_task` 异步分发，ack 仍同步读。只做 2A、不做 skip_pull（接受 first-message+members 空时双拉）。真机验证待做。
 - Phone 是否主动拉全量成员 → 已实施（checkpoint-18）：`_ensure_group_session` members 空则拉 + `sync_groups()`（复用 daemon `list_real_groups`），`add_card` 成功分支自动 sync。
 - 未登记真人/机器人消息静默丢弃 → **设计选择**：provider 登记账号代表可见范围，未登记即不可见，不做降级处理（非 bug）。
 - Phone 抽象三待讨论点裁决 → 见本体 docs/phone-design.md + entries/2026-08-17-cogos-phone-design.md。

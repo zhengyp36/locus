@@ -1,38 +1,40 @@
 # 索引
 
-- 2026-08-23: Phone 接入 Telecom 完成（send 同步 / 群成员变化 / 收消息链路 / list_chats sync / 异常感知 / /LEAVE 事件即事实，`1e48652`+`a6e7cfc`+`44ab65c`）→ projects/cogos/checkpoint/checkpoint-14~22.md + codebase.md「Phone/Telecom 发送链路」
-- 2026-08-22: Phone 阶段 A 落地并提交（`5f62bd8`+`599abf5`，model/store/fake/phone 四文件 + 50 测试 + 全量 601 passed；阶段 B 接 FeishuTelecomClient 待讨论）→ entries/2026-08-22-cogos-phone-stage-a-done.md
-- 2026-08-22: Phone 实现策略定稿 + impl-plan 落地（阶段 A 领域层+持久化+FakeTelecomClient 待实现，阶段 B 接 telecom）→ entries/2026-08-22-cogos-phone-impl-plan.md + 本体 docs/phone-impl-plan.md
-- 2026-08-22: COGOS002 真机验证 L1 + 8 处修复（建 provider/agent + 建真群 + get_members 双源/rebuild/过滤 leave + /ENTER 公告）→ entries/2026-08-22-cogos-live-verification.md（checkpoint 见 projects/cogos/checkpoint/）
-- 2026-08-22: 群实时事件公告（/ENTER /LEAVE /REMOVE + remove/leave 链路）+ 群成员 tracker（members.json + build 历史回放 + add_event 单调 + GC）→ entries/2026-08-22-cogos-group-tracker.md + entries/2026-08-22-cogos-group-event.md
-- 2026-08-21: 群聊 5 落地——收发打通（Telecom 发送拆分 + mentions 解析 + 接收三缓存）/ chat_registry + 群主解析 / 命令机制 + add-ws 引用计数 / group 区分 contact.json → entries/2026-08-21-cogos-group-chat-send-recv.md + entries/2026-08-21-cogos-chat-registry-owner.md + entries/2026-08-21-cogos-agent-cmd.md + entries/2026-08-21-cogos-group-distinguish.md
-- 2026-08-20~21: 群聊（Telecom 真群）方案定稿 + 1-4 实施（1-3 protocol 帧 / Chat·Message 数据模型 / FeishuTelecomClient 请求-响应；4 daemon 四 handler + add_members 编排 + 真机验证两行为点；5-6 待接）→ entries/2026-08-20-cogos-group-chat-telecom.md + entries/2026-08-21-cogos-group-chat-block4.md + 本体 docs/group-chat-telecom.md
-- 2026-08-20: 群历史拉取实验（im/v1/messages 全量/增量 + sender 表示 + 群成员解析 + open_id→user_id）→ entries/2026-08-20-cogos-group-history.md
-- 2026-08-20: bot p2p 真机调通 + group-p2p 迁移修复（sync-group-p2p 命令补 peer_number + bot p2p 去 @_all 前缀）→ entries/2026-08-20-cogos-p2p-debug.md
-- 2026-08-20: account refactor 实施（删 agent 三字段 + token 重建 + term ensure + open_id 可空 + AgentRef._refresh 补固有字段，459 测试过）→ entries/2026-08-20-cogos-account-refactor-done.md
-- 2026-08-20: load_bot vs ensure 分层 + agent 账号本地特有字段去留（bitable_token 重建 / bitable_url·open_id·patch_granted 删）→ entries/2026-08-20-cogos-load-bot-vs-ensure.md、entries/2026-08-20-cogos-account-refactor.md
-- 2026-08-20: bot 间消息发送落地（make_session/resolve_target 目标缓存 + route_message 按 chat_type 分派 + meta peer_number + 修 3 bug）→ entries/2026-08-20-cogos-bot-send.md
-- 2026-08-19: bot 命名规范 + bs_registry 自检（删 S 计数器 / tenant 回填 / device_name 区分 bs-bot）→ entries/2026-08-19-cogos-bot-naming.md
-- 2026-08-19: contact-refresh 落地（/refresh-contact 命令 + 连续区间补齐高号 agent + activate/refresh 重构共享）→ entries/2026-08-19-cogos-contact-refresh.md
-- 2026-08-19: p2p 激活流程落地（/activate 命令 + 建群 + /MEET 收集 open_id + 写 Contact bitable + 置 active）→ entries/2026-08-19-cogos-p2p-activate.md
-- 2026-08-18: p2p 消息实现 checkpoint（bot↔bot 收发检视 + 7 文件修正提交 1624136）→ entries/2026-08-18-cogos-p2p-impl.md
-- 2026-08-18: 群操作落地（update_chat/join_chat/me_join + account 列表 invite；飞书封死 app 拉 app bot）→ entries/2026-08-18-cogos-group-mejoin.md；实验脚本 ~/codex/cogos/scripts/group.py + exp_group.py + exp_invite.py
-- 2026-08-18: agent-bot 创建流程改 init 状态 + 每 agent 建 Contact bitable → entries/2026-08-18-cogos-agent-contact-bitable.md
-- 2026-08-17: Phone 抽象设计定稿（卡/联系人/send/listen/会话/消息状态，待编码）→ entries/2026-08-17-cogos-phone-design.md
-- 2026-08-17: Telecom 接口实现（startup/send/listen/shutdown）+ term 迁移 → entries/2026-08-17-cogos-telecom-impl.md
-- 2026-08-16: Telecom 通信接口抽象定稿（ABC + Contact/Chat + 异常，编码待开始）→ entries/2026-08-16-cogos-telecom-interface.md
-- 2026-08-16: AccountRef 号码解析（三级缓存）+ agent send 发 human → entries/2026-08-16-cogos-account-ref.md
-- 2026-08-15: agent 账号 id 加 provider 前缀 + 存量改名迁移 → entries/2026-08-15-cogos-agent-account-id.md
-- 2026-08-15: agent 账号失效/刷新实现（refresh + load 判定）→ entries/2026-08-15-cogos-agent-refresh-impl.md
-- 2026-08-15: agent-term 架子实现 + 失效/刷新方案定稿 → entries/2026-08-15-cogos-agent-term-impl.md
-- 2026-08-15: agent-term 方案定稿（channel 协议 + term 脚手架）→ entries/2026-08-15-cogos-agent-term-design.md
-- 2026-08-15: /help 调整 + /query-agent 真机验证 → entries/2026-08-15-cogos-help-query-agent.md
-- 2026-08-15: /add-human /add-agent 实现 → entries/2026-08-15-cogos-add-agent.md
-- 2026-08-15: resume cloud-first 重写 + 跨设备验证 → entries/2026-08-15-cogos-resume-verify.md
-- 2026-08-15: provider.json 3 字段索引层落地 → entries/2026-08-15-cogos-provider-resume.md
-- 2026-08-15: setup 流程真机调通 + 3 项修复 → entries/2026-08-15-cogos-setup-verify.md
-- 2026-08-15: 项目认知地图成图 → entries/project-map.md；建图过程 → entries/2026-08-14-cogos-map.md
-- 2026-08-14: Phase C 联调 3 bug 修复 → entries/2026-08-14-cogos-bugfix.md
-- 2026-08-12~13: Phase 0/1/A/C 实现 + provider 字段改造 → entries/2026-08-12-cogos-setup.md
-- 2026-08-12: 真实账号集成测试 + invite-bot 修复 → entries/2026-08-12-cogos-comm-testing.md
-- 2026-08-12: 交接确认 + 版本依赖 + bot_type 补齐 → entries/2026-08-12-cogos.md
+- 2026-08-23 Phone 可用性收口 + get_members 30s 自阻塞根治 → checkpoint/checkpoint-23~28.md
+- 2026-08-23 phone-term 提案（待讨论）→ entries/2026-08-23-cogos-phone-term.md
+- 2026-08-23 Phone 接入 Telecom 完成 → checkpoint/checkpoint-14~22.md + checkpoint/codebase.md
+- 2026-08-22 Phone 阶段 A → entries/2026-08-22-cogos-phone-stage-a-done.md
+- 2026-08-22 Phone impl-plan → entries/2026-08-22-cogos-phone-impl-plan.md
+- 2026-08-22 COGOS002 真机验证 L1 → entries/2026-08-22-cogos-live-verification.md
+- 2026-08-22 群事件公告 + tracker → entries/2026-08-22-cogos-group-event.md + entries/2026-08-22-cogos-group-tracker.md
+- 2026-08-21 群聊 5 收发 / registry / 命令 / 区分 → entries/2026-08-21-cogos-group-chat-send-recv.md + entries/2026-08-21-cogos-chat-registry-owner.md + entries/2026-08-21-cogos-agent-cmd.md + entries/2026-08-21-cogos-group-distinguish.md
+- 2026-08-20~21 群聊方案 + 块 1-4 → entries/2026-08-20-cogos-group-chat-telecom.md + entries/2026-08-21-cogos-group-chat-block4.md
+- 2026-08-20 群历史实验 → entries/2026-08-20-cogos-group-history.md
+- 2026-08-20 bot p2p 调通 + group-p2p 迁移 → entries/2026-08-20-cogos-p2p-debug.md
+- 2026-08-20 account refactor → entries/2026-08-20-cogos-account-refactor-done.md
+- 2026-08-20 load_bot vs ensure + refactor 方案 → entries/2026-08-20-cogos-load-bot-vs-ensure.md + entries/2026-08-20-cogos-account-refactor.md
+- 2026-08-20 bot 间消息发送 → entries/2026-08-20-cogos-bot-send.md
+- 2026-08-19 bot 命名规范 → entries/2026-08-19-cogos-bot-naming.md
+- 2026-08-19 contact-refresh → entries/2026-08-19-cogos-contact-refresh.md
+- 2026-08-19 p2p 激活 → entries/2026-08-19-cogos-p2p-activate.md
+- 2026-08-18 p2p 消息实现 → entries/2026-08-18-cogos-p2p-impl.md
+- 2026-08-18 群操作 me_join → entries/2026-08-18-cogos-group-mejoin.md
+- 2026-08-18 agent-bot 创建 init + Contact bitable → entries/2026-08-18-cogos-agent-contact-bitable.md
+- 2026-08-17 Phone 抽象设计 → entries/2026-08-17-cogos-phone-design.md
+- 2026-08-17 Telecom 接口实现 → entries/2026-08-17-cogos-telecom-impl.md
+- 2026-08-16 Telecom 接口抽象 → entries/2026-08-16-cogos-telecom-interface.md
+- 2026-08-16 AccountRef 号码解析 → entries/2026-08-16-cogos-account-ref.md
+- 2026-08-15 agent 账号 id 前缀 → entries/2026-08-15-cogos-agent-account-id.md
+- 2026-08-15 agent 账号失效/刷新 → entries/2026-08-15-cogos-agent-refresh-impl.md
+- 2026-08-15 agent-term 架子 → entries/2026-08-15-cogos-agent-term-impl.md
+- 2026-08-15 agent-term 方案 → entries/2026-08-15-cogos-agent-term-design.md
+- 2026-08-15 /help + /query-agent → entries/2026-08-15-cogos-help-query-agent.md
+- 2026-08-15 /add-human /add-agent → entries/2026-08-15-cogos-add-agent.md
+- 2026-08-15 resume cloud-first → entries/2026-08-15-cogos-resume-verify.md
+- 2026-08-15 provider.json 索引层 → entries/2026-08-15-cogos-provider-resume.md
+- 2026-08-15 setup 真机调通 → entries/2026-08-15-cogos-setup-verify.md
+- 2026-08-15 认知地图成图 → entries/project-map.md + entries/2026-08-14-cogos-map.md
+- 2026-08-14 Phase C 联调 bugfix → entries/2026-08-14-cogos-bugfix.md
+- 2026-08-12~13 Phase 0/1/A/C → entries/2026-08-12-cogos-setup.md
+- 2026-08-12 真实账号集成测试 → entries/2026-08-12-cogos-comm-testing.md
+- 2026-08-12 交接 + bot_type → entries/2026-08-12-cogos.md

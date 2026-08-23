@@ -1,33 +1,26 @@
 # cogos
 
-多 agent 运行时，飞书作通信总线，前身 agent-study。通信层已真机调通。
+多 agent 运行时，飞书作通信总线，前身 agent-study。通信层 + agent 账号链路已真机调通，Phone 抽象已接真实 Telecom 全链路。
 
-- 已完成：agent-term、账号失效/刷新、AccountRef 号码解析、Telecom 通信接口（FeishuTelecomClient 四方法）；Phone 完整定稿（接口 + 三待讨论点裁决 + 持久化分离，见本体 docs/phone-design.md + docs/phone-usage.md）+ impl-plan 落地（docs/phone-impl-plan.md）。
-- Phone 阶段 A 已落地并提交（`5f62bd8`+`599abf5`）：`cogos/phone/` 四文件 model/store/fake/phone + 50 测试 + 全量 601 passed；只依赖 telecom 抽象，身份零交叉。阶段 B 接 FeishuTelecomClient 已完成 → entries/2026-08-22-cogos-phone-stage-a-done.md
-- Phone 接入真实 Telecom 全链路完成并提交（`1e48652`+`a6e7cfc`+`44ab65c`）：send 同步化（等 send-ack + 服务器 create_time 落库）/ 群成员变化 members_changed 帧（diff 权威列表）/ client_factory 注入 / 收消息链路真机全绿（修 group-p2p 透传 + 真群 bot sender 两 bug）/ list_chats RPC + sync_groups + members 空则拉 / 异常感知（断连 ConnectionLost 透传 + 自动延时重连 + members_error）/ /LEAVE 事件即事实 + group-p2p 转义对称。真机场景 6~18 全绿，单测 642 passed。过程见 projects/cogos/checkpoint/checkpoint-14~22.md + codebase.md
-- 群操作（`eb68ceb`）：app 拉 app bot 被封（invite 230003），唯一路径 me_join（需 public 群）：建群 private→拉真人 user_id→改 public→各 bot me_join→改回 private。修 bug（`bfae959`）：invite-members 拉真人从未真正执行——`Chat.add` 按 `h.get('type')=='human'` 过滤但 human 账号无 type 字段恒空；改显式 humans/bots + `_add_humans` 先查证再重试 + `Lib.list_members`（分页）。
-- agent-bot 创建（`8ab7420`）：status 写 init + 每 agent 建 Contact bitable。
-- p2p 激活（`/activate <Axxx>`）：奇偶选群主建双 bot 群 + `@all /MEET` 收 open_id + 写 Contact bitable + 置 active；bot↔bot p2p 收发已落地（1624136）。
-- contact-refresh（`608ecef`）：`/refresh-contact <Axxx>` 补齐更高号新激活 agent（连续区间，读对方 contact 查 chat_id）。
-- bot 命名规范（`951c32a`）：admin `{provider}-ADMIN` / bs `{provider}-BS`（name 含 device_name）/ agent `{provider}-Axxxx`；删 S 计数器；bs_registry 字段 device/app_id/app_secret/status，setup/resume 后按 app_id 自检 upsert + 回填 tenant。
-- sessions 目录整改：落盘改 `SESSIONS_DIR/<app_id>/by_chat_id/<chat_id>/`，叠加 p2p/group 软链接分类视图 + `providers/<provider>/<number>` 软链接；group-p2p 由 activate/refresh 收尾转 p2p 链；`sync-session-links` 命令随时补 providers 链。新增 `session_naming.py`、`session_links.py`、`accounts.get_human_by_user_id`/`list_bot_accounts`。
-- bot 间消息发送：`AgentConn.make_session`（self.account 当 bot dict，弃 load_bot）+ `resolve_target`（目标缓存 20 FIFO key provider:number；H→user_id / A→自己 contact 查 chat_id）+ daemon `_handle_agent_send_p2p` 重写；接收 `route_message` 按 chat_type 分派（p2p→human、group-p2p→meta `peer_number`）；`_resolve_human` 本地优先。修 3 bug：chat_id 传裸号、human provider 校验、发送失败不断连。
-- bot p2p 真机调通 + group-p2p 迁移修复（`32a2940`/`665ddda`）：老群（08-19 激活、早于 fix_group_p2p 落地）缺 `chat_type:group-p2p` + `peer_number` 元数据 → route_message 不路由、群错在 group/。修：新增 `sync-group-p2p` 命令（`_list_contact_rows` + `sync_group_p2p_links` 从 contact bitable 补 peer_number + 转 p2p 链）+ bot p2p 去 `@_all` 前缀（`_strip_at_all`，仅 group-p2p）→ entries/2026-08-20-cogos-p2p-debug.md
-- 已实施 account refactor：删 agent 账号三字段（bitable_url/open_id/patch_granted）、bitable_token 改 `_ensure_contact_token` 按需重建、term `_load_pin` 改 `AgentRef.ensure`、`_configure_admin_bot` open_id 可空；追加修 `AgentRef._refresh` 补 bot_type/type/id/provider/tenant（否则 /resume 恢复的 agent 本地文件缺 bot_type，ws.add 失败）；真机验证 token 重建命中 `A0001-Contact` + startup OK；459 测试通过 → entries/2026-08-20-cogos-account-refactor-done.md
-- 讨论中（未实施，待 YZ 定方向）：load_bot 与 AccountRef.ensure 分层错位（`_peer_chat_id` 读 peer token 仍 load_bot）→ entries/2026-08-20-cogos-load-bot-vs-ensure.md
-- 群聊（Telecom 真群）方案已定 + 块 1-4 已实施（未提交）：1-3 = Chat 普通类（id/name/client，title→name）+ Message 数据模型 + OnMsg 改 Message + protocol 新帧（create_chat/add_members/get_members + ack）+ FeishuTelecomClient 请求-响应机制；4 = daemon 四 handler（create_chat/add_members/get_members/send_chat）+ add_members 编排（复用 groupmgr.Chat.add：群主拉真人→改public→bot me_join→改private，同步 ack）+ core.Lib.user_open_id（@真人）。真机验证：非 owner bot 拉真人 232011 失败只能群主拉；WS 群消息 sender.sender_id 带 user_id 无需转换。块 5-6 待接 → entries/2026-08-20-cogos-group-chat-telecom.md + entries/2026-08-21-cogos-group-chat-block4.md + 本体 docs/group-chat-telecom.md
-- 群聊 5-6 + 群命令/事件/tracker 落地（`835bc3e`，545 passed）：① 收发打通——Telecom 发送拆分（send 只收 Contact + Chat.send/_send_chat + ALL="@all"）+ mentions open_id 解析（human user_open_id / agent contact bitable）+ 接收三缓存（_id_cache 主表 + _open_id_index/_user_id_index + resolve_id/resolve_number + message 帧 mentions）② chat_registry（建群 owner 落 admin bitable）+ daemon.get_chat_owner 群主解析三分支（真人 user_id_type / bot registry）③ agent_cmd.py 命令机制（单 / 命令、双 // 普通 + escape/unescape + 多 handler 注册表）+ ws add-ws 引用计数（allow_duplicate）④ group 区分——contact.json 本地缓存判定 group-p2p vs 真-group + /clean-cache 失效广播（long_running「处理中」）⑤ tracker.py 群成员运行时（members.json + build 历史回放 + add_event 单调 + GC 24h + core.Lib.list_messages 流式 + entry is_bot）⑥ group_event.py（/ENTER /LEAVE /REMOVE 公告 + _do_leave 退群四路径 + remove/leave 帧）→ entries/2026-08-21-cogos-group-chat-send-recv.md + entries/2026-08-21-cogos-chat-registry-owner.md + entries/2026-08-21-cogos-agent-cmd.md + entries/2026-08-21-cogos-group-distinguish.md + entries/2026-08-22-cogos-group-tracker.md + entries/2026-08-22-cogos-group-event.md
-- 待接：可 import 的 Python startup() API。
-- COGOS002 真机验证（脚本直调 FeishuTelecomClient，未提交）：建 bs+admin+bitable+A0001~A0005 全激活；L1 建真群/拉 bot/落盘通过。修 8 处（setup json_headers / add-agent name 覆盖 / Chat.add 缺 bots / ensure init 云刷新 / get_members bot 段+rebuild+过滤 leave / 补 /ENTER 公告）。checkpoint 移入 projects/cogos/checkpoint/。→ entries/2026-08-22-cogos-live-verification.md
-- 群历史实验（未接入代码）：tenant token 拉 im/v1/messages 全量/增量，sender bot=app_id、真人=open_id、system=展示名；open_id 是 per-app 的，身份锚 user_id；群成员 API 只含真人，bot 靠解析历史进群/退群 system 消息；结论入本体 docs/feishu-group-history.md + scripts/exp_group_history.py。→ entries/2026-08-20-cogos-group-history.md
+## 当前状态
 
-细节见锚点与 entries。
+- get_members 30s 自阻塞根治并提交（`3976401`，643 passed）：reader 回调异步分发（2A），ack 仍同步读，自阻塞解除；真机验证未做。
+- Phone 默认 client 改真机（`Phone()` 即接真机）；可观测性落地（`events.log` ndjson + 9 事件，观测=读盘）。
+- Phone 接入 Telecom 完成并提交（`1e48652`+`a6e7cfc`+`44ab65c`，642 passed）：send 同步化 / members_changed 帧 / client_factory 注入 / list_chats + sync_groups / 异常感知 + 自动重连 / /LEAVE 事件即事实。真机场景 6~18 全绿。
+- 会话 1~5 真机验证收尾全绿（真人进退群驱动 members 增减），过程见 checkpoint/。
+- 群聊（Telecom 真群）已落地（`835bc3e`）：收发 / chat_registry / agent_cmd / group 区分 / tracker / group_event。
+- Phone 即 agent 侧可 import API（`Phone()` → `add_card(number, pin)` → `listen`，`send`/`create_group`/`sync_groups`/`shutdown` 齐备）；旧裸 `startup(号码, on_msg, PIN)` 草图已废弃。
+
+## 未决
+
+- load_bot 与 AccountRef.ensure 分层错位（未实施）→ entries/2026-08-20-cogos-load-bot-vs-ensure.md
+- phone-term（Phone 交互终端 TUI）待 YZ 讨论 → ROADMAP.md + entries/2026-08-23-cogos-phone-term.md
+- 真机验证 2A 未做（真人进退群驱动 members_changed，确认 30s 消失）→ checkpoint/checkpoint-28.md
 
 ## 锚点
 
-- 本体/约定/关键文件/设计决策/前身来源: projects/cogos/README.md
-- 项目认知地图（目的轴 + 概念体系 + 状态轴 + 代码分层）: projects/cogos/entries/project-map.md
-- 阶段记录: projects/cogos/CHANGELOG.md
-- 遗留问题: projects/cogos/ISSUES.md
-- 下一阶段方向: projects/cogos/ROADMAP.md
-- 历史细节: projects/cogos/index.md → projects/cogos/entries/
+- 约定 / 关键文件 / 设计决策: README.md
+- 阶段记录（权威流水账）: CHANGELOG.md
+- 遗留问题: ISSUES.md · 候选方向: ROADMAP.md
+- 认知地图: entries/project-map.md · 历史细节: index.md → entries/
+- 真机验证过程: checkpoint/
