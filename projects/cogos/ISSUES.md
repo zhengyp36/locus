@@ -23,6 +23,11 @@
 - **注销是最终一致、非强保证**：离线设备靠 fail-open（云端不可达不主动失效、5 分钟重试）可无限期续命，最坏失效延迟 = 12h TTL + 重试窗口。与「号码唯一性=纪律非软件保证」同类折中，需 YZ 知悉。
 - **无 revoke 命令**（暂不实现，短期无失效必要）：`agent_registry.status` 目前只有 `"active"`，没有把 status 改为 inactive 的入口，失效机制真机端到端不可触发（只能 mock 单测）。
 
+### 智能系统设计缺口（复习 agent-study 后确认，待补设计）
+
+- **缺「过程元控制」**：有内容审视（显意识把关），无过程元控制（监控调度智能过程本身）。补法=预装三种子（自我状态可读 / 元动作可执行 / 反思回路），元策略自长。元动作已列继续/换路/求助/放弃，缺切换方法/扩大观察/折叠。
+- **缺「诊断/调试观察」**：事件流 / 可观测性接口设计。阶段 1 认知树与执行器需要，否则调试盲区。已补进 cogos-plan.md 待定项。
+
 ## 已解决
 
 - get_members 30s 超时 → **根因自阻塞**（checkpoint-27 坐实，非此前「串行排队」）：phone 侧 telecom `_reader` 单协程 `await` 回调里同步 get_members 等 ack，而 ack 须同一 reader 读回 → 自阻塞 30s。已用 2A 修复（checkpoint-28，`3976401`）：reader 回调改 `asyncio.create_task` 异步分发，ack 仍同步读。只做 2A、不做 skip_pull（接受 first-message+members 空时双拉）。真机验证已完成（真人进退群驱动 members_changed，30s 消失确认）。

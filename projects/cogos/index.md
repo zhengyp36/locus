@@ -2,13 +2,13 @@
 
 > 分层：当前阶段（首页）→ 已收尾（归档入口）。细节按需去 entries/ 翻，不逐条占首页。
 
-## 当前 · 实施阶段（08-26 起）
+## 当前 · 实施阶段（08-27 起）
 
 - 概念体系 → docs/cogos-concept-system.md
 - 开发计划 → docs/cogos-plan.md
 - 设计理论摘要 → docs/cogos-design-theory-summary.md
-- 阶段划分与时间预估 → ../checkpoint/checkpoint-1.md
-- 过程记录（活区）→ ../checkpoint/
+- agent-study 挂接点 → docs/agent-study-hooks.md
+- 复习过程与阶段预估 → checkpoint/archive/26-08-27-agent-study-review/
 
 ## 已收尾 · 通信层（08-07 ~ 08-24）
 

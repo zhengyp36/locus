@@ -42,5 +42,6 @@ Phone 抽象落地（agent 侧 API），真机验证全绿，通信层收口。
 - 概念体系 → docs/cogos-concept-system.md
 - 开发计划 → docs/cogos-plan.md（底层三件 → 子系统 → 整系统）
 - 理论摘要 → docs/cogos-design-theory-summary.md
+- agent-study 已确认结论复习 → 挂接点固化 docs/agent-study-hooks.md；元控制二分（资源级/认知级）；缺口进 ISSUES
 
-→ 过程：checkpoint/archive/26-08-26/
+→ 过程：checkpoint/archive/26-08-26/ + checkpoint/archive/26-08-27-agent-study-review/
