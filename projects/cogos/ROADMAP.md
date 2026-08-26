@@ -2,12 +2,12 @@
 
 ## 当前阶段
 
-通信层已真机调通，agent 账号链路（term 架子 / 失效刷新 / id 前缀 / AccountRef 解析 + 发 human）已完成。当前进度见 current.md 与 CHANGELOG.md。
+通信层已收口。智能系统设计已收敛（概念体系 + 开发计划），进入实施阶段。
 
-## 待 YZ 讨论的候选方向（优先级降序）
+## 方向（按 `docs/cogos-plan.md`）
 
-1. 可靠性 / 可观测性
-2. 持久化
-3. 认知树 + InferNode
-4. agent 运行时
-5. 权限
+1. 底层基础三件：LLM-Service / CogUnit+CogExecutor / 认知树
+2. 子系统设计：意识 / 记忆 / 感知 / 意图
+3. 整系统搭建：agent 注册、节律、多 agent
+
+实施细节与验证方式在过程中定，见 plan 待定项。

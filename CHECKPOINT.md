@@ -25,10 +25,21 @@
 
 固化快照 `projects/<工程>/checkpoint/`(定期 commit 进 locus git)。
 
+## 过程 / 记忆边界
+
+- 过程中只写 `../checkpoint/`（/undo 不回退），不写 locus 记忆文件（current.md 等，会被 /undo 回退）。
+- 会话收口（结束 / 不 /undo 转新会话）时，再整理 checkpoint 更新记忆文件。
+
+## 新会话恢复协议
+
+- 读记忆：active.md → 当前工程 current.md。
+- 读 checkpoint：`../checkpoint/status.md` + 相关 `checkpoint-<N>.md`。
+- 两者合并恢复上下文，不要求全量重读 entries/。
+
 ## 触发
 
-- 仅 YZ 明确指示时写(如"记录 checkpoint""整理草稿")。不主动写。
-- YZ 说"读 checkpoint/status.md"时,读之恢复上下文。
+- 每做完一件事，自行更新 checkpoint（status.md + 新增/追加 checkpoint-<N>.md），不等 YZ 指示。
+- YZ 说"读 checkpoint/status.md"时，读之恢复上下文。
 
 ## 写作结构
 

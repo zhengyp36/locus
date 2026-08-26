@@ -4,7 +4,7 @@ agent 设计的学习/理论工程（知识库本体）。locus 存索引与工�
 
 ## 当前状态
 
-索引骨架已建（README + index）。工程印象待「转向 agent-study 加载」时生成，暂空。
+理论摘要已整理并固化到 cogos 本体：`../cogos/docs/cogos-design-theory-summary.md`。agent-study 结论服务 cogos 设计，需要时按 README 索引查本体。
 
 ## 锚点
 
