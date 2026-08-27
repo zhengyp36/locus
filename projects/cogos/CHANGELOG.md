@@ -45,3 +45,13 @@ Phone 抽象落地（agent 侧 API），真机验证全绿，通信层收口。
 - agent-study 已确认结论复习 → 挂接点固化 docs/agent-study-hooks.md；元控制二分（资源级/认知级）；缺口进 ISSUES
 
 → 过程：checkpoint/archive/26-08-26/ + checkpoint/archive/26-08-27-agent-study-review/
+
+## 阶段 5 · 底层三件实施前预研（上网 + 视觉，08-27 ~ 08-28）
+
+底层三件（lm-service 起步）讨论前，先跑了两项分支预研，均已归档，回到底层三件。无代码变更。
+
+- 上网 → docs/webtool-design.md（工具子系统 = 身体，阶段二实施；阶段 1 只打地基）
+- 视觉 → docs/vision-system-design.md（感知子系统预研，后置实施；阶段 1 只留认知树 schema 钩子）
+- LLM-Service 接口/model 抽象 + 认知树 schema 预留感知事件结构 → 已挂进 docs/cogos-plan.md
+
+→ 过程：locus 活文档 checkpoint-11~14 + checkpoint/archive/26-08-27-web-search-fetch/

@@ -19,7 +19,7 @@
 活文档 `../checkpoint/`:
 
 - `status.md` — 当前状态入口,新会话只读它 + `codebase.md`
-- `codebase.md` — 代码认知基线,append 式累积
+- `codebase.md` — 代码认知基线（当前认知快照，就地改）
 - `checkpoint-<N>.md` — 每步过程记录,N 递增
 - `archive/` — 归档历史
 
@@ -55,9 +55,9 @@
 
 - 凝练可恢复,锚点优先,细节靠锚点重 `read`/`grep` 找回,不搬运原文。
 - 代码/路径/变量/文件名用英文;讨论结论可中文。
-- `codebase.md` 只记"对代码的新认知",append 式,只增不改旧结论。
+- `codebase.md` 记"对代码的当前认知"，就地改：认知变了就修正、去掉过时/被推翻的旧结论、不重复；演化过程归 checkpoint-N.md/archive，codebase 不做审计。
 
 ## 固化节奏
 
 - checkpoint 常驻工位目录,不随重启丢失。每个里程碑收口后,可把关键结论固化进 `projects/<工程>/checkpoint/` 并 commit(可选,便于跨工位共享)。
-- 活文档(`../checkpoint/`)是唯一权威;git 内固化快照只增不改,单向覆盖(codebase.md 以活文档版为准)。
+- 活文档(`../checkpoint/`)是唯一权威;git 内固化快照由活文档版单向覆盖(git 历史即审计,快照无需 append)。
