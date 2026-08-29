@@ -45,3 +45,13 @@ Phone 抽象落地（agent 侧 API），真机验证全绿，通信层收口。
 - agent-study 已确认结论复习 → 挂接点固化 docs/agent-study-hooks.md；元控制二分（资源级/认知级）；缺口进 ISSUES
 
 → 过程：checkpoint/archive/26-08-26/ + checkpoint/archive/26-08-27-agent-study-review/
+
+## 阶段 5 · 底层三件设计收敛 + 进入并行实施（08-27 ~ 08-29）
+
+lm-service 最小版设计收敛为 v1，cog-runtime 雏形已出，进入「工位 B 实施 lm-service / 工位 A 讨论 cog-runtime」并行。
+
+- lm-service 设计 → docs/design-lm-service-min.md（LmClient 冻结契约 / category 六类 / 三文件分离 / router 模态>tier / 调试记录）
+- cog-runtime 雏形 → 活文档 design-cog-runtime.md（继续讨论）
+- 任务清单 → tasks/（task-1 lm-service 工位 B + task-2 cog-runtime 工位 A）
+
+→ 过程：checkpoint/archive/26-08-29-impl-design/
