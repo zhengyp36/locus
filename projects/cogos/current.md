@@ -22,9 +22,12 @@
 ## 当前：底层三件实施（08-29 起）
 
 - 任务1（工位 B）：lm-service 实施 ✅ 完成（08-30）
+- 任务3（工位 B）：lm-service 遗留三项 ✅ 完成（08-30）
 - 任务2（工位 A）：cog-runtime 设计讨论 → 活文档 `../checkpoint/design-cog-runtime.md`
 
 lm-service 最小版（`docs/design-lm-service-min.md`）已实现并验证：mock 51 passed + 全量 pytest 719 passed 无回归 + 真实验证全绿（deepseek 文本/401/视觉 judge）。关键决策（YZ 拍板）：tier 改名 basic/advanced（视觉模型归 basic）；thinking 默认关闭（cogos 内部不用厂商 thinking，仅留参数对比）。冻结契约：LmClient.chat → 归一响应 + LmServiceError(category)。过程归档 `checkpoint/archive/26-08-30-lm-service-impl/`。
+
+task-3 遗留三项（① internal_key 自带 base_url ② tool call 内部化 ③ content 归一 content[]）完成：`chat` 加 `tools` 入参、响应加 `tool_calls` 出参（`[{id, name, args}]`）、content 变 list；mock 65 + 全量 733 passed 无回归 + deepseek 真实验证 tool call 全绿（同构 openai、arguments 真实 parse、strict 忽略不补）。契约形状不变，仅扩展字段。过程 `work/B/checkpoint/`。
 
 ## 锚点
 

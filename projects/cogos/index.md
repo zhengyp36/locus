@@ -4,9 +4,9 @@
 
 ## 当前 · 底层三件实施（08-29 起）
 
-- 任务清单 → tasks/task-1-lm-service.md（✅ 完成）+ task-2-cog-runtime.md（工位 A 讨论中）
+- 任务清单 → tasks/task-1-lm-service.md（✅ 完成）+ task-3-lm-service-fixes.md（✅ 完成）+ task-2-cog-runtime.md（工位 A 讨论中）
 - lm-service 规格 → docs/design-lm-service-min.md
-- lm-service 实施过程归档 → checkpoint/archive/26-08-30-lm-service-impl/
+- lm-service 实施过程归档 → checkpoint/archive/26-08-30-lm-service-impl/（task-1）+ work/B/checkpoint/（task-3）
 - lm-service 设计过程归档 → checkpoint/archive/26-08-29-impl-design/
 - 开发计划 → docs/cogos-plan.md
 

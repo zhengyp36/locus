@@ -25,6 +25,7 @@
 
 ## 已解决
 
+- lm-service 三项遗留（internal_key 自带 base_url / tool call 内部化 / content 归一 content[]）→ **task-3 完成**（08-30，工位 B）：5 轮 mock 全绿 + 全量 733 passed + deepseek 真实验证全绿（tool call 同构 openai、arguments 真实 parse、strict 忽略不补）。过程 `work/B/checkpoint/`，任务 `tasks/task-3-lm-service-fixes.md`。
 - get_members 30s 超时 → **根因自阻塞**（checkpoint-27 坐实，非此前「串行排队」）：phone 侧 telecom `_reader` 单协程 `await` 回调里同步 get_members 等 ack，而 ack 须同一 reader 读回 → 自阻塞 30s。已用 2A 修复（checkpoint-28，`3976401`）：reader 回调改 `asyncio.create_task` 异步分发，ack 仍同步读。只做 2A、不做 skip_pull（接受 first-message+members 空时双拉）。真机验证已完成（真人进退群驱动 members_changed，30s 消失确认）。
 - Phone 是否主动拉全量成员 → 已实施（checkpoint-18）：`_ensure_group_session` members 空则拉 + `sync_groups()`（复用 daemon `list_real_groups`），`add_card` 成功分支自动 sync。
 - 未登记真人/机器人消息静默丢弃 → **设计选择**：provider 登记账号代表可见范围，未登记即不可见，不做降级处理（非 bug）。

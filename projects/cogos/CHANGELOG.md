@@ -67,3 +67,15 @@ task-1（工位 B）完成：lm-service 最小版全链路跑通，mock + 真实
 
 → 过程：checkpoint/archive/26-08-30-lm-service-impl/
 → 任务：tasks/task-1-lm-service.md
+
+## 阶段 7 · lm-service 遗留三项完成（08-30）
+
+task-3（工位 B）完成：lm-service 三项遗留补齐 + tool call 内部化真实验证全绿。
+
+- ① `LmClient` 删 base_url 参数（internal_key 自带地址，走环境变量/默认，上层只持句柄）
+- ② tool call 内部化：`chat` 加 `tools` 入参（组装厂商格式）+ 响应 `tool_calls` 归一 `[{id, name, args}]` + 调试记录落盘
+- ③ 输出 content 归一 `content[]`（消息数组，对称输入 material）
+- mock 65 passed + 全量 733 passed 无回归；deepseek 真实验证 tool call 全绿（同构 openai、arguments 真实 parse、strict 忽略不补）
+
+→ 过程：work/B/checkpoint/（工位 B checkpoint）
+→ 任务：tasks/task-3-lm-service-fixes.md
