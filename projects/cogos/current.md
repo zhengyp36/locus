@@ -19,12 +19,12 @@
 
 31 条已确认结论全过，保留项挂接进 cogos 模块，固化 `docs/agent-study-hooks.md`。关键新决策：元控制二分（资源级=机制层预装不可自长 / 认知级=策略层自长方法论）。两个设计缺口已归入 plan：过程元控制→阶段三整系统（认知级元认知）、诊断观察→每阶段都有诊断出口，完整事件流随阶段三。过程归档 `checkpoint/archive/26-08-27-agent-study-review/`。
 
-## 当前：并行实施（08-29 起）
+## 当前：底层三件实施（08-29 起）
 
-- 任务1（工位 B）：lm-service 实施 → `tasks/task-1-lm-service.md`，规格 `docs/design-lm-service-min.md`
+- 任务1（工位 B）：lm-service 实施 ✅ 完成（08-30）
 - 任务2（工位 A）：cog-runtime 设计讨论 → 活文档 `../checkpoint/design-cog-runtime.md`
 
-lm-service 最小版已收敛 v1（`docs/design-lm-service-min.md`）：LmClient 冻结契约（chat → 归一响应 + `LmServiceError(category)`）、category 六类字符串枚举（非错误码）、config/secrets/state 三文件分离、router 模态>tier、调试 jsonl + admin calls。过程归档 `checkpoint/archive/26-08-29-impl-design/`。
+lm-service 最小版（`docs/design-lm-service-min.md`）已实现并验证：mock 51 passed + 全量 pytest 719 passed 无回归 + 真实验证全绿（deepseek 文本/401/视觉 judge）。关键决策（YZ 拍板）：tier 改名 basic/advanced（视觉模型归 basic）；thinking 默认关闭（cogos 内部不用厂商 thinking，仅留参数对比）。冻结契约：LmClient.chat → 归一响应 + LmServiceError(category)。过程归档 `checkpoint/archive/26-08-30-lm-service-impl/`。
 
 ## 锚点
 

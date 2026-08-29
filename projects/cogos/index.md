@@ -2,10 +2,11 @@
 
 > 分层：当前阶段（首页）→ 已收尾（归档入口）。细节按需去 entries/ 翻，不逐条占首页。
 
-## 当前 · 并行实施（08-29 起）
+## 当前 · 底层三件实施（08-29 起）
 
-- 任务清单 → tasks/task-1-lm-service.md（工位 B 开发）+ task-2-cog-runtime.md（工位 A 讨论）
+- 任务清单 → tasks/task-1-lm-service.md（✅ 完成）+ task-2-cog-runtime.md（工位 A 讨论中）
 - lm-service 规格 → docs/design-lm-service-min.md
+- lm-service 实施过程归档 → checkpoint/archive/26-08-30-lm-service-impl/
 - lm-service 设计过程归档 → checkpoint/archive/26-08-29-impl-design/
 - 开发计划 → docs/cogos-plan.md
 

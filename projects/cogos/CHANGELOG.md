@@ -55,3 +55,15 @@ lm-service 最小版设计收敛为 v1，cog-runtime 雏形已出，进入「工
 - 任务清单 → tasks/（task-1 lm-service 工位 B + task-2 cog-runtime 工位 A）
 
 → 过程：checkpoint/archive/26-08-29-impl-design/
+
+## 阶段 6 · lm-service 实施完成（08-29 ~ 08-30）
+
+task-1（工位 B）完成：lm-service 最小版全链路跑通，mock + 真实验证全绿。
+
+- 包骨架 + yaml 三文件（config/secrets/state）+ admin CLI + router + handler + scheduler 主链路 + providers 归一 + 调试 jsonl + LmClient + lm_call CLI
+- tier 改名 basic/advanced（视觉模型归 basic，YZ 拍板）
+- thinking 默认关闭（cogos 内部不用厂商 thinking，仅保留参数对比，YZ 拍板）
+- mock 51 passed + 全量 pytest 719 passed 无回归；真实验证全绿（deepseek 文本/401/视觉 judge）
+
+→ 过程：checkpoint/archive/26-08-30-lm-service-impl/
+→ 任务：tasks/task-1-lm-service.md
