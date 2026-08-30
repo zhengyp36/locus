@@ -23,14 +23,14 @@
 
 - 任务1（工位 B）：lm-service 实施 ✅ 完成（08-30）
 - 任务3（工位 B）：lm-service 遗留三项 ✅ 完成（08-30）
-- 任务2（工位 A）：cog-runtime 设计 ✅ 收敛（`../checkpoint/design-cog-runtime-min.md` 已固化）
+- 任务2（工位 A）：cog-runtime 设计 ✅ 收敛（归档 `checkpoint/archive/26-08-30-cog-runtime-impl/design-cog-runtime-min.md`）
 - 任务4（工位 A）：cog-runtime 实施 ✅ 完成（08-30）
 
 lm-service 最小版（`docs/design-lm-service-min.md`）已实现并验证：mock 51 passed + 全量 pytest 719 passed 无回归 + 真实验证全绿（deepseek 文本/401/视觉 judge）。关键决策（YZ 拍板）：tier 改名 basic/advanced（视觉模型归 basic）；thinking 默认关闭（cogos 内部不用厂商 thinking，仅留参数对比）。冻结契约：LmClient.chat → 归一响应 + LmServiceError(category)。过程归档 `checkpoint/archive/26-08-30-lm-service-impl/`。
 
-task-3 遗留三项（① LmClient 不暴露 base_url，走环境变量 ② tool call 内部化 ③ content 归一 content[]）完成：`chat` 加 `tools` 入参、响应加 `tool_calls` 出参（`[{id, name, args}]`）、content 变 list；mock 65 + 全量 733 passed 无回归 + deepseek 真实验证 tool call 全绿（同构 openai、arguments 真实 parse、strict 忽略不补）。契约形状不变，仅扩展字段。过程 `work/B/checkpoint/`。
+task-3 遗留三项（① LmClient 不暴露 base_url，走环境变量 ② tool call 内部化 ③ content 归一 content[]）完成：`chat` 加 `tools` 入参、响应加 `tool_calls` 出参（`[{id, name, args}]`）、content 变 list；mock 65 + 全量 733 passed 无回归 + deepseek 真实验证 tool call 全绿（同构 openai、arguments 真实 parse、strict 忽略不补）。契约形状不变，仅扩展字段。过程 `checkpoint/archive/26-08-30-lm-service-fixes/`。
 
-task-4（cog-runtime 实施，工位 A）完成：类型 + CogUnit + CogRuntime/_advance 状态机 + 支路 A/B 闭环 + 并发 + 父子通知 + shutdown，测试 32 passed。真实测试暴露 lm-service 缺续轮消息归一→厂商转换，工位 A 直改补齐（`providers/base.py` `assemble_tool_messages`）；全量 777 passed 无回归 + 真实 deepseek 三路全绿（A 文本 / B 工具续轮 / E 401→auth）。遗留：告知值默认注入先不做。过程工位 A `checkpoint/checkpoint-3~5.md`。
+task-4（cog-runtime 实施，工位 A）完成：类型 + CogUnit + CogRuntime/_advance 状态机 + 支路 A/B 闭环 + 并发 + 父子通知 + shutdown，测试 32 passed。真实测试暴露 lm-service 缺续轮消息归一→厂商转换，工位 A 直改补齐（`providers/base.py` `assemble_tool_messages`）；全量 777 passed 无回归 + 真实 deepseek 三路全绿（A 文本 / B 工具续轮 / E 401→auth）。遗留：告知值默认注入先不做。过程 `checkpoint/archive/26-08-30-cog-runtime-impl/`。
 
 ## 锚点
 

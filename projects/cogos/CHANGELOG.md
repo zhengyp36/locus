@@ -77,5 +77,16 @@ task-3（工位 B）完成：lm-service 三项遗留补齐 + tool call 内部化
 - ③ 输出 content 归一 `content[]`（消息数组，对称输入 material）
 - mock 65 passed + 全量 733 passed 无回归；deepseek 真实验证 tool call 全绿（同构 openai、arguments 真实 parse、strict 忽略不补）
 
-→ 过程：work/B/checkpoint/（工位 B checkpoint）
+→ 过程：checkpoint/archive/26-08-30-lm-service-fixes/
 → 任务：tasks/task-3-lm-service-fixes.md
+
+## 阶段 8 · cog-runtime 实施完成（08-30）
+
+task-2（工位 A 设计收敛）+ task-4（工位 A 实施）完成：cog-runtime 最小版闭环。
+
+- CogRuntime/CogUnit/_advance 状态机 + 支路 A/B 闭环 + 并发 + 父子通知 + shutdown
+- 真实测试暴露 lm-service 缺续轮消息归一→厂商转换，工位 A 直改补齐（assemble_tool_messages）
+- 测试 32 passed（cog_runtime）+ 全量 777 passed 无回归 + 真实 deepseek 三路全绿
+
+→ 过程：checkpoint/archive/26-08-30-cog-runtime-impl/
+→ 任务：tasks/task-2-cog-runtime.md + tasks/task-4-cog-runtime-impl.md
