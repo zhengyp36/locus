@@ -90,3 +90,16 @@ task-2（工位 A 设计收敛）+ task-4（工位 A 实施）完成：cog-runti
 
 → 过程：checkpoint/archive/26-08-30-cog-runtime-impl/
 → 任务：tasks/task-2-cog-runtime.md + tasks/task-4-cog-runtime-impl.md
+
+## 阶段 9 · 认知图设计探索 + 封存（08-30 晚 ~ 09-01 凌晨）
+
+底层第三件从「认知树」转向「认知图」的设计探索，最终封存为预研、聊天机器人 MVP 暂停。无代码变更。
+
+- checkpoint-1~6：认知树结构/表达/环境同一性收敛
+- checkpoint-7：认知树→认知图转向（节点+类型化关系，路 A 单一原语多视图）
+- checkpoint-8~11：初态与好奇 / replace 纠错+场景+时间 / 接口方法论+四通道+情绪 / 图无决策
+- checkpoint-12：必要性质疑（上下文窗口本身就是记忆，图必要性在上下文局限）
+- checkpoint-13：图封存，转向 4K 聊天机器人 MVP（记忆文件组织 / 软预算+冗余 / 预算外包取舍自学）→ 暂停
+
+→ 归档：checkpoint/archive/26-09-01-cog-graph-sealed/（封存，后续再看）
+→ 状态：ISSUES「封存/暂停」

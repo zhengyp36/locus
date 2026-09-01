@@ -23,6 +23,15 @@
 - **注销是最终一致、非强保证**：离线设备靠 fail-open（云端不可达不主动失效、5 分钟重试）可无限期续命，最坏失效延迟 = 12h TTL + 重试窗口。与「号码唯一性=纪律非软件保证」同类折中，需 YZ 知悉。
 - **无 revoke 命令**（暂不实现，短期无失效必要）：`agent_registry.status` 目前只有 `"active"`，没有把 status 改为 inactive 的入口，失效机制真机端到端不可触发（只能 mock 单测）。
 
+## 封存 / 暂停
+
+### 认知图设计 + 4K 聊天机器人 MVP（08-30 晚 ~ 09-01 凌晨）
+
+- 认知图设计探索期（checkpoint-1 ~ 13）已封存为预研：底层原语=节点+类型化关系、四通道/图无决策/情绪还原等结论是「图长出来该长什么样」的预研，非必须实现。
+- 关键转折（checkpoint-12/13）：图必要性不在「抽象需要记忆」，而在上下文局限；方向改为「cu 跑起来后从痛点长出」。
+- 4K 聊天机器人 MVP 暂停（记忆用文件组织 / 软预算+冗余 / 预算外包取舍自学，结论已定稿，暂不实施）。
+- 归档：`checkpoint/archive/26-09-01-cog-graph-sealed/`（checkpoint-1~13 + handoff + status + interface-design-plan）。后续再看从 `handoff.md` 恢复。
+
 ## 已解决
 
 - lm-service 三项遗留（internal_key 自带 base_url / tool call 内部化 / content 归一 content[]）→ **task-3 完成**（08-30，工位 B）：5 轮 mock 全绿 + 全量 733 passed + deepseek 真实验证全绿（tool call 同构 openai、arguments 真实 parse、strict 忽略不补）。过程 `work/B/checkpoint/`，任务 `tasks/task-3-lm-service-fixes.md`。

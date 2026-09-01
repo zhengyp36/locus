@@ -1,6 +1,6 @@
 # cogos
 
-多 agent 运行时，飞书作通信总线。通信层已收口，智能系统设计已收敛，进入实施（底层三件）。
+多 agent 运行时，飞书作通信总线。通信层已收口，智能系统设计已收敛。底层三件：lm-service + cog-runtime 已完成，第三件「认知图」设计探索已封存为预研（09-01），4K 聊天机器人 MVP 暂停。
 
 ## 通信（已收口）
 
@@ -31,6 +31,10 @@ lm-service 最小版（`docs/design-lm-service-min.md`）已实现并验证：mo
 task-3 遗留三项（① LmClient 不暴露 base_url，走环境变量 ② tool call 内部化 ③ content 归一 content[]）完成：`chat` 加 `tools` 入参、响应加 `tool_calls` 出参（`[{id, name, args}]`）、content 变 list；mock 65 + 全量 733 passed 无回归 + deepseek 真实验证 tool call 全绿（同构 openai、arguments 真实 parse、strict 忽略不补）。契约形状不变，仅扩展字段。过程 `checkpoint/archive/26-08-30-lm-service-fixes/`。
 
 task-4（cog-runtime 实施，工位 A）完成：类型 + CogUnit + CogRuntime/_advance 状态机 + 支路 A/B 闭环 + 并发 + 父子通知 + shutdown，测试 32 passed。真实测试暴露 lm-service 缺续轮消息归一→厂商转换，工位 A 直改补齐（`providers/base.py` `assemble_tool_messages`）；全量 777 passed 无回归 + 真实 deepseek 三路全绿（A 文本 / B 工具续轮 / E 401→auth）。遗留：告知值默认注入先不做。过程 `checkpoint/archive/26-08-30-cog-runtime-impl/`。
+
+## 认知图设计探索 → 封存（08-30 晚 ~ 09-01 凌晨）
+
+第三件从「认知树」转向「认知图」的设计探索（checkpoint-1~13），最终封存为预研，聊天机器人 MVP 暂停。关键结论：图必要性在上下文局限而非「抽象需要记忆」；图非预先设计、从 cu 痛点长出；MVP 记忆用文件组织（profile replace + events append）、预算外包取舍自学。归档 `checkpoint/archive/26-09-01-cog-graph-sealed/`，状态 ISSUES「封存/暂停」。
 
 ## 锚点
 
