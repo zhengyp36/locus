@@ -46,7 +46,17 @@ CogUnit 加 `thinking` 透传（dict，默认 None=厂商 disabled）+ 工具续
 
 实施已推进 6 期（意识层第一期 + 工具层 read/write/edit/execute/search/fetch + scratch 草稿纸），read 已改行模式（offset/limit+行号），全量回归 856 passed 已推 master；当前 consciousness 仍是 oneshot 不续轮。代码认知 `entries/2026-09-02-cogos-agent-codebase.md`。
 
-下一步：模拟 kilo code 做实验检验理论，先落实能实现的部分，不一次实现全部。
+## terminal + timer 实施 + agent 接 cu 讨论（09-03）
+
+terminal + timer 已实施（`../cogos/docs/design-terminal-timer.md` 落地）：terminal.py（busy/idle + buffer/cursor + killpg 中止 + terminal_done 事件）、timer.py（绝对时间戳 + 单调度循环 + timers.json 恢复 + timer_fired 事件）、events.py（AgentEvent/render_event）、app.py（事件队列 + consumer + stop）、tools.py 提取 drain_stream。全量 883 passed 无回归。
+
+e2e（真实 deepseek）：exec 非阻塞验证通过（deliver 长命令 0.66s 未卡 4s）；但 LLM 只调 terminal_open 就停——暴露 agent 层 oneshot 无续轮，open 结果不回传。
+
+→ 引出 agent 接 cu 讨论（收敛）→ 已实施（09-03 晚，见下）。
+
+## agent 接 cu 实施（09-03，完成）
+
+oneshot 改 cu 多轮续轮：Consciousness 持 context + `asyncio.Lock`，`on_message` append user → `runtime.cu(tier="basic")` → `await cu.wait()`；`on_tool_call` 计数超限 interrupt + 调 registry；`on_done` 补 assistant + 兜底 send_msg（非 system 且未 send_msg）。runtime 加 `client` 注入 + `on_tool_call` 异常保护（原会悬挂）。全量 886 passed 无回归。真实 deepseek e2e：`sleep 3 && echo` 6.73s 走通 open→exec→observe→send_msg 完整闭环，terminal_done 事件回传成第二轮 user 消息。细节 `entries/2026-09-03-cogos-agent-cu-wired.md`。
 
 ## 锚点
 

@@ -113,3 +113,25 @@ CogUnit 支持 think 模式（对比用），真实验证 DeepSeek thinking 回�
 - 全量 862 passed 无回归；测试 +6（thinking 透传/默认、续轮 reasoning 回传、result 带 reasoning、转换层 2 例）
 
 → 细节：entries/2026-09-02-cogos-cogunit-thinking.md
+
+## 阶段 11 · terminal + timer 工具实施（09-03）
+
+模拟 kilo code「agent 被工具阻塞」，落地非阻塞工具 + 事件回执通路。
+
+- terminal.py（busy/idle + buffer/cursor + killpg 中止 + terminal_done 事件）+ timer.py（绝对时间戳 + 单调度循环 + timers.json 恢复 + timer_fired 事件）+ events.py（AgentEvent/render_event）+ app.py（事件队列 + consumer + stop）+ tools.py 提取 drain_stream
+- 全量 883 passed 无回归
+- e2e（真实 deepseek）：exec 非阻塞验证通过（deliver 长命令 0.66s 未卡 4s）；但暴露 agent 层 oneshot 无续轮（LLM 只调 terminal_open 就停），引出 agent 接 cu 讨论
+
+→ 设计：docs/design-terminal-timer.md
+→ 讨论：entries/2026-09-03-cogos-agent-cu-wiring.md（agent 接 cu 收敛，见阶段 12）
+
+## 阶段 12 · agent 接 cu 实施（09-03）
+
+oneshot 改 cog-runtime cu 多轮续轮，打通 terminal/timer 工具闭环。
+
+- Consciousness 持 context + asyncio.Lock，on_message append user → runtime.cu(tier="basic") → await cu.wait()；on_tool_call 计数超限 interrupt + 调 registry；on_done 补 assistant + 兜底 send_msg（非 system 且未 send_msg）
+- runtime 加 client 注入 + on_tool_call 异常保护（原会悬挂）
+- 全量 886 passed 无回归（+3 测试）
+- 真实 deepseek e2e：sleep 3 && echo 6.73s 走通 open→exec→observe→send_msg 完整闭环，terminal_done 事件回传成第二轮 user 消息
+
+→ 细节：entries/2026-09-03-cogos-agent-cu-wired.md

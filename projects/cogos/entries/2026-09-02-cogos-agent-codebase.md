@@ -32,6 +32,6 @@
 
 - 无取消/抢占；并发共享状态无锁；oneshot 结果不回填（v2 解决）；同 sender 乱序；无并发节流。
 
-## 下一步（模拟 kilo code 实验）
+## 下一步（terminal + timer 实施）
 
-- 先做能实现的部分；模拟 kilo code = 检验 v2 理论的实验（cu 循环/状态对象/脉络），不追求一次实现全部理论。
+- 方案已定稿 `../cogos/docs/design-terminal-timer.md`：terminal（busy/idle + 游标读 buffer + killpg 中止 + 完成事件）+ timer（绝对时间戳 + 单调度循环 + timers.json 持久化）+ 事件回执通路（queue + consumer）。阶段 A terminal 先行、B timer 随后。
