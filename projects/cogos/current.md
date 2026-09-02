@@ -40,7 +40,7 @@ task-4（cog-runtime 实施，工位 A）完成：类型 + CogUnit + CogRuntime/
 
 编程助手场景，从「记忆系统」转向「LLM 自管理上下文」。核心：cu 覆盖式回合、状态对象（context/intent/problem/gain）、意识=脉络（放下意识层/元层术语，改功能命名）、心智时间留元层不进对象层、来源标注分工、scratch 脚注引用与 cu 化展开、目录 ID 化、元层内省推/拉、张力驱动主题调度、模型分级。设计原文归档 `checkpoint/26-09-02-agent-cog-arch/`，凝练版 `entries/2026-09-02-cogos-agent-cog-arch.md`。
 
-实施已推进 3 期（意识层第一期 + 工具层两期 read/write/execute/search/fetch），全量回归 832 passed 已推 master；当前 consciousness 仍是 oneshot 不续轮。代码认知 `entries/2026-09-02-cogos-agent-codebase.md`。
+实施已推进 6 期（意识层第一期 + 工具层 read/write/edit/execute/search/fetch + scratch 草稿纸），read 已改行模式（offset/limit+行号），全量回归 856 passed 已推 master；当前 consciousness 仍是 oneshot 不续轮。代码认知 `entries/2026-09-02-cogos-agent-codebase.md`。
 
 下一步：模拟 kilo code 做实验检验理论，先落实能实现的部分，不一次实现全部。
 
