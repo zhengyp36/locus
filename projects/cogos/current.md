@@ -32,6 +32,10 @@ task-3 遗留三项（① LmClient 不暴露 base_url，走环境变量 ② tool
 
 task-4（cog-runtime 实施，工位 A）完成：类型 + CogUnit + CogRuntime/_advance 状态机 + 支路 A/B 闭环 + 并发 + 父子通知 + shutdown，测试 32 passed。真实测试暴露 lm-service 缺续轮消息归一→厂商转换，工位 A 直改补齐（`providers/base.py` `assemble_tool_messages`）；全量 777 passed 无回归 + 真实 deepseek 三路全绿（A 文本 / B 工具续轮 / E 401→auth）。遗留：告知值默认注入先不做。过程 `checkpoint/archive/26-08-30-cog-runtime-impl/`。
 
+## CogUnit thinking 模式（09-02）
+
+CogUnit 加 `thinking` 透传（dict，默认 None=厂商 disabled）+ 工具续轮回传 `reasoning` + `CuResultOk.reasoning` + `assemble_tool_messages` 转 `reasoning_content`，目的对比。真实验证：DeepSeek **不校验** reasoning_content 回传（漏传/截断均 200，flash/pro 一致），回传是质量导向非硬约束，官方「不传 400」是威慑性描述。遗留：plain assistant 的 reasoning 未映射（跨 cu 多轮才需要，暂不改）。细节 `entries/2026-09-02-cogos-cogunit-thinking.md`。
+
 ## 认知图设计探索 → 封存（08-30 晚 ~ 09-01 凌晨）
 
 第三件从「认知树」转向「认知图」的设计探索（checkpoint-1~13），最终封存为预研，聊天机器人 MVP 暂停。关键结论：图必要性在上下文局限而非「抽象需要记忆」；图非预先设计、从 cu 痛点长出；MVP 记忆用文件组织（profile replace + events append）、预算外包取舍自学。归档 `checkpoint/archive/26-09-01-cog-graph-sealed/`，状态 ISSUES「封存/暂停」。

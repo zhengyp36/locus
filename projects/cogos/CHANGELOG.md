@@ -103,3 +103,13 @@ task-2（工位 A 设计收敛）+ task-4（工位 A 实施）完成：cog-runti
 
 → 归档：checkpoint/archive/26-09-01-cog-graph-sealed/（封存，后续再看）
 → 状态：ISSUES「封存/暂停」
+
+## 阶段 10 · CogUnit thinking 模式 + DeepSeek 行为验证（09-02）
+
+CogUnit 支持 think 模式（对比用），真实验证 DeepSeek thinking 回传行为。
+
+- `thinking` 参数透传（dict，默认 None=disabled）+ 工具续轮回传 reasoning + `CuResultOk.reasoning` + `assemble_tool_messages` 转 `reasoning_content`
+- 真实验证：DeepSeek 不校验 reasoning_content 回传（漏传/截断均 200，flash/pro 一致）；回传是质量导向非硬约束，官方「不传 400」是威慑性描述
+- 全量 862 passed 无回归；测试 +6（thinking 透传/默认、续轮 reasoning 回传、result 带 reasoning、转换层 2 例）
+
+→ 细节：entries/2026-09-02-cogos-cogunit-thinking.md
