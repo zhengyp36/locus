@@ -36,6 +36,14 @@ task-4（cog-runtime 实施，工位 A）完成：类型 + CogUnit + CogRuntime/
 
 第三件从「认知树」转向「认知图」的设计探索（checkpoint-1~13），最终封存为预研，聊天机器人 MVP 暂停。关键结论：图必要性在上下文局限而非「抽象需要记忆」；图非预先设计、从 cu 痛点长出；MVP 记忆用文件组织（profile replace + events append）、预算外包取舍自学。归档 `checkpoint/archive/26-09-01-cog-graph-sealed/`，状态 ISSUES「封存/暂停」。
 
+## agent 认知架构 + 实施（09-01 ~ 09-02，讨论收敛 + 概念澄清）
+
+编程助手场景，从「记忆系统」转向「LLM 自管理上下文」。核心：cu 覆盖式回合、状态对象（context/intent/problem/gain）、意识=脉络（放下意识层/元层术语，改功能命名）、心智时间留元层不进对象层、来源标注分工、scratch 脚注引用与 cu 化展开、目录 ID 化、元层内省推/拉、张力驱动主题调度、模型分级。设计原文归档 `checkpoint/26-09-02-agent-cog-arch/`，凝练版 `entries/2026-09-02-cogos-agent-cog-arch.md`。
+
+实施已推进 3 期（意识层第一期 + 工具层两期 read/write/execute/search/fetch），全量回归 832 passed 已推 master；当前 consciousness 仍是 oneshot 不续轮。代码认知 `entries/2026-09-02-cogos-agent-codebase.md`。
+
+下一步：模拟 kilo code 做实验检验理论，先落实能实现的部分，不一次实现全部。
+
 ## 锚点
 
 - 约定 / 关键文件 / 设计决策: README.md

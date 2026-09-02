@@ -2,7 +2,14 @@
 
 > 分层：当前阶段（首页）→ 已收尾（归档入口）。细节按需去 entries/ 翻，不逐条占首页。
 
-## 当前 · 底层三件实施（08-29 起）
+## 当前 · agent 认知架构（09-01 起）
+
+- 设计凝练 → entries/2026-09-02-cogos-agent-cog-arch.md
+- 设计原文归档 → checkpoint/26-09-02-agent-cog-arch/agent-prototype-design-v2.md
+- 代码认知 + 实施状态 → entries/2026-09-02-cogos-agent-codebase.md
+- 下一步：模拟 kilo code 实验，先落实能实现的部分
+
+## 已收尾 · 底层三件实施（08-29 ~ 08-30）
 
 - 任务清单 → tasks/task-1-lm-service.md（✅ 完成）+ task-3-lm-service-fixes.md（✅ 完成）+ task-2-cog-runtime.md（✅ 设计收敛）+ task-4-cog-runtime-impl.md（✅ 完成）
 - lm-service 规格 → docs/design-lm-service-min.md
