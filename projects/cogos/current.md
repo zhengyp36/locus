@@ -77,7 +77,11 @@ img-tool 并发控制已收敛（09-03 四轮）：短命子进程 + flock 计�
 
 细节 `entries/2026-09-03-cogos-cogfunc-paradigm.md`。
 
-→ **下一步（新会话）**：以视觉为例实现四层 lm-service → cog-unit → cog-func → cog-actor，交接 `checkpoint/26-09-03-cogfunc-paradigm/handoff.md`。
+## img-tool 实现（09-03 续，四层第一步落地）
+
+img-tool 原语已实现（`../cogos/cogos/img_tool/` core/cli/stub + tests/img_tool 29 测试），全量 915 passed 无回归（基线 886），四项验收全过。关键：flock 计数信号量抢槽、能力探测（MemAvailable×0.6 每次读）、extract 写 `--out` 文件、stub tempfile 建/读/清。代码认知在 `/home/zhengyp/work/A/checkpoint/codebase.md`（已加 img_tool 段）。跑测试需 python3.11。
+
+→ **下一步**：实现 cog-func（look_at）= 看图契约 prompt + 缓存句柄 + 复用主 cu 循环，接 img-tool 两个原语。交接 `checkpoint/26-09-03-imgtool-impl/handoff.md`。
 
 ## 锚点
 
