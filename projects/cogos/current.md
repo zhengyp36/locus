@@ -58,6 +58,27 @@ e2e（真实 deepseek）：exec 非阻塞验证通过（deliver 长命令 0.66s 
 
 oneshot 改 cu 多轮续轮：Consciousness 持 context + `asyncio.Lock`，`on_message` append user → `runtime.cu(tier="basic")` → `await cu.wait()`；`on_tool_call` 计数超限 interrupt + 调 registry；`on_done` 补 assistant + 兜底 send_msg（非 system 且未 send_msg）。runtime 加 `client` 注入 + `on_tool_call` 异常保护（原会悬挂）。全量 886 passed 无回归。真实 deepseek e2e：`sleep 3 && echo` 6.73s 走通 open→exec→observe→send_msg 完整闭环，terminal_done 事件回传成第二轮 user 消息。细节 `entries/2026-09-03-cogos-agent-cu-wired.md`。
 
+## 视觉方案收敛（09-03）
+
+视觉子系统方案讨论+实测收敛，目标=人眼看东西（全景背景 + 局部看清细节），省 token + 看清楚。否定预生成金字塔与放大，取图 = 原图 + range(crop 原生，凑近=缩 range) + scale(draft 降采样档，非放大倍数)。全细节不降采样，串行 + 能力探测超限即返回错误态由 LLM 第一人称转述，不降级。视觉子系统独立进程。实测：draft 70ms/22MB、crop 原生 285ms/67MB；**token 封顶 443（≥1000×750 不变）**，封顶原因=厂商内部 resize 到封顶尺寸切 patch，crop 局部=提高有效分辨率（印证永不放大）。已更新本体 `vision-system-design.md` §4/§6/§14。细节 `entries/2026-09-03-cogos-vision-scheme.md`。
+
+img-tool 并发控制已收敛（09-03 四轮）：短命子进程 + flock 计数信号量（N slot 抢任意空闲 + jitter 防惊群），N 可配置、N=1 退化互斥；控制落在 img-tool 自身，不放上层（多进程管不住）。细节 entry 末尾「并发控制」节 + 本体 §14。
+
+→ 分叉已化解（09-03 续）：视觉既非工具也非子系统，是 cog-func（img-tool 原语 + look_at 种子功能 + 生长功能）。见下节。
+
+## cog-func 范式讨论（09-03 续）
+
+从"视觉看似收敛但仍有疑虑"出发，换角度从三件套（LLM/cog-unit/cog-func）审视，发现缺 cog-func。讨论从"cog-func 是什么"一路推到范式层，三层结论：
+
+- **具体**：视觉非子系统 = img-tool 原语 + look_at 种子功能 + 生长功能；cog-func 分层 = 原语层（预枚举封闭）+ 功能层（组合开放，种子+生长）。
+- **成长**：经验绑定 cog-func（程序性记忆，调用即生效）不进认知树（陈述性记忆）；成长 = raw trace 攒批 → 量变总结 → 保底滚动替换；记录规则自长（只给保守种子）。
+- **范式**：函数封装"过程"→ cog-func 封装"理解"；正确性从精确过程→契约+约束+反馈；复用代码→复用理解；开发者从园丁→可调度协作资源+研究者。主线：主体性从"固定的我"→"流动的调度权"（人与机制等价）。
+- **命名（YZ 拍板）**：cog-actor（谁）/ cog-func（什么能力）/ cog-unit（什么动作）三层；agent = 对外的 cog-actor 实例，总结模块 = 内部 cog-actor；本质层 actor、呈现层 agent，主体性 = actor 在呈现层的投影。
+
+细节 `entries/2026-09-03-cogos-cogfunc-paradigm.md`。
+
+→ **下一步（新会话）**：以视觉为例实现四层 lm-service → cog-unit → cog-func → cog-actor，交接 `checkpoint/26-09-03-cogfunc-paradigm/handoff.md`。
+
 ## 锚点
 
 - 约定 / 关键文件 / 设计决策: README.md
