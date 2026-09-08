@@ -149,3 +149,20 @@ oneshot 改 cog-runtime cu 多轮续轮，打通 terminal/timer 工具闭环。
 → 细节：entries/2026-09-07-cogos-vision-find.md / -vision-thinking-attention.md / 2026-09-08-cogos-vision-rect-marker-context.md / -vision-image-fields.md
 → 本体：cogos/docs/design-vision-image-fields.md
 - 修订（09-08 同日续，YZ 拍板）：**取消「场」（观察场/比较场/展示集上限）** → 图的组织=**图块散落历史 + 活 K 轮（默认4、可配，`earliest_fig_turn` 单指针；K 改大不回生/改小即生效；compile 只编当前轮、历史固定只删超龄图块）**；接口 **`load`** 取代 `load_view_field`/`load_compare_field`（**无单轮多张**，原供一次多图的 `load_many` 也删；单轮至多 1 图块：load/view 各产一新 FIG 图块，draw/move/delete 改其所属 FIG 标注并重渲染产出最新图块——同 FIG_ID、模型可见变化）；**删 `View.parent`**（`FIG` 纯函数，各 FIG 只靠 path 归属自己 Source）。本体与 locus 记忆已同步。
+
+## 阶段 14 · image_ctx 原始/定位/上下文/去重（P1~P4）落地 + 探针收口（09-08 晚 ~ 深夜）
+
+从「视觉图组织/引用规范」定稿到 P1~P4 全落码 + LLM/几何探针双收口，图管理工具链完成并与 img-tool 衔接。
+
+- **P1 原始层**：`cogos/image_ctx/{view,domain,render,tools}.py` + `tests/image_ctx/test_p1.py`（坐标换算/clamp/render 指纹/元注解）；全量 955 passed。
+- **P2 定位层**：anno 像素叠加小原型先行（程序+视觉双确认），render 自绘 annos + 原语 `draw/move/delete_anno/clear_annos` + `clear_fig_block/fig_meta`；全量 967 passed。
+- **职责边界定案（YZ）**：`image_ctx` 只管图对象状态，K 轮/compile/摘图块全归上下文管理器；设计 §10 原 window.py/compile.py 塞进 image_ctx 作废。
+- **P3 上下文**：`cogos/cog_ctx/`（`FigContext` compile/strip 纯原语 + `FigContextManager` step/k/live deque `next/advance` 老化）+ `tests/cog_ctx`。
+- **P4 去重**：Source 身份层（同 path 幂等/同窗口同 FIG_ID/跨 path 不合并）+ `test_p4.py`；全量 **992 passed**。
+- **坐标基准统一**：size 分母从短边改**各自维度（宽对宽、高对高）**，全图窗口 `s(1.000,1.000)`、`@窗口≡@全图` 逐位一致（旧÷短边在横向图宽稀释 56%）。
+- **探针收口**：P3 目的层 `taskA`（纯锚重建）/`taskB`（真实老化→图超龄被摘→纯锚无规则重定位）双过 delta 0；§138 换算精度 `probe138` 过（亚像素 0.56px、目标覆盖）。checklist 回勾 §0 行为 6 + 禁区 3 + 残留§138/§139。
+- **遗留**：坐标规则动态注入暂缓（静态前置）；`desc/` canonical 未落盘；超龄回收（Source.registry/cache 积压）未做；待实测 3 项未测。
+
+→ 细节：entries/2026-09-08-cogos-image-ctx-boundary.md（含 P1/P2/P3/P4 + 坐标统一 + 探针）
+→ 设计本体：cogos/docs/design-vision-image-fields.md + -p1-spec.md + -p3-spec.md + -checklist.md
+→ 最新交接：checkpoint/principle-exp/handoff-vision-image-fields-8.md（下一步=衍生推理档）

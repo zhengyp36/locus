@@ -120,6 +120,12 @@ img-tool 原语已实现（`../cogos/cogos/img_tool/` core/cli/stub + tests/img_
 - **最大变更=坐标体系**从「相对全图全局系」重做→**三套化**（动作`@窗口`/地图`@全图`/像素内部+尺寸），§5/§9-3 重写；其余设计不变。
 - **新建验收清单**：`cogos/docs/design-vision-image-fields-checklist.md`（分 P1~P4，行为 MUST HAVE + 禁区 MUST NOT，回指设计 §条款 + 可验证手段；自检=功能完整/是否偏离设计，禁区最易被顺手改回）。
 - 交接 `checkpoint/principle-exp/handoff-vision-image-fields-4.md`：设计定稿协调一致、未实现；下一步落 `cogos/image_ctx` 原始层（P1 add_src/load/view/render，用 windows.png 验证）。
+- **P1 实现规格 + 两项拍板（同晚续）**：规格 `cogos/docs/design-vision-image-fields-p1-spec.md`（坐标换算`@窗口`→`@全图`/越界clamp/render指纹`(path,window,annos)`/add_src·load·view·render 签名输出形状；只写规格未落码。subagent 检视过，修掉指纹对 list[list]/clamp退化0宽两个高危）。YZ 拍板：① `load` 产新 FIG=全图普通 FIG、按 `(path,全图窗)` 去重首次建再次复用；② `@窗口` size 基准=**方案 A**（center+size 均分轴 over 参考框、`1,1`=整盒、不取短边倍数，单基准）。
+- **P1 落码完成（09-08 晚）**：`cogos/image_ctx/{view,domain,render,tools}.py` 落地 + `tests/image_ctx`（18 test 全过），P1 checklist 逐条勾（detail=original 按 §7-3 归 P2+），全量 pytest 955 过、无禁区 API。windows.png 探针（1357×764）：`@窗口≡@全图` center 精确、全图主动降到 800×450、越界只取有效区不补边。细节 `entries/2026-09-08-cogos-image-ctx-boundary.md`。
+- **职责边界定案（YZ，勿越界）**：`image_ctx` **只管图对象状态**，**不管上下文/K 轮/compile**（earliest_fig_turn/图块散落/K 轮/薄状态行/摘超龄图块全归**上下文管理器**）；`image_ctx` 只暴露 `load/view/draw/move/delete_anno`(产 Block)、`fig_meta(fig_id)`、`clear_fig_block(fig_id)`（上下文管理器摘图块时调用，触发清 annos）。设计 §10 原把 `window.py`/`compile.py` 塞进 image_ctx 的建议**作废**，归上下文管理器。
+- **P2 定位层落码完成（09-08 续，小原型先行）**：先 `anno_proto.py` 验证 anno 像素叠加正确性（程序断言+视觉双确认，十字压中 windows.png「工具(T)」无问题）；随后 render 改自绘 annos、新原语 `draw/move/delete_anno/clear_annos`+越界 clamp+markdown 高亮+`clear_fig_block/fig_meta`。测试 `tests/image_ctx/test_p2.py`（12 项）+ 全量 pytest **967 passed**，P2 checklist 全勾。细节 `entries/2026-09-08-cogos-image-ctx-boundary.md`。**已交接** `checkpoint/principle-exp/handoff-vision-image-fields-6.md`（P1+P2 落码 + 职责边界定案，下一步 P3 上下文编译层归上下文管理器）。
+- **P3 上下文 + P4 去重落码（09-08 深夜，handoff-7）**：`cogos/cog_ctx/`（`FigContext`=compile/strip 纯原语、`FigContextManager`=step/k/live deque 老化 `next/advance`）+ `tests/cog_ctx`；P4 Source 去重 `test_p4.py`。全量 pytest **992 passed**。
+- **坐标基准统一 + P3 目的层探针（09-08 深夜收口，handoff-8）**：① 坐标 size 分母从短边改**各自维度（宽对宽、高对高）**，全图窗口 `s(1.000,1.000)`、`@窗口≡@全图` 逐位一致（旧÷短边横向图宽稀释 56%）；② P3 探针双过：`taskA.py`（纯文字锚重建窗口）+ `taskB.py`（真实老化→图超龄被摘→纯锚无规则重定位）回放 delta 全 0——锚**自含**；③ §138 换算精度 `probe138.py` 过（亚像素 0.56px、目标覆盖）。checklist 回勾 §0 行为 6 项 + 禁区 3 项 + §138/§139。**下一步=衍生推理档**（用锚做新相对窗口，检验坐标教学必要性），待 YZ 开题。
 
 ## 锚点
 

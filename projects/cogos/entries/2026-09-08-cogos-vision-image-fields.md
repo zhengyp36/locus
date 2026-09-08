@@ -62,10 +62,15 @@ delete_anno(fig_ref, anno_id) -> 消息块
 
 ## 验证/下一步
 - 验收清单：`cogos/docs/design-vision-image-fields-checklist.md`（09-08 晚新建；分 P1~P4，每组【行为 MUST HAVE + 禁区 MUST NOT】+ 回指设计 §条款 + 可验证手段；自检两问=功能完整 / 是否偏离设计）。
+- **P1 实现规格**：`cogos/docs/design-vision-image-fields-p1-spec.md`（09-08 晚写；坐标换算@窗口→@全图 / 越界clamp / render指纹(path,window,annos) / add_src·load·view·render 签名+输出形状；只写规格未落码）。
 - 用 windows.png 复现 vf6 能力验证原始层（add_src/load/view/render）。
 - A/B 验证"元信息短+固定序"是否真降干扰。
 - 实现落位：`cogos/image_ctx/{domain.py(域+Source图根), view.py, window.py(图块K轮寿命/earliest_fig_turn), compile.py, render.py, tools.py}`（独立于 img_tool，后续再议融合）。
 - 后端：lm_service server（会话级）；跑 vf6：python3.11 vf6.py <msg> --scene windows.png --out DIR。
+
+## YZ 已拍板（09-08 晚）
+- **§7-1 `load` 产新 FIG**：全图=普通 FIG，按 `(path,全图窗口)` 去重——首次建、再次复用（恒同 src_fig）；与 P4「同 path 幂等」不冲突，"新"=首次不存在才建。load 与 view 对称，均走 dedup。
+- **§7-2 `@窗口` size 基准 = 方案 A**：center、size 均分轴 over 参考 FIG 窗口盒（`1,1`=整盒）；**不取短边倍数**（Y 认为短边随 view 变是移动基准、心智负担；A 单一基准、贴"0~1 覆盖该窗口"）。接受 `@窗口≡@全图` 仅对象级（size 数值不等，不碍正确性）。
 
 ## 论证脉络（下午轮）
 定稿于上午轮之后：① 实现应落 cogos 本体而非 vf6 → image_ctx 独立模块（不与 img_tool 融合，后续再议）→ ② 三个视角（协议/状态模型/编译）→ ③ 图说明 = 元注解 + 瞬态 note，管理数据不泄上下文 → ④ note 不进图的管理层（只在上下文）→ ⑤ `FIG:/ANNO:/PATH:` 命名，FIG 为 (path,view) 纯函数，全图/子图不区分 → ⑥ PATH 为必需输入通道（人让打开某路径图）→ ⑦ 需要 Source(图根) 作为单源管理者（图生了多少 FIG、去重挂靠点）→ ⑧ compile 无去重（模型可反复看图，图管理层不干预）→ ⑨ 去重仅身份层, 源图同 path 幂等 → ⑩ ANNO 图内作用域定稿（draw→move→delete，clamp+高亮）→ ⑪ 元信息降干扰（短+固定序，非视觉对齐；A/B 可测）→ ⑫ 文字自含（工具痕迹可抹）。

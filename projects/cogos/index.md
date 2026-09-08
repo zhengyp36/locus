@@ -8,7 +8,9 @@
 - 设计原文归档 → checkpoint/26-09-02-agent-cog-arch/agent-prototype-design-v2.md
 - 代码认知 + 实施状态 → entries/2026-09-02-cogos-agent-codebase.md
 - 视觉图组织/引用规范（域·FIG + 图块K轮寿命；FIG:/PATH:/ANNO:，定稿待实现）→ entries/2026-09-08-cogos-vision-image-fields.md；本体 `cogos/docs/design-vision-image-fields.md`
-- 下一步：模拟 kilo code 实验，先落实能实现的部分
+- image_ctx P1~P4 落码 + 职责边界定案（图模块不管 K 轮/compile，归上下文管理器）+ 坐标基准统一 + 探针收口（§138/§139）→ entries/2026-09-08-cogos-image-ctx-boundary.md
+- 探针：`/tmp/kilo/vision/p3probe/{taskA,taskB,probe138}.py`（P3 目的层 A/B + §138 换算精度，非仓库）
+- 下一步：衍生推理档（用锚做新相对窗口，检验坐标教学必要性）——待 YZ 开题
 
 ## 已收尾 · 底层三件实施（08-29 ~ 08-30）
 
