@@ -135,3 +135,17 @@ oneshot 改 cog-runtime cu 多轮续轮，打通 terminal/timer 工具闭环。
 - 真实 deepseek e2e：sleep 3 && echo 6.73s 走通 open→exec→observe→send_msg 完整闭环，terminal_done 事件回传成第二轮 user 消息
 
 → 细节：entries/2026-09-03-cogos-agent-cu-wired.md
+
+## 阶段 13 · 视觉图组织/引用规范定稿（09-06 ~ 09-08，principle-exp）
+
+从 vf6 镜筒实测收敛到"图如何落到上下文"的设计定稿（独立于 img_tool，落 cogos `image_ctx`，后续再议融合）。
+
+- 核心跃迁：**FIG ≜ (path, view)**，主图/子图边界对模型不存在（所有图都是"子图"，自足带全局尺寸/窗口）；引用 = tagged token `FIG:`/`PATH:`/`(FIG,ANNO)`（模型只抄不造、系统解引用；PATH 为必需输入通道）。
+- 新增 **Source(图根)** 身份层（单源 + 其 FIG 注册表），去重仅身份层（`FIG=(path,window)` 纯函数：同 path 幂等/同窗口同 FIG_ID）；**compile 无去重**（模型可反复看图，图管理层不干预）。
+- **ANNO 图内作用域定稿**：draw 创建→move/adjust→delete_anno；生命周期=所属 FIG 在窗口内(淘汰失效)；移出边界 clamp 到边界 + markdown 高亮提示、不报错；不入 desc。
+- 图说明 = 元注解(meta_annotation)+模型批注(compose_figure_text，note 瞬态)；批注回显**你的备注:**(第二人称)；元信息**短+固定序+分隔符统一、不做视觉对齐**；**文字必须自含**（工具痕迹可能被抹）。
+- 待实现：落后 cogos `image_ctx`（原始层 add_src/load_view_field/view/render 先做，用 windows.png 验证）；元信息 A/B 验证待测。
+
+→ 细节：entries/2026-09-07-cogos-vision-find.md / -vision-thinking-attention.md / 2026-09-08-cogos-vision-rect-marker-context.md / -vision-image-fields.md
+→ 本体：cogos/docs/design-vision-image-fields.md
+- 修订（09-08 同日续，YZ 拍板）：**取消「场」（观察场/比较场/展示集上限）** → 图的组织=**图块散落历史 + 活 K 轮（默认4、可配，`earliest_fig_turn` 单指针；K 改大不回生/改小即生效；compile 只编当前轮、历史固定只删超龄图块）**；接口 **`load`** 取代 `load_view_field`/`load_compare_field`（**无单轮多张**，原供一次多图的 `load_many` 也删；单轮至多 1 图块：load/view 各产一新 FIG 图块，draw/move/delete 改其所属 FIG 标注并重渲染产出最新图块——同 FIG_ID、模型可见变化）；**删 `View.parent`**（`FIG` 纯函数，各 FIG 只靠 path 归属自己 Source）。本体与 locus 记忆已同步。

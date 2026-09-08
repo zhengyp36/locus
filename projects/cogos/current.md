@@ -83,6 +83,44 @@ img-tool 原语已实现（`../cogos/cogos/img_tool/` core/cli/stub + tests/img_
 
 → **下一步**：实现 cog-func（look_at）= 看图契约 prompt + 缓存句柄 + 复用主 cu 循环，接 img-tool 两个原语。交接 `checkpoint/26-09-03-imgtool-impl/handoff.md`。
 
+## 聚焦-扫描 / foveation 预研（09-03 起，视觉方案之后的机制探索）
+
+视觉"工具 vs 子系统"分叉化解（cog-func）后，进一步探索"模型到底怎么看"的机制层。主线几轮（principle-exp 目录，非 cogos 仓库本体）：
+
+- 机制已收敛到**镜筒** `look(center, radius, focal)`（中心=注视/扫描、半径=视野可退可近、焦距=清晰度档）。网格/贴边/IoU/降采样档/判别锚决策层**全部作废**（是"把规划外包给程序 + 只用单方向凑近"产生的多余层）。
+- 关键立场：**模型管"怎么看"（规划），我们只管"能看多清"（哑原语）**；不写状态机/策略循环。之前"模型自报不可靠"是"没镜筒只能单遍看"的后果，非能力缺陷；重构为"注视=检验"（看的结果=内生反馈），落 cogos 功能成长。
+- 坚持每轮修正：网格≠隔离、蒸发≠挑错、凑近≠放大像素；**判据锚=目标可辨性，非像素档**（降采样划档方法论不成立）。
+- 当前正做**镜筒快速验证**（首次把"看"自主权交给模型，判据=能否自主走到 A）。
+
+最新交接：`/home/zhengyp/work/A/checkpoint/principle-exp/handoff-focus-scan-foveation-7.md`（第 8 轮：落地单一视野三层 + 图对象统一 + open 路径化 + view 参数化，整合一次性/REPL）。前置：`handoff-focus-scan-foveation-{2,3,4,5,6}.md`（6/7 轮逐步收敛 view 两参 + 全景常驻 + 轨迹累积）、`handoff-focus-scan.md` / `-foveation.md`、`result-downsample-tiers.md`。
+
+第 7 轮（handoff-6）：极简对话式，tool 收敛 view 两参，全景常驻 + 轨迹累积，一次运行一步 view。第 8 轮（handoff-7）：YZ 把"单一视野/驻留/对照"谈成可实现模型并落地——视野三层(驻留≤2/全景/中央凹 view 参数轨迹)、图对象统一(路径+属性, view 参数化不存图)、open 只 open 原图(用户给绝对路径, 同路径去重, 拒 view 产物目录)、view 产物图入 views/ 不作可 open 原图、模型可循环 view + json 剥离只存纯文字、P2 改 JPEG 降 base64 字节。后端 server 需新会话重启。”
+
+## 聚焦-扫描落地推进（09-06 ~ 09-07 本会话，principle-exp，`/tmp/kilo/vision/vf6.py`）
+
+镜筒从跑通到可对话式使用。核心：**定位=对话式观察**（人主导、agent 负责看说，不做自动化/收口）；**中性提示词**（只声明工具能做什么，不教策略，修正"全景唯一坐标基准"矛盾→默认坐标上下文）；本会话关键 = **image 坐标系**：`view{"image","center","radius"}`（坐标相对指定图、缺省=当前全景、可超[0,1]、出界停边界），**换算收归工具** `State.map_to_pano`，修掉模型手算子图→原图坐标的误差（手算偏(0.63,0.58)，工具算(0.593,0.515)≈GT A）。真实对话 2-3 步命中双矩形（≈GT A）。行为分化：空区"重复/微挪/收尾"各 1/3（偶发，根因=缺收口动作，与"过度收敛"同源，不无限重复）。机制层候选（同坐标重复 view≥N 次注入轻提示）与收口动作**观察阶段先不落**。细节 `entries/2026-09-07-cogos-vision-find.md`。
+
+## 读图精度：思考/注意力/模型/像素（09-07 晚，principle-exp 对照）
+
+`vf6.py` 读体温单 p062 做一组对照（无思考/有思考/提示词/不同模型/不同像素）测"读准靠什么"，收敛：**模型视觉能力 > 思考**（网页版强模型无思考近可用，deepseek 无思考乱读/打转——属谱系偏差，别当通则）；**思考=非单调增益器**（纠模糊也用错、会为自洽编造且不自知，提升幅度与模型强弱成反比）；**提示词**能逼诚实/不脑补，但不加推理深度、不补像素；**单次前向不可全信**，任何模型单点会错、需交叉验证兜底。deepseek thinking 无预算（思考链吃满 max_tokens→content 截断，`finish_reason=length` 可检测；"加大 token"是反方向）。vf6 已改造（删驻留、fovea 按源图分组、open 恢复上下文组图、修 P2 body 超限、`--no-thinking` 开关）。细节 `entries/2026-09-07-cogos-vision-thinking-attention.md`。**已交接新会话**：`checkpoint/principle-exp/handoff-read-precision-context.md`（含 vf6 上下文串行不分区→复读 bug、待办：上下文分区/动作状态区 + finish_reason 处理 + 交叉验证）。
+
+## GUI 点击坐标 + 矩形/十字标记 + 上下文管理（09-08 早）
+
+用 Xftp 截图 windows.png(1357×764) 测「agent 点击坐标精度」+ 给视觉工具加原语 + 深挖上下文管理。三次坐实「单次前向不可信」：工具(T) 真值≈[0.188,0.042]；模型给过 [0.188] 也 [0.55](错~490px)；thinking 反而把整图误读成"渐变背景"退回去猜(思考=非单调不可靠)；复读/parroting 连发 4 次相同 view+相同理由。
+
+- 工具原语(**已落地+接入 vf6**)：矩形视野 fovea + 中心十字(aim marker) `Viewer.view_box(center,size,step,shape,mark,mark_pt)`（size 相对短边、归一化[0,1]、只缩不放）；SYSTEM/map_to_pano/exec_action/save_trail 均已接。矩形对表格/UI 净收益(rect 框整行、circle 读不了)。原型 `vf_box_proto.py`。交接 `checkpoint/principle-exp/handoff-vf6-rect-marker-context.md`。
+- 上下文管理重设计(**定案未实现**)：图在上下文**出现一次**、LIVE 张常驻带图(全景1+最新视图1)、旧观察**降级文字**、contexts 只作动作轨迹+重看兜底。模型"知道图变了"靠 ① 当前新鲜图 ②文字状态 ③ 增量+十字(注视=检验)。复读根因=模型自己长文回喂 + 每轮同批静态图无增量 + 无收敛信号；根在上下文组织+反馈信号，非模型能力。
+- 遗留：落地上下文重设计(A/B 测工具(T) 复读/命中)；交叉验证+不确定出口并入；finish_reason=length。细节 `entries/2026-09-08-cogos-vision-rect-marker-context.md`。
+
+## 域 / 图(FIG) / 场设计 + 引用规范（09-08，下午轮定稿，待实现）
+
+「图如何落到上下文」定稿：**FIG ≜ (path, view)**，全图=窗口覆盖整体、主/子图边界对模型不存在；引用=tagged token `FIG:`/`PATH:`/`(FIG,ANNO)`，模型只抄不造、系统解引用（**PATH 为必需输入通道**，人让"打开某路径图"；FIG 兜住任意图含无路径子视图）。**源/域**：Source(图根)=域与图之间的身份层（单源+其 FIG 注册表 `window→FIG_ID`，去重/枚举挂靠点；`FIG=(path,window)` 纯函数：同 path 幂等（同 Source+同 src_fig）/同窗口同 FIG_ID）；域=图资源容器。**无场**（废弃观察场/比较场，YZ 拍板）：图的组织=**图块散落历史、活 K 轮**（默认4、可配），超龄仅摘图块、文字永续；`earliest_fig_turn` 单指针比较即可清；K 改大不回生、改小立即生效；**compile 只编当前轮**、历史固定只删超龄图块；**load 打开进历史（只开一张）**；**无 load_many**（单轮至多 1 图块：load/view 各产一新 FIG 图块，draw/move/delete 改所属 FIG 标注并重渲染产其最新图块（同 FIG_ID、模型可见变化）；K 轮窗口总量≈K 张，容量由 K 完全控制）。坐标系=**三套化**（动作`@窗口`相对参考FIG窗口/地图`@全图`信息性/像素内部+尺寸；模型只在`@窗口`动作不做换算，看全图=load/view全图⇒`@窗口`≡`@全图`），**越界 clamp=只取有效区**（方案1：clamp 到边界、不补边/平移，标注「原坐标→实际生效坐标（含实际窗口）」）。**像素一致性（已定）**：下发=**render 出的窗口位图**（img-tool extract 语义 crop+本机按封顶 max_dim 主动降采样），**非原图**；请求 **`detail=original`** 禁厂商二次 resize（防坐标偏/元注解 w×h 失真）；**元注解 w×h=实际下发位图**。承接 vision-system-design.md §14「精确给」+ 官方 detail=original。上下文=**文字永续(重载锚)+图块K轮寿命**（砍降级文字），**文字必须自含**（工具调用痕迹可能被抹→重载锚/窗口/坐标必须写进文字）；**compile 无去重**（模型可反复看图，图管理层不干预、不提示；去重仅身份层）。图说明=**元注解**(`meta_annotation` 从管理数据渲染)+模型批注(`compose_figure_text` 拼；note 瞬态、不进图/存储/desc)，批注回显用**你的备注:**(第二人称)；元信息**短+固定序+分隔符统一、不做视觉对齐**（机制=低可预测/短token，非视觉显著性；A/B 可测）。**ANNO 图内作用域定稿**：draw 创建(初始定位)→move/adjust(改位置+尺寸)→delete_anno；生命周期=所属 FIG 的图块在 K 轮窗口内(超龄失效清空、重载不带回)；move 移出所属 FIG 边界→clamp 到边界+markdown 高亮(`> ⚠️ **…**`)、不报错；不入 desc。**parent 已删**：FIG 纯函数下无需 `View.parent`（YZ 拍板），各 FIG 只靠 path 归属自己的 Source。接口：`load`/`view`/`draw`/`move`/`delete_anno`（无 load_many）。本体 `cogos/docs/design-vision-image-fields.md`（已含全部结论），细节 `entries/2026-09-08-cogos-vision-image-fields.md`。
+
+### 09-08 晚：坐标改三套化 + 建验收清单（设计定稿协调一致，尚未实现）
+- **最大变更=坐标体系**从「相对全图全局系」重做→**三套化**（动作`@窗口`/地图`@全图`/像素内部+尺寸），§5/§9-3 重写；其余设计不变。
+- **新建验收清单**：`cogos/docs/design-vision-image-fields-checklist.md`（分 P1~P4，行为 MUST HAVE + 禁区 MUST NOT，回指设计 §条款 + 可验证手段；自检=功能完整/是否偏离设计，禁区最易被顺手改回）。
+- 交接 `checkpoint/principle-exp/handoff-vision-image-fields-4.md`：设计定稿协调一致、未实现；下一步落 `cogos/image_ctx` 原始层（P1 add_src/load/view/render，用 windows.png 验证）。
+
 ## 锚点
 
 - 约定 / 关键文件 / 设计决策: README.md
