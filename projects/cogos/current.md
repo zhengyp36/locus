@@ -208,7 +208,7 @@ P0/L1 唯一剩项落地。实测全量 41s（task-6 已生效）；现状一次
 
 ## 锚点
 
-- 当前交接: ../checkpoint/handoff-ctx-seed.md
+- 当前交接: ../checkpoint/handoff-ctx-seed-recurrence.md
 - 约定 / 关键文件 / 设计决策: README.md
 - 阶段记录: CHANGELOG.md
 - 遗留问题: ISSUES.md · 方向: ROADMAP.md
