@@ -157,6 +157,8 @@ e2e 两轮均命中：coord_1 px(250.3,28.9)、coord_2 px(251.1,33.1) vs 真值 
 
 → **task-5（工位 B，已交接）**：回路省时两件——验收遇错即止 + phase 计时，`tasks/task-5-loop-verify-timing.md`；B 在 `work/B/cogos-s2`（s2 分支 worktree，A 已建好）开工。讨论中明确的其余时间项（分层验收、红→绿证据、候选项）留工位 A。
 
+→ **新遗留：工位隔离缺口**（editable 钉 A + `~/.cogos` 硬编码/服务单例）→ `ISSUES.md` + `entries/2026-09-11-cogos-workstation-isolation.md`；不阻塞 task-5，阻塞"同时真机跑/常驻"。
+
 ## 锚点
 
 - 约定 / 关键文件 / 设计决策: README.md

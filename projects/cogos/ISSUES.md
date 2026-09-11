@@ -31,6 +31,13 @@
 - 已定：先简单做（静态前置照旧），动态注入后面再考虑（YZ 已确认）。
 - 09-08 深夜更新：**任务 B 已实证**该硬约束（真实 `FigContextManager` 老化 → 图超龄被摘 → 纯锚无规则重定位 delta 0），即锚自含成立。故「无图则规则删」的可行性有据；但**坐标教学必要性仍未定**——那要靠"衍生推理档"（用锚做新相对窗口）检验，若彼时模型混淆才推动态注入。
 
+### 工位隔离缺口：`COGOS_HOME` + 服务单例 owner
+
+- **代码身份耦合**：`pip show cogos` editable 钉在 `work/A/cogos`（全局 `~/.local`，非 venv）→ 不在 B checkout 的 cwd 下 `import cogos` 会拿到 A 的代码（task-5 已靠 cwd 规避，属隐式契约）。
+- **运行状态耦合**：`~/.cogos` 路径硬编码（`feishu/config.py:10-12`、`lm_service/config.py:9`、`phone/term.py:394`、loop agent-dir 默认）且 feishu daemon/agent 为单例 → 多会话/多工位争用 work-dir、accounts、agent 绑定；与 S2/S3「work-dir 被切 `default-xxxx`」同源。
+- **不阻塞** task-5（mock 不需服务）；**阻塞**"同时真机跑"与"常驻"（服务需稳定 owner）。
+- 修法：引入 `COGOS_HOME`（每工位独立）+ 明确服务单例 owner；可当自驱回路 dogfood 靶子。细节 `entries/2026-09-11-cogos-workstation-isolation.md`。
+
 ## 封存 / 暂停
 
 ### 认知图设计 + 4K 聊天机器人 MVP（08-30 晚 ~ 09-01 凌晨）
