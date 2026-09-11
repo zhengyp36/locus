@@ -148,7 +148,7 @@ e2e 两轮均命中：coord_1 px(250.3,28.9)、coord_2 px(251.1,33.1) vs 真值 
 - **S0 状态面**：回路缺三格——机器可读议程 / 自触发 / agent 内自验证（L1→L2 门槛）；执行层齐，视觉库未接入 consciousness，记忆缺跨会话持久。
 - **S2 首跑完成（09-11）**：靶子=给 `AccountRef.ensure` 本地缺失→云端兜底补测（最小可验，不取候选 1）。壳 `cogos/agent/loop.py`（薄壳+一个洞：壳跑判据、模型不自证）在 `cogos-s2` 分支跑出 **verdict=done**（agent 真加了 `TestEnsureCloudFallback`，全量绿）。报告 `../checkpoint/s2-report.md`：产出 7 条"人在哪被需要" + 3 个真实缺陷（① 全量 pytest 的 `test_workdir_switch` 未隔离，会改真实 `~/.cogos/feishu` 配置并停 daemon；② phone 连接失败会清 `is_default` 持久化→静默失联；③ 壳 notify 失败被吞）。
 - **代码已提交（未 push）**：分支 `s2-selfdrive-loop`（`91ff8dc` 壳 + `c74f47e` 测试增量），spec 随分支入库。
-- **停点**：`../checkpoint/status.md`（新会话入口）+ `plan.md` + `state.md` + `s2-report.md`。下一步 **S3 前置修复（YZ 已认可方案）**：① `test_workdir_switch` 默认不跑；② `phone._connect_card` 失败不清 `is_default` + `init_phone` 补默认卡；③ `loop._notify` 失败重试+本地 outbox+标 `notify_failed`。三条做完再拆 **S3 触发**。
+- **停点**：`../checkpoint/status.md`（新会话入口）+ `plan.md` + `state.md` + `checkpoint-2.md`。S2 暴露的 3 缺陷已在 S3 前置修复（见下）。
 - 细节：entries/2026-09-11-cogos-selfdrive-pivot.md
 
 ### S3 触发完成（09-11 续）
@@ -158,6 +158,8 @@ e2e 两轮均命中：coord_1 px(250.3,28.9)、coord_2 px(251.1,33.1) vs 真值 
 → **task-5（工位 B，已交接）**：回路省时两件——验收遇错即止 + phase 计时，`tasks/task-5-loop-verify-timing.md`；B 在 `work/B/cogos-s2`（s2 分支 worktree，A 已建好）开工。讨论中明确的其余时间项（分层验收、红→绿证据、候选项）留工位 A。
 
 → **新遗留：工位隔离缺口**（editable 钉 A + `~/.cogos` 硬编码/服务单例）→ `ISSUES.md` + `entries/2026-09-11-cogos-workstation-isolation.md`；不阻塞 task-5，阻塞"同时真机跑/常驻"。
+
+→ **本轮讨论（自驱语义 + 时间分配）**：`../checkpoint/checkpoint-2.md`（自驱 = 议程更新函数 f / ΔA、三源外移 & S0–S4 意义、分水岭=议程空时能否自生；时间按信息增量分配、等待=阻塞问题、通知保人低频）。
 
 ## 锚点
 
