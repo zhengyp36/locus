@@ -146,8 +146,16 @@ e2e 两轮均命中：coord_1 px(250.3,28.9)、coord_2 px(251.1,33.1) vs 真值 
 - **行业评估**：定位已商品化（ScreenSpot-Pro ~88%、OSWorld-Verified 86%、人类基线 72%），未解在长程（OSWorld 2.0 20.6%），归因 planning+memory；验证是活跃区（VeriGUI/VSA/reward model），差异化在 harness 层。→ 视觉不追加投入，力气放回路。
 - **保命收编**：`/tmp/kilo` → `cogos/research/`（push `c3ad76f`）；旧活文档 87 文件归档 → `checkpoint/26-09-11-live-checkpoint/`（push `ace9c95`）；`../checkpoint` 清空重启（编号不续）。
 - **S0 状态面**：回路缺三格——机器可读议程 / 自触发 / agent 内自验证（L1→L2 门槛）；执行层齐，视觉库未接入 consciousness，记忆缺跨会话持久。
-- **停点**：`../checkpoint/status.md`（新会话入口）+ `plan.md`（计划）+ `state.md`（S0，待 YZ 验收）→ 下一步 S1 写最小回路 spec → S2 用 ISSUES 候选 1 手跑。
+- **S2 首跑完成（09-11）**：靶子=给 `AccountRef.ensure` 本地缺失→云端兜底补测（最小可验，不取候选 1）。壳 `cogos/agent/loop.py`（薄壳+一个洞：壳跑判据、模型不自证）在 `cogos-s2` 分支跑出 **verdict=done**（agent 真加了 `TestEnsureCloudFallback`，全量绿）。报告 `../checkpoint/s2-report.md`：产出 7 条"人在哪被需要" + 3 个真实缺陷（① 全量 pytest 的 `test_workdir_switch` 未隔离，会改真实 `~/.cogos/feishu` 配置并停 daemon；② phone 连接失败会清 `is_default` 持久化→静默失联；③ 壳 notify 失败被吞）。
+- **代码已提交（未 push）**：分支 `s2-selfdrive-loop`（`91ff8dc` 壳 + `c74f47e` 测试增量），spec 随分支入库。
+- **停点**：`../checkpoint/status.md`（新会话入口）+ `plan.md` + `state.md` + `s2-report.md`。下一步 **S3 前置修复（YZ 已认可方案）**：① `test_workdir_switch` 默认不跑；② `phone._connect_card` 失败不清 `is_default` + `init_phone` 补默认卡；③ `loop._notify` 失败重试+本地 outbox+标 `notify_failed`。三条做完再拆 **S3 触发**。
 - 细节：entries/2026-09-11-cogos-selfdrive-pivot.md
+
+### S3 触发完成（09-11 续）
+
+前置三修复（S2 缺陷）已实施：`test_workdir_switch` 加 `COGOS_SERVICE_TESTS` 默认跳过；phone 失败不再清 `is_default` + `init_phone` 补默认卡；`_notify` 重试 + 本地 outbox + 标 `notify_failed`。**S3 触发**改为"壳自动选条（`pick_next`，跳 done/needs_human/high-risk），无候选走 `no_work`"（spec `cogos/docs/design-selfdrive-loop-s3.md`）。真机三次跑同一项 `create_group-clear-error`（先放红测试）：① 验收空转也 done（教训）；② `model_asked`，查出 **work_dir 未透传给模型工具**（已修 `Agent(work_dir=)`+loop 透传）；③ 自动把 `create_group` 改用 `_client_for`，红转绿、done。全量 1018 passed；分支 `s2-selfdrive-loop` 已 push。新发现待讨论：**验收空转**（验收太弱→不改代码也 done）、`send_msg` 问/报不分。报告 `../checkpoint/s3-report.md`。细节 `entries/2026-09-11-cogos-s3-trigger.md`。
+
+→ **task-5（工位 B，已交接）**：回路省时两件——验收遇错即止 + phase 计时，`tasks/task-5-loop-verify-timing.md`；B 在 `work/B/cogos-s2`（s2 分支 worktree，A 已建好）开工。讨论中明确的其余时间项（分层验收、红→绿证据、候选项）留工位 A。
 
 ## 锚点
 
