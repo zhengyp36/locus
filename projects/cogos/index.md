@@ -5,9 +5,11 @@
 ## 当前 · 自驱回路（09-11 起，主线）
 
 - 转向 + 行业评估 + 保命收编 → entries/2026-09-11-cogos-selfdrive-pivot.md
-- 计划 + S0 状态面 → `../checkpoint/plan.md` / `state.md`（活文档，待 YZ 验收）
+- 计划 + S0 状态面 + 停点 → `../checkpoint/plan.md` / `state.md` / `status.md` / `checkpoint-3.md`（活文档）
 - 旧活文档归档 → checkpoint/26-09-11-live-checkpoint/
-- 下一步：S1 最小回路 spec → S2 用 ISSUES 候选 1 手跑
+- task-5 复核通过（验收遇错即止 + phase 计时）→ tasks/task-5-loop-verify-timing.md
+- task-6（测试提速）+ task-7（Kilo 常驻多通道 spike）已交工位 B → tasks/
+- 下一步（待 YZ 开题）：S4 判据源→agent 最小 demo（红→绿硬门），先选靶
 
 ## 当前 · agent 认知架构（09-01 起）
 
