@@ -156,6 +156,8 @@ e2e 两轮均命中：coord_1 px(250.3,28.9)、coord_2 px(251.1,33.1) vs 真值 
 前置三修复（S2 缺陷）已实施：`test_workdir_switch` 加 `COGOS_SERVICE_TESTS` 默认跳过；phone 失败不再清 `is_default` + `init_phone` 补默认卡；`_notify` 重试 + 本地 outbox + 标 `notify_failed`。**S3 触发**改为"壳自动选条（`pick_next`，跳 done/needs_human/high-risk），无候选走 `no_work`"（spec `cogos/docs/design-selfdrive-loop-s3.md`）。真机三次跑同一项 `create_group-clear-error`（先放红测试）：① 验收空转也 done（教训）；② `model_asked`，查出 **work_dir 未透传给模型工具**（已修 `Agent(work_dir=)`+loop 透传）；③ 自动把 `create_group` 改用 `_client_for`，红转绿、done。全量 1018 passed；分支 `s2-selfdrive-loop` 已 push。新发现待讨论：**验收空转**（验收太弱→不改代码也 done）、`send_msg` 问/报不分。报告 `../checkpoint/s3-report.md`。细节 `entries/2026-09-11-cogos-s3-trigger.md`。
 
 → **task-5（工位 B，已交接）**：回路省时两件——验收遇错即止 + phase 计时，`tasks/task-5-loop-verify-timing.md`；B 在 `work/B/cogos-s2`（s2 分支 worktree，A 已建好）开工。讨论中明确的其余时间项（分层验收、红→绿证据、候选项）留工位 A。
+→ **task-5 复核通过（09-11，A）**：验收遇错即止 + phase 计时落地，全量 1021 passed；B 未 commit，等 A 收尾。**task-5 的"计时"证明浪费主要在：pytest 每轮全量（~60s）+ 3 条慢测试**（lark 首次 import ~13–18s、monitor 两处漏 mock 各 5s）。
+→ **task-6（工位 B，已交接）**：测试套件提速——消除 lark 首次 import（mock `_build_handler`）+ 补 monitor 两处 sleep mock，A 实测约 28s 纯浪费；`tasks/task-6-pytest-speedup.md`；B 在 `work/B/cogos-s2` 同一 worktree 叠加开工（不 commit）。
 
 → **新遗留：工位隔离缺口**（editable 钉 A + `~/.cogos` 硬编码/服务单例）→ `ISSUES.md` + `entries/2026-09-11-cogos-workstation-isolation.md`；不阻塞 task-5，阻塞"同时真机跑/常驻"。
 
