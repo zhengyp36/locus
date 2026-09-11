@@ -166,6 +166,20 @@ e2e 两轮均命中：coord_1 px(250.3,28.9)、coord_2 px(251.1,33.1) vs 真值 
 
 → **回主线建议（09-11 晚）**：效率线收尾后回归 S4，建议第一阶 = **判据源→agent 最小 demo**，拿**红→绿**当硬门（同时治 S3 验收空转）。形态：只有标题的 issue → agent 先写会失败的红测试（停）→ 壳确认初始红 → 实现 → 红转绿 → 人只复核判据合理性；验收=①自产判据②判据合理。最小机制=验收分两相（判据相要求初始红/实现相红转绿）+ 初始非红→needs_human。先别做 L3/常驻/大重构。分工适合 A（B 忙 task-6/7）。待 YZ 开题/选靶。细节 `../checkpoint/checkpoint-3.md`。**分工模型调整**：探索型任务一个 owner 设计+实现同一人，另一工位末端复核，避免重复思考。
 
+### 判据源外移 + 真靶 dogfood（09-11 晚）
+
+S4 第一阶：议程项可标 `requires_criterion`，**判据（红测试）由 agent 写、机制留壳**，两相 baseline→criterion(红)→implement(绿)→done。落 `d417332`（已 push `s2-selfdrive-loop`）。
+
+真靶 dogfood（COGOS_HOME 切片，worktree `cogos-dogfood`）：运行 1 **零改动假 done**——flaky 验收（`test_observe_while_busy`）伪造判据 + `cu max_tokens=1000` 截断写文件（semantic）；修 harness（`30de9fd`）后运行 2 真 done。据此最小修改（`4cf0f31`，未 push）：**变更绑定守卫**（无变化红记 `spurious_red`、无变化不判 done→`no_change`，单相项顺带堵 S3 空转）+ **CuResultError 保留 message**。cogos-s2 全量 1028；dogfood 运行 3 真 done、全量 1040。细节 `entries/2026-09-11-cogos-criterion-dogfood.md`。
+
+→ 下一步候选/残留见 `../checkpoint/handoff-criterion-dogfood.md`，新会话入口 `../checkpoint/status.md`。
+
+### 自驱回路 P0 收尾 + 路线图（09-11 晚，本会话）
+
+收口（push `57c8aa9`：port max_tokens=8192 + flaky 修复）+ 机制硬化（push `b8a92d5`：相变验收复现→`unstable_acceptance`；cu 错误瞬时重试 + 连续停问 `repeated_cu_error`），`cogos-s2` 全量 1032。真机最小靶重跑 `verdict=done`、判据经 stub（16 failed）验证真实。路线图重写进 `ROADMAP.md`（自驱 L1→L4，回路 6 格 × 源 + P0–P3 + 两个结构性大跳）。判据复核点定型（spec §8，`62c400f`）。分层验收待设计（实测成本翻倍但可接受，暂缓）。细节 `entries/2026-09-11-cogos-selfdrive-p0.md`。
+
+→ 新会话入口 `../checkpoint/status.md`；下一步待 YZ 选（新真靶 / 分层验收设计 / 工位隔离 / task-7）。
+
 ## 锚点
 
 - 约定 / 关键文件 / 设计决策: README.md
