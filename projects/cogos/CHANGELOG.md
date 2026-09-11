@@ -207,3 +207,16 @@ oneshot 改 cog-runtime cu 多轮续轮，打通 terminal/timer 工具闭环。
 
 → 细节：entries/2026-09-11-cogos-selfdrive-pivot.md / -s3-trigger.md / -criterion-dogfood.md / -selfdrive-p0.md / -layered-acceptance.md
 → 交接：`../checkpoint/status.md` + `handoff-layered-acceptance.md`
+
+## 阶段 18 · 路线修正：上下文组织是自驱地基（09-12）
+
+从"回路是否为工程任务而设 / 纯思考型能否自驱"出发，修正路线重心：**自驱的地基是上下文组织，不是调度机制。**
+
+- **结论**：通用性 = 判据谱系（机器可判 ←→ 判断），非两种 agent；回路三缺口（机器二值判据 / 无线程半成品状态 / 单条一枪到底）；"该放放"由 agent 自己决定（调度判断），壳只当记账员+护栏。
+- **症结**：`consciousness.py` 意识上下文裸 append、从不重组 → 帧=日志 → agent 出不来自己 → 不能自评。**最深的结构跳 = append → 可重组**，在 L2/L3 上游；L3 开题前必铺。
+- **有损蒸馏**：帧=投影、存储=底片（也不无损）；蒸馏带出处指针；有损是预算机制，取舍=智能本身；自评 = "能对自己表示做取舍"这个 faculty。
+- **下一步（三刀，待 YZ）**：① 状态对象 + 冷启动重启，判据=冷启动重建（优先）② 线程单位 + parked/resume ③ 判据接口抽象（后置）。**不直接上 L2**（无地基=自动化非自驱）。
+- ROADMAP 已同步：上下文组织 支线→主干；6 格"验证"格改述为判据谱系轴。
+
+→ 细节：entries/2026-09-12-cogos-general-agent.md
+→ 交接：`../checkpoint/status.md`（已改道）
