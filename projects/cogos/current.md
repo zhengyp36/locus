@@ -160,7 +160,7 @@ e2e 两轮均命中：coord_1 px(250.3,28.9)、coord_2 px(251.1,33.1) vs 真值 
 → **task-6（工位 B，已交接）**：测试套件提速——消除 lark 首次 import（mock `_build_handler`）+ 补 monitor 两处 sleep mock，A 实测约 28s 纯浪费；`tasks/task-6-pytest-speedup.md`；B 在 `work/B/cogos-s2` 同一 worktree 叠加开工（不 commit）。
 → **task-7（工位 B，已交接，Kilo harness 支线）**：Kilo 常驻 + 事件唤醒 + 飞书/窗口双通道 spike。关键事实：Kilo 有 `@kilocode/sdk` server/client（`createKiloServer`/`session.prompt`）、插件 `event` 钩子收全部总线事件（含 `session.idle`/`pty.exited`）、`PluginInput.client` 可注入、飞书出站已有 MCP（`tool/feishu_server.py`）、入站复用 cogos feishu。B owner（设计+实现同一人），A 仅末端复核。`tasks/task-7-kilo-resident-multichannel.md`。**分工模型调整：探索型任务一个 owner 设计+实现，避免 A 想一遍 B 再想一遍。**
 
-→ **新遗留：工位隔离缺口**（editable 钉 A + `~/.cogos` 硬编码/服务单例）→ `ISSUES.md` + `entries/2026-09-11-cogos-workstation-isolation.md`；不阻塞 task-5，阻塞"同时真机跑/常驻"。
+→ **新遗留：工位隔离缺口** → `ISSUES.md` + `entries/2026-09-11-cogos-workstation-isolation.md`。**09-11 更正**：服务（lm-service/feishu）是设备级单例、所有 agent 共用、无 owner（设计非缺陷）；`COGOS_HOME` 仅 dev 用，非运行期需求。真正剩 = 代码身份（开发卫生）+ 防误起/防连错约定。
 
 → **本轮讨论（自驱语义 + 时间分配）**：`../checkpoint/checkpoint-2.md`（自驱 = 议程更新函数 f / ΔA、三源外移 & S0–S4 意义、分水岭=议程空时能否自生；时间按信息增量分配、等待=阻塞问题、通知保人低频）。
 
@@ -179,6 +179,14 @@ S4 第一阶：议程项可标 `requires_criterion`，**判据（红测试）由
 收口（push `57c8aa9`：port max_tokens=8192 + flaky 修复）+ 机制硬化（push `b8a92d5`：相变验收复现→`unstable_acceptance`；cu 错误瞬时重试 + 连续停问 `repeated_cu_error`），`cogos-s2` 全量 1032。真机最小靶重跑 `verdict=done`、判据经 stub（16 failed）验证真实。路线图重写进 `ROADMAP.md`（自驱 L1→L4，回路 6 格 × 源 + P0–P3 + 两个结构性大跳）。判据复核点定型（spec §8，`62c400f`）。分层验收待设计（实测成本翻倍但可接受，暂缓）。细节 `entries/2026-09-11-cogos-selfdrive-p0.md`。
 
 → 新会话入口 `../checkpoint/status.md`；下一步待 YZ 选（新真靶 / 分层验收设计 / 工位隔离 / task-7）。
+
+## 分层验收：设计 + 落码（09-11 晚，会话 #3）
+
+P0/L1 唯一剩项落地。实测全量 41s（task-6 已生效）；现状一次 run 三相各复跑 = 6 次全量 ≈ 246s，分层预期验收 → ~175s（省 ~30%）。spec `cogos-s2/docs/design-selfdrive-loop-s4-layered-acceptance.md`（YZ 认可两裁决点：diff 推导+agenda 可覆盖；全量恒在末步按需短路）。
+
+已落码 `cogos/agent/loop.py`：`acceptance` 增 `{changed_tests: true}` 步骤（机制解析为变更测试命令）；判据相 `only_target` 只跑变更测试、不付全量；实现相沿用**冻结 target** 防换测试；新增 `criterion_lost`/`target_missing`；判据相记红收紧为"只认 target 红"（替代 `changed_now`）。agenda opt-in，旧路径零影响。测试 +9，全量 **1061 passed / 1 skipped** 无回归。**真机 dogfood 验证通过（会话 #4）**：靶 `list-timers`（worktree `cogos-dogfood-layered`），`verdict=done`；criterion 相 `[1,null]` 5.58s **不付全量**、implement 相 `[0,0]` 105.43s（含全量）；总验收 393.5s→263.7s（省 ~33%），全量 6→4 次；判据真红（stash 生产改动 8 failed）。commit `9563fe4` 已 push `s2-selfdrive-loop`。细节 `entries/2026-09-11-cogos-layered-acceptance.md`，交接 `../checkpoint/status.md`。
+
+→ 下一步（待 YZ）：**L2 最小自触发**（自己醒来再跑一条 + 预算/暂停安全件）；P2 议程源外移安全件暂缓（不预造）。服务 owner 框架已废（设备级单例共用，见 ISSUES 更正）。
 
 ## 锚点
 

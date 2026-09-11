@@ -9,7 +9,9 @@
 - 旧活文档归档 → checkpoint/26-09-11-live-checkpoint/
 - task-5 复核通过（验收遇错即止 + phase 计时）→ tasks/task-5-loop-verify-timing.md
 - task-6（测试提速）+ task-7（Kilo 常驻多通道 spike）已交工位 B → tasks/
-- 下一步（待 YZ 开题）：S4 判据源→agent 最小 demo（红→绿硬门），先选靶
+- S4 判据源外移 + 分层验收（真机 dogfood 验证省 ~33%）→ entries/2026-09-11-cogos-layered-acceptance.md；停点 `../checkpoint/status.md`
+- 工位隔离更正：服务是设备级单例共用、无 owner；`COGOS_HOME` 仅 dev 用 → entries/2026-09-11-cogos-workstation-isolation.md
+- 下一步（待 YZ）：L2 最小自触发（自己醒来再跑一条 + 预算/暂停安全件）
 
 ## 当前 · agent 认知架构（09-01 起）
 

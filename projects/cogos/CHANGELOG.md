@@ -193,3 +193,17 @@ oneshot 改 cog-runtime cu 多轮续轮，打通 terminal/timer 工具闭环。
 
 → 细节：entries/2026-09-11-cogos-selfdrive-pivot.md
 → 交接：`../checkpoint/status.md` + `plan.md` + `state.md`（活文档）
+
+## 阶段 17 · 自驱回路第一阶（判据源外移）+ 分层验收（09-11）
+
+从"回路缺格"到 S4 真靶跑通 + 验收成本优化落码（工位 A/B 协作，探索型任务单 owner）。
+
+- **S1 回路 spec**（`design-selfdrive-loop-s1.md`）→ **S2 手工跑**（`verdict=done` + "人在哪被需要"7 条 + 3 缺陷）→ **S3 拆触发**（自动选条 `pick_next` + `no_work`，`s2-selfdrive-loop` 已 push）→ **S4 判据源外移**（红→绿两相硬门，`d417332`）。
+- **确定性/错误处理**：验收复现确认（`unstable_acceptance`）+ cu 错误瞬时重试/连续停问（`repeated_cu_error`）+ 变更绑定守卫（`spurious_red`/`no_change`）+ 判据复核点定型。
+- **dogfood 真靶两次**：COGOS_HOME 切片、`list_timers`（加能力类），均干净跑通；首跑修"零改动假 done"。
+- **分层验收（本阶段收尾）**：spec `design-selfdrive-loop-s4-layered-acceptance.md`；落码 `acceptance` 增 `changed_tests` 步骤，判据相只跑变更测试、全量末步按需短路、实现相沿用冻结 target、判据相记红收紧为只认 target 红；测试 +9，全量 **1061 passed / 1 skipped**；**真机 dogfood 验证省 ~33%**（criterion 相不付全量）。commit `9563fe4`。
+- 分支 `s2-selfdrive-loop` 已 push（`136ff2e` + `77dc547` + `9563fe4`）。
+- **工位隔离更正**：服务（lm-service/feishu）是设备级单例、所有 agent 共用，无 owner；`COGOS_HOME` 仅 dev 用，非运行期需求。
+
+→ 细节：entries/2026-09-11-cogos-selfdrive-pivot.md / -s3-trigger.md / -criterion-dogfood.md / -selfdrive-p0.md / -layered-acceptance.md
+→ 交接：`../checkpoint/status.md` + `handoff-layered-acceptance.md`
