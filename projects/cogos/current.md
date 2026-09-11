@@ -158,6 +158,7 @@ e2e 两轮均命中：coord_1 px(250.3,28.9)、coord_2 px(251.1,33.1) vs 真值 
 → **task-5（工位 B，已交接）**：回路省时两件——验收遇错即止 + phase 计时，`tasks/task-5-loop-verify-timing.md`；B 在 `work/B/cogos-s2`（s2 分支 worktree，A 已建好）开工。讨论中明确的其余时间项（分层验收、红→绿证据、候选项）留工位 A。
 → **task-5 复核通过（09-11，A）**：验收遇错即止 + phase 计时落地，全量 1021 passed；B 未 commit，等 A 收尾。**task-5 的"计时"证明浪费主要在：pytest 每轮全量（~60s）+ 3 条慢测试**（lark 首次 import ~13–18s、monitor 两处漏 mock 各 5s）。
 → **task-6（工位 B，已交接）**：测试套件提速——消除 lark 首次 import（mock `_build_handler`）+ 补 monitor 两处 sleep mock，A 实测约 28s 纯浪费；`tasks/task-6-pytest-speedup.md`；B 在 `work/B/cogos-s2` 同一 worktree 叠加开工（不 commit）。
+→ **task-7（工位 B，已交接，Kilo harness 支线）**：Kilo 常驻 + 事件唤醒 + 飞书/窗口双通道 spike。关键事实：Kilo 有 `@kilocode/sdk` server/client（`createKiloServer`/`session.prompt`）、插件 `event` 钩子收全部总线事件（含 `session.idle`/`pty.exited`）、`PluginInput.client` 可注入、飞书出站已有 MCP（`tool/feishu_server.py`）、入站复用 cogos feishu。B owner（设计+实现同一人），A 仅末端复核。`tasks/task-7-kilo-resident-multichannel.md`。**分工模型调整：探索型任务一个 owner 设计+实现，避免 A 想一遍 B 再想一遍。**
 
 → **新遗留：工位隔离缺口**（editable 钉 A + `~/.cogos` 硬编码/服务单例）→ `ISSUES.md` + `entries/2026-09-11-cogos-workstation-isolation.md`；不阻塞 task-5，阻塞"同时真机跑/常驻"。
 
