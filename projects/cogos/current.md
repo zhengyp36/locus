@@ -139,6 +139,16 @@ e2e 两轮均命中：coord_1 px(250.3,28.9)、coord_2 px(251.1,33.1) vs 真值 
 - **P3 上下文 + P4 去重落码（09-08 深夜，handoff-7）**：`cogos/cog_ctx/`（`FigContext`=compile/strip 纯原语、`FigContextManager`=step/k/live deque 老化 `next/advance`）+ `tests/cog_ctx`；P4 Source 去重 `test_p4.py`。全量 pytest **992 passed**。
 - **坐标基准统一 + P3 目的层探针（09-08 深夜收口，handoff-8）**：① 坐标 size 分母从短边改**各自维度（宽对宽、高对高）**，全图窗口 `s(1.000,1.000)`、`@窗口≡@全图` 逐位一致（旧÷短边横向图宽稀释 56%）；② P3 探针双过：`taskA.py`（纯文字锚重建窗口）+ `taskB.py`（真实老化→图超龄被摘→纯锚无规则重定位）回放 delta 全 0——锚**自含**；③ §138 换算精度 `probe138.py` 过（亚像素 0.56px、目标覆盖）。checklist 回勾 §0 行为 6 项 + 禁区 3 项 + §138/§139。**下一步=衍生推理档**（用锚做新相对窗口，检验坐标教学必要性），待 YZ 开题。
 
+## 转向自驱回路（09-11）
+
+从视觉/机制细节回到主线：造**能自驱推进**的 cogos agent（人不在场时自己思考推进，人在场一起裁决）。定为 L1→L4 自主度阶梯，入口 = dogfood（agent 维护 cogos 自身）；不押实现 L4，押"把回路建起来、逐阶抬升"。
+
+- **行业评估**：定位已商品化（ScreenSpot-Pro ~88%、OSWorld-Verified 86%、人类基线 72%），未解在长程（OSWorld 2.0 20.6%），归因 planning+memory；验证是活跃区（VeriGUI/VSA/reward model），差异化在 harness 层。→ 视觉不追加投入，力气放回路。
+- **保命收编**：`/tmp/kilo` → `cogos/research/`（push `c3ad76f`）；旧活文档 87 文件归档 → `checkpoint/26-09-11-live-checkpoint/`（push `ace9c95`）；`../checkpoint` 清空重启（编号不续）。
+- **S0 状态面**：回路缺三格——机器可读议程 / 自触发 / agent 内自验证（L1→L2 门槛）；执行层齐，视觉库未接入 consciousness，记忆缺跨会话持久。
+- **停点**：`../checkpoint/status.md`（新会话入口）+ `plan.md`（计划）+ `state.md`（S0，待 YZ 验收）→ 下一步 S1 写最小回路 spec → S2 用 ISSUES 候选 1 手跑。
+- 细节：entries/2026-09-11-cogos-selfdrive-pivot.md
+
 ## 锚点
 
 - 约定 / 关键文件 / 设计决策: README.md

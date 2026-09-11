@@ -2,6 +2,13 @@
 
 > 分层：当前阶段（首页）→ 已收尾（归档入口）。细节按需去 entries/ 翻，不逐条占首页。
 
+## 当前 · 自驱回路（09-11 起，主线）
+
+- 转向 + 行业评估 + 保命收编 → entries/2026-09-11-cogos-selfdrive-pivot.md
+- 计划 + S0 状态面 → `../checkpoint/plan.md` / `state.md`（活文档，待 YZ 验收）
+- 旧活文档归档 → checkpoint/26-09-11-live-checkpoint/
+- 下一步：S1 最小回路 spec → S2 用 ISSUES 候选 1 手跑
+
 ## 当前 · agent 认知架构（09-01 起）
 
 - 设计凝练 → entries/2026-09-02-cogos-agent-cog-arch.md

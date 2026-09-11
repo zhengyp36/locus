@@ -181,3 +181,15 @@ oneshot 改 cog-runtime cu 多轮续轮，打通 terminal/timer 工具闭环。
 
 → 细节：entries/2026-09-10-cogos-coord-anno-lifetime.md
 → 最新交接：checkpoint/principle-exp/handoff-vision-image-fields-15.md
+
+## 阶段 16 · 转向自驱回路（09-11）
+
+从视觉/机制细节回到主线：造**能自驱推进**的 cogos agent（L1→L4 自主度阶梯，入口 = dogfood）。
+
+- **行业评估**：定位已商品化（ScreenSpot-Pro ~88%、OSWorld-Verified 86%、人类基线 72%），未解在长程（OSWorld 2.0 20.6%），归因 planning + memory；验证是活跃区、差异化在 harness 层。→ 视觉不追加投入。
+- **保命收编**：`/tmp/kilo` → `cogos/research/`（`c3ad76f`）；旧活文档 87 文件 → `checkpoint/26-09-11-live-checkpoint/`（`ace9c95`）；`../checkpoint` 清空重启（编号不续）。
+- **S0 状态面**：回路缺三格——机器可读议程 / 自触发 / agent 内自验证（L1→L2 门槛）。
+- **下一步**：S1 最小回路 spec → S2 用 ISSUES 候选 1 手跑。
+
+→ 细节：entries/2026-09-11-cogos-selfdrive-pivot.md
+→ 交接：`../checkpoint/status.md` + `plan.md` + `state.md`（活文档）
