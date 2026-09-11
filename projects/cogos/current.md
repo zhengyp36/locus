@@ -112,6 +112,18 @@ img-tool 原语已实现（`../cogos/cogos/img_tool/` core/cli/stub + tests/img_
 - 上下文管理重设计(**定案未实现**)：图在上下文**出现一次**、LIVE 张常驻带图(全景1+最新视图1)、旧观察**降级文字**、contexts 只作动作轨迹+重看兜底。模型"知道图变了"靠 ① 当前新鲜图 ②文字状态 ③ 增量+十字(注视=检验)。复读根因=模型自己长文回喂 + 每轮同批静态图无增量 + 无收敛信号；根在上下文组织+反馈信号，非模型能力。
 - 遗留：落地上下文重设计(A/B 测工具(T) 复读/命中)；交叉验证+不确定出口并入；finish_reason=length。细节 `entries/2026-09-08-cogos-vision-rect-marker-context.md`。
 
+## 对话式图工具 + 点击『工具(T)』取证（09-09 晚，principle-exp，`/tmp/kilo/vision/image_field_chat.py`）
+
+落地 handoff-12 遗留（schema 接入并暴露给模型）：`image_field_chat.py` 用 `figure_tool_schemas()` 把 `see/mark/adjust_mark/unmark` 暴露给模型（结构化 tool_calls），K=4 图上下文(`FigContextManager`)、raw.jsonl 持久化、`--resume` 重放、每次十字落 `crosses.jsonl`。真实模型点击『工具(T)』：命中样本(<10px)+非命中样本(test_2 偏右 78px)并存。**根因=模型子图目测偏 ~11%子图宽(77px)+未换算+标完未自证**（非基准乱：ref=全图与值自洽，但值从子图目测未经换算且估读本身偏）。关键修复：多 tool_calls 时 tool 必须连续(中间不可插观察图 user，否则 invalid_request)、重放协议安全重排、打印不截断。**本会话未上评审**，停点=模型视觉自证收口，正确性靠自证+事后 crosses.jsonl 评分。交接 `checkpoint/principle-exp/handoff-vision-image-fields-13.md`。
+
+## coord 求解原图坐标 + ANNO 寿命=FIG（09-10，principle-exp）
+
+把图工具用途讲透并落码：`see`=看清、`mark`/`adjust_mark`=点出并校准候选、`coord`=**把候选换回原图坐标值**（纯读）。关键：**坐标值必须工具给**——mark 存的是 `@窗口` 相对坐标，模型要的是 `@原图`，换算（`win_c−win_s/2+u×win_s`）工具做、模型不算（此前模型自己手算既多余又是错误来源）。新增 `coord(fig_ref, anno_id)`（返回原图路径+形状+cross→[x,y]/rect→[cx,cy,w,h] 归一化+像素）+ `anno_to_src` 单点换算（coord 与评分共用）；schema **契约自明**承载方法（see→mark→adjust→coord）。
+
+**ANNO 寿命 = FIG**（YZ 拍板）：去掉"摘超龄图块即清 annos"（`clear_fig_block` 废除），anno 随 `View` 在 registry 存续；重载 `(path,window)` 带回 anno。文档同步 + **工具命名统一**（旧设计名 `load/view/draw/move/delete_anno` → 代码名 `see/mark/adjust_mark/unmark`）。
+
+e2e 两轮均命中：coord_1 px(250.3,28.9)、coord_2 px(251.1,33.1) vs 真值 (255,32)；**隔离验证**（删 SYSTEM 一切 coord 提示）仍走对 → schema 契约自足、不依赖 SYSTEM。提交 `1b5153c`/`4555050`/`f12d1f0`。细节 `entries/2026-09-10-cogos-coord-anno-lifetime.md`，交接 `handoff-vision-image-fields-15.md`。
+
 ## 域 / 图(FIG) / 场设计 + 引用规范（09-08，下午轮定稿，待实现）
 
 「图如何落到上下文」定稿：**FIG ≜ (path, view)**，全图=窗口覆盖整体、主/子图边界对模型不存在；引用=tagged token `FIG:`/`PATH:`/`(FIG,ANNO)`，模型只抄不造、系统解引用（**PATH 为必需输入通道**，人让"打开某路径图"；FIG 兜住任意图含无路径子视图）。**源/域**：Source(图根)=域与图之间的身份层（单源+其 FIG 注册表 `window→FIG_ID`，去重/枚举挂靠点；`FIG=(path,window)` 纯函数：同 path 幂等（同 Source+同 src_fig）/同窗口同 FIG_ID）；域=图资源容器。**无场**（废弃观察场/比较场，YZ 拍板）：图的组织=**图块散落历史、活 K 轮**（默认4、可配），超龄仅摘图块、文字永续；`earliest_fig_turn` 单指针比较即可清；K 改大不回生、改小立即生效；**compile 只编当前轮**、历史固定只删超龄图块；**load 打开进历史（只开一张）**；**无 load_many**（单轮至多 1 图块：load/view 各产一新 FIG 图块，draw/move/delete 改所属 FIG 标注并重渲染产其最新图块（同 FIG_ID、模型可见变化）；K 轮窗口总量≈K 张，容量由 K 完全控制）。坐标系=**三套化**（动作`@窗口`相对参考FIG窗口/地图`@全图`信息性/像素内部+尺寸；模型只在`@窗口`动作不做换算，看全图=load/view全图⇒`@窗口`≡`@全图`），**越界 clamp=只取有效区**（方案1：clamp 到边界、不补边/平移，标注「原坐标→实际生效坐标（含实际窗口）」）。**像素一致性（已定）**：下发=**render 出的窗口位图**（img-tool extract 语义 crop+本机按封顶 max_dim 主动降采样），**非原图**；请求 **`detail=original`** 禁厂商二次 resize（防坐标偏/元注解 w×h 失真）；**元注解 w×h=实际下发位图**。承接 vision-system-design.md §14「精确给」+ 官方 detail=original。上下文=**文字永续(重载锚)+图块K轮寿命**（砍降级文字），**文字必须自含**（工具调用痕迹可能被抹→重载锚/窗口/坐标必须写进文字）；**compile 无去重**（模型可反复看图，图管理层不干预、不提示；去重仅身份层）。图说明=**元注解**(`meta_annotation` 从管理数据渲染)+模型批注(`compose_figure_text` 拼；note 瞬态、不进图/存储/desc)，批注回显用**你的备注:**(第二人称)；元信息**短+固定序+分隔符统一、不做视觉对齐**（机制=低可预测/短token，非视觉显著性；A/B 可测）。**ANNO 图内作用域定稿**：draw 创建(初始定位)→move/adjust(改位置+尺寸)→delete_anno；生命周期=所属 FIG 的图块在 K 轮窗口内(超龄失效清空、重载不带回)；move 移出所属 FIG 边界→clamp 到边界+markdown 高亮(`> ⚠️ **…**`)、不报错；不入 desc。**parent 已删**：FIG 纯函数下无需 `View.parent`（YZ 拍板），各 FIG 只靠 path 归属自己的 Source。接口：`load`/`view`/`draw`/`move`/`delete_anno`（无 load_many）。本体 `cogos/docs/design-vision-image-fields.md`（已含全部结论），细节 `entries/2026-09-08-cogos-vision-image-fields.md`。

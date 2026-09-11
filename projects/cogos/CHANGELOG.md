@@ -166,3 +166,18 @@ oneshot 改 cog-runtime cu 多轮续轮，打通 terminal/timer 工具闭环。
 → 细节：entries/2026-09-08-cogos-image-ctx-boundary.md（含 P1/P2/P3/P4 + 坐标统一 + 探针）
 → 设计本体：cogos/docs/design-vision-image-fields.md + -p1-spec.md + -p3-spec.md + -checklist.md
 → 最新交接：checkpoint/principle-exp/handoff-vision-image-fields-8.md（下一步=衍生推理档）
+
+## 阶段 15 · 图工具对话探针 + coord 求解原图坐标 + ANNO 寿命=FIG（09-09 ~ 09-10，principle-exp）
+
+从「对话式图工具 + 点击『工具(T)』取证」到「把坐标求解做进工具、让模型默认走对」。
+
+- **对话探针（09-09）**：`/tmp/kilo/vision/image_field_chat.py` 用 `figure_tool_schemas()` 把 `see/mark/adjust_mark/unmark` 暴露给模型；K=4 图上下文、raw.jsonl 持久化、`--resume`、每次十字落 `crosses.jsonl`。真实点击『工具(T)』：命中+非命中并存，根因=子图目测偏+未换算+标完未自证。
+- **图上下文 K 修复（09-10）**：`prune_aged_obs` 按各观察消息自身 `_step` 逐条老化（原按 `fig_id` 是否在 live 保留→全保留失效）。
+- **图工具用途重定位 + coord（09-10，核心）**：`see`=看清、`mark`/`adjust_mark`=点出/校准候选、`coord`=**换回原图坐标值**（纯读）。新增 `coord(fig_ref, anno_id)` + `anno_to_src` 单点换算；schema 自明承载方法（see→mark→adjust→coord）。**坐标值必须工具给**（模型手算既多余又出错）。
+- **ANNO 寿命 = FIG（YZ 拍板）**：去掉「摘超龄图块即清 annos」（`clear_fig_block` 废除），anno 随 View 在 registry 存续、重载带回。
+- **验证**：e2e 两轮命中（偏差 5.8px / 4.1px）；**隔离验证**（删 SYSTEM coord 提示）仍走对 → schema 契约自足。
+- **文档同步 + 命名统一**：4 份 vision 文档同步 coord/寿命语义；旧设计名 `load/view/draw/move/delete_anno` → 代码名 `see/mark/adjust_mark/unmark`。
+- 提交 `1b5153c` / `4555050` / `f12d1f0`。
+
+→ 细节：entries/2026-09-10-cogos-coord-anno-lifetime.md
+→ 最新交接：checkpoint/principle-exp/handoff-vision-image-fields-15.md
