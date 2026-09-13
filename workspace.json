@@ -1,6 +1,7 @@
 {
   "external": {
     "cogos": "git@github.com:zhengyp36/cogos-dev.git",
-    "agent-study": "git@github.com:zhengyp36/agent-study.git"
+    "agent-study": "git@github.com:zhengyp36/agent-study.git",
+    "kilo-resident": "git@github.com:zhengyp36/kilo-resident.git"
   }
 }
