@@ -220,3 +220,17 @@ oneshot 改 cog-runtime cu 多轮续轮，打通 terminal/timer 工具闭环。
 
 → 细节：entries/2026-09-12-cogos-general-agent.md
 → 交接：`../checkpoint/status.md`（已改道）
+
+## 阶段 19 · 上下文组织实验链 → 判据重述：身份即锚（09-12 会话 #4~#7）
+
+沿"帧 → 蒸馏 → 冷启动重启"逐个探针验证，实验链与本轮重述：
+
+- **实验链**（worktree `work/A/cogos-ctx` @ `ctx-seed`，未碰 `consciousness.py`）：
+  - ctx-seed 首跑 + E1/E2（维度塌缩，`current` 重做 vs `axes`/`narrative` 停）→ entries/2026-09-12-cogos-ctx-seed-diagnosis.md
+  - 复现实验（时序框架 + 出处；信任当下 vs 重验过去）→ entries/2026-09-12-cogos-recurrence-arm-analysis.md
+  - 三处校正（投影≠替换、回取≠立即取、换帧要质变）→ entries/2026-09-12-cogos-distill-retrieval-frame-swap.md
+  - 契约块一/二/三 → entries/2026-09-12-cogos-frame-swap-trigger.md
+  - **探针 1**（块一）：`recast` 3/3、`append` 3/3 均未换帧；正对照才换、帧 B 重做。主判据**不成立**且实验不可归因（把"是否换帧"交给 agent 自愿，违背自定"无主动"纪律）→ 报告 `../checkpoint/ctx-swap-probe-report.md`
+- **判据重述（会话 #7 追问，待 YZ 裁决）**：并置三条线 → **身份 = 锚/脊**；"丢 vs 模糊"分界=有无身份脊；块二信封=身份显式锚；**块一"目的≠身份"与身份线冲突**（任务 1→2 属"同主题换视角"，实验支持身份线）；判据改三问：身份是否延续 / 视角是否变 / 需旧帧哪层。悬置：底片是否常驻、帧职权、轨迹归帧还是归链、召回。
+- 细节：entries/2026-09-12-cogos-identity-anchor-frame.md
+- 交接：`../checkpoint/status.md` + `handoff-identity-anchor-frame.md`

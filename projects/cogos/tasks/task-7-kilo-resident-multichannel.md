@@ -1,6 +1,7 @@
 # task-7 — Kilo 常驻 + 多通道（飞书/窗口）spike
 
-> 状态：待执行。**工位 B owner（设计 + 实现同一人）**。工位 A 只在结束时做独立复核；开放决策由 YZ 裁决。
+> 状态：✅ 完成（2026-09-12，工位 B）。spike 走通并转为实现：源码工程 `../kilo-resident`（remote `zhengyp36/kilo-resident`），本体 HEAD `4bae464`。报告 `../../B/checkpoint/task-7-report.md`、交接 `../../B/checkpoint/task-7-handoff-4.md`；locus 记忆见 `projects/kilo-resident/`。剩余待办见该工程 current.md（忙时排队、飞书真机往返、真常驻宿主待 YZ 裁决）。原任务书保留如下。
+> **工位 B owner（设计 + 实现同一人）**。工位 A 只在结束时做独立复核；开放决策由 YZ 裁决。
 > 性质：**spike（可行性 + 设计）**，不是实现任务。目标是把"常驻 Kilo + 事件唤醒 + 飞书/窗口双通道"的技术路走通并产出设计，**不要**一上来做产品。
 > 归属：Kilo harness 支线（由 cogos 自驱主线引出）。实现落在 Kilo 侧，**不碰 cogos 代码**；若后续转实现，再另立 locus 工程。
 

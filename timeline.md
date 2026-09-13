@@ -6,3 +6,5 @@
 - 2026-08-27: cogos — agent-study 复习收尾（挂接点固化，准备实施底层三件）
 - 2026-09-03: cogos — terminal+timer 工具落地，agent 接 cu 打通多轮续轮
 - 2026-09-11: kilo-resident — 立项：Kilo 常驻 + 飞书/窗口双通道桥接（承接工位 B task-7）
+- 2026-09-12: cogos — 路线修正：上下文组织是自驱地基（复现实验 → 蒸馏契约）；kilo-resident task-7 完成
+- 2026-09-13: cogos — v0 架构定型：机制拥有记忆/整理/议程 + 婴儿期（生念=整理，tick 归后期）

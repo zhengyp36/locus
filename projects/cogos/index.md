@@ -10,6 +10,9 @@
 - task-5 复核通过（验收遇错即止 + phase 计时）→ tasks/task-5-loop-verify-timing.md
 - task-6（测试提速）+ task-7（Kilo 常驻多通道 spike）已交工位 B → tasks/
 - S4 判据源外移 + 分层验收（真机 dogfood 验证省 ~33%）→ entries/2026-09-11-cogos-layered-acceptance.md；停点 `../checkpoint/status.md`
+- 上下文组织校正：复现实验 → 蒸馏再校正（投影≠替换、回取≠立即取、换帧要质变）→ entries/2026-09-12-cogos-recurrence-arm-analysis.md、entries/2026-09-12-cogos-distill-retrieval-frame-swap.md
+- 契约块一·换帧边界：唯一触发=目的变了；来源=内容+状态；agent 无"主动"只有机制触发；自评=传感器+概率提醒 → entries/2026-09-12-cogos-frame-swap-trigger.md（剩块二/三/四；§十 已标"身份优先于目的"冲突）
+- 探针 1 结果 + 并置讨论：**身份即锚/脊**；丢 vs 模糊的分界=有无身份脊；块一"目的≠身份"与身份线冲突；判据重述为三问（身份延续/视角变/需旧帧哪层）→ entries/2026-09-12-cogos-identity-anchor-frame.md；报告 `../checkpoint/ctx-swap-probe-report.md`
 - 工位隔离更正：服务是设备级单例共用、无 owner；`COGOS_HOME` 仅 dev 用 → entries/2026-09-11-cogos-workstation-isolation.md
 - 下一步（待 YZ）：L2 最小自触发（自己醒来再跑一条 + 预算/暂停安全件）
 
