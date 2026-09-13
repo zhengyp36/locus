@@ -14,7 +14,9 @@
 - 契约块一·换帧边界：唯一触发=目的变了；来源=内容+状态；agent 无"主动"只有机制触发；自评=传感器+概率提醒 → entries/2026-09-12-cogos-frame-swap-trigger.md（剩块二/三/四；§十 已标"身份优先于目的"冲突）
 - 探针 1 结果 + 并置讨论：**身份即锚/脊**；丢 vs 模糊的分界=有无身份脊；块一"目的≠身份"与身份线冲突；判据重述为三问（身份延续/视角变/需旧帧哪层）→ entries/2026-09-12-cogos-identity-anchor-frame.md；报告 `../checkpoint/ctx-swap-probe-report.md`
 - 工位隔离更正：服务是设备级单例共用、无 owner；`COGOS_HOME` 仅 dev 用 → entries/2026-09-11-cogos-workstation-isolation.md
-- 下一步（待 YZ）：L2 最小自触发（自己醒来再跑一条 + 预算/暂停安全件）
+- **动机为根（09-13 会话 #8）**：根=动机，目的从动机长、任务从目的长 → entries/2026-09-13-cogos-motive-root.md
+- **v0 架构（09-13 会话 #9）**：记忆/整理/议程归机制层、婴儿期、不设 tick → entries/2026-09-13-cogos-v0-arch.md；交接 `work/A/checkpoint/handoff-build-agent-v0.md`
+- 下一步（待 YZ/动手）：搭 agent v0（落盘记忆 + 每回合装配 system prompt + 帧 dump）；根措辞；L2 最小自触发
 
 ## 当前 · agent 认知架构（09-01 起）
 
