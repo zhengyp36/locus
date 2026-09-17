@@ -1,0 +1,20 @@
+max_steps: 8
+items:
+- id: cogos-home
+  title: Support COGOS_HOME to relocate the runtime state directory
+  goal: 'Runtime state is currently hardcoded under ~/.cogos: the feishu config (cogos/feishu/config.py),
+    the lm-service config (cogos/lm_service/config.py), the phone default config (cogos/phone/term.py),
+    and the agent default directory in the loop shell. Add support for a COGOS_HOME
+    environment variable that relocates this base directory, defaulting to ~/.cogos
+    when the variable is unset. Keep current default behaviour unchanged. Centralize
+    the base-directory resolution so all call sites share one source. Write tests
+    that capture the required behaviour.
+
+    '
+  acceptance:
+  - cmd: python3.11 -m pytest -q
+  requires_criterion: true
+  status: done
+  risk: low
+  self_contained: high
+  notes: ''

@@ -1,0 +1,266 @@
+diff --git a/cogos/agent/loop.py b/cogos/agent/loop.py
+index 54357ff..fec6111 100644
+--- a/cogos/agent/loop.py
++++ b/cogos/agent/loop.py
+@@ -26,6 +26,7 @@ import yaml
+ 
+ from cogos.agent.app import Agent
+ from cogos.cog_runtime.types import CuResultError, CuResultOk
++from cogos.home import cogos_home
+ 
+ logger = logging.getLogger("cogos.agent.loop")
+ 
+@@ -591,11 +592,15 @@ async def _main_async(args) -> int:
+     return 0 if verdict in ("done", "no_work") else 1
+ 
+ 
++def _default_agent_dir() -> Path:
++    return cogos_home() / "agent" / "tangyu"
++
++
+ def main() -> None:
+     p = argparse.ArgumentParser(description="self-drive loop shell (S1 + S3 auto-trigger)")
+     p.add_argument("--agenda", default="agenda.yaml")
+     p.add_argument("--item", help="explicit item id; omit to auto-pick the next eligible one")
+-    p.add_argument("--agent-dir", default=str(Path.home() / ".cogos/agent/tangyu"))
++    p.add_argument("--agent-dir", default=str(_default_agent_dir()))
+     p.add_argument("--work-dir")
+     p.add_argument("--runs")
+     p.add_argument("--max-steps", type=int, default=None)
+diff --git a/cogos/feishu/config.py b/cogos/feishu/config.py
+index 2d9eb92..a70fc75 100644
+--- a/cogos/feishu/config.py
++++ b/cogos/feishu/config.py
+@@ -3,13 +3,14 @@ import random
+ import shutil
+ from pathlib import Path
+ 
++from ..home import cogos_home
+ from .utils import TmpFilePair
+ 
+ 
+ class Config:
+-    GLOBAL_PATH  : Path = Path("~/.cogos/feishu/global.json").expanduser()
+-    ACCOUNTS_DIR : Path = Path("~/.cogos/feishu/accounts").expanduser()
+-    FEISHU_HOME  : Path = Path("~/.cogos/feishu").expanduser()
++    GLOBAL_PATH  : Path = cogos_home() / "feishu" / "global.json"
++    ACCOUNTS_DIR : Path = cogos_home() / "feishu" / "accounts"
++    FEISHU_HOME  : Path = cogos_home() / "feishu"
+     PROG_NAME    : str  = "cogos-feishu"
+ 
+     UNIT_DAEMON_NAME  : str  = "cogos-feishu-daemon"
+diff --git a/cogos/home.py b/cogos/home.py
+new file mode 100644
+index 0000000..22adcbc
+--- /dev/null
++++ b/cogos/home.py
+@@ -0,0 +1,24 @@
++"""Centralized resolution of the COGOS runtime state directory.
++
++The runtime state lives under ``~/.cogos`` by default.  Setting the
++``COGOS_HOME`` environment variable relocates that base directory.  All
++call sites should resolve their paths through :func:`cogos_home` so there
++is a single source of truth.
++"""
++
++import os
++from pathlib import Path
++
++DEFAULT_COGOS_HOME = Path.home() / ".cogos"
++
++
++def cogos_home() -> Path:
++    """Return the base runtime state directory.
++
++    Honours the ``COGOS_HOME`` environment variable (with ``~`` expansion);
++    falls back to ``~/.cogos`` when it is unset or empty.
++    """
++    value = os.environ.get("COGOS_HOME")
++    if value:
++        return Path(value).expanduser()
++    return DEFAULT_COGOS_HOME
+diff --git a/cogos/lm_service/config.py b/cogos/lm_service/config.py
+index ed0cbf3..035a059 100644
+--- a/cogos/lm_service/config.py
++++ b/cogos/lm_service/config.py
+@@ -6,7 +6,9 @@ from pathlib import Path
+ 
+ import yaml
+ 
+-CONFIG_DIR = Path.home() / ".cogos" / "lm-service"
++from ..home import cogos_home
++
++CONFIG_DIR = cogos_home() / "lm-service"
+ CONFIG_FILE = CONFIG_DIR / "config.yaml"
+ SECRETS_FILE = CONFIG_DIR / "secrets.yaml"
+ STATE_FILE = CONFIG_DIR / "state.yaml"
+diff --git a/cogos/phone/term.py b/cogos/phone/term.py
+index 3c589bc..76dd3a8 100644
+--- a/cogos/phone/term.py
++++ b/cogos/phone/term.py
+@@ -391,7 +391,9 @@ async def _run(config_path):
+ 
+ 
+ def _default_config_path() -> str:
+-    return str(Path.home() / ".cogos" / "phone" / "default" / "phone.json")
++    from ..home import cogos_home
++
++    return str(cogos_home() / "phone" / "default" / "phone.json")
+ 
+ 
+ def _setup_logging(data_dir: Path) -> None:
+diff --git a/tests/test_cogos_home.py b/tests/test_cogos_home.py
+new file mode 100644
+index 0000000..7f2e0f1
+--- /dev/null
++++ b/tests/test_cogos_home.py
+@@ -0,0 +1,149 @@
++"""Tests for the COGOS_HOME runtime-state relocation feature.
++
++The runtime state directory is currently hardcoded under ``~/.cogos`` in
++several places.  These tests pin down the required behaviour:
++
++* a single, centralized resolver decides the base directory,
++* ``COGOS_HOME`` relocates that base directory,
++* when ``COGOS_HOME`` is unset the default stays ``~/.cogos``,
++* the known call sites (feishu config, lm-service config, phone default
++  config, agent loop default dir) all go through the resolver.
++"""
++
++import importlib
++import os
++from pathlib import Path
++
++import pytest
++
++
++# ── centralized resolver ──────────────────────────────────────────────
++
++
++class TestCogosHomeResolver:
++    def test_default_is_dot_cogos(self, monkeypatch):
++        monkeypatch.delenv("COGOS_HOME", raising=False)
++        from cogos.home import cogos_home
++
++        assert cogos_home() == Path.home() / ".cogos"
++
++    def test_env_var_relocates_base(self, monkeypatch, tmp_path):
++        target = tmp_path / "relocated"
++        monkeypatch.setenv("COGOS_HOME", str(target))
++        from cogos.home import cogos_home
++
++        assert cogos_home() == target
++
++    def test_env_var_expanduser(self, monkeypatch):
++        monkeypatch.setenv("COGOS_HOME", "~/custom-cogos-home")
++        from cogos.home import cogos_home
++
++        assert cogos_home() == Path.home() / "custom-cogos-home"
++
++    def test_empty_env_var_falls_back_to_default(self, monkeypatch):
++        monkeypatch.setenv("COGOS_HOME", "")
++        from cogos.home import cogos_home
++
++        assert cogos_home() == Path.home() / ".cogos"
++
++    def test_returns_path(self, monkeypatch, tmp_path):
++        monkeypatch.setenv("COGOS_HOME", str(tmp_path))
++        from cogos.home import cogos_home
++
++        assert isinstance(cogos_home(), Path)
++
++
++# ── call sites honour COGOS_HOME ──────────────────────────────────────
++
++
++class TestFeishuConfigUsesCogosHome:
++    def test_feishu_home_relocated(self, monkeypatch, tmp_path):
++        target = tmp_path / "cogos-home"
++        monkeypatch.setenv("COGOS_HOME", str(target))
++        from cogos.feishu import config
++
++        importlib.reload(config)
++        try:
++            assert config.Config.FEISHU_HOME == target / "feishu"
++            assert config.Config.GLOBAL_PATH == target / "feishu" / "global.json"
++            assert config.Config.ACCOUNTS_DIR == target / "feishu" / "accounts"
++        finally:
++            monkeypatch.delenv("COGOS_HOME", raising=False)
++            importlib.reload(config)
++
++    def test_feishu_home_default(self, monkeypatch):
++        monkeypatch.delenv("COGOS_HOME", raising=False)
++        from cogos.feishu import config
++
++        importlib.reload(config)
++        assert config.Config.FEISHU_HOME == Path.home() / ".cogos" / "feishu"
++
++
++class TestLmServiceConfigUsesCogosHome:
++    def test_config_dir_relocated(self, monkeypatch, tmp_path):
++        target = tmp_path / "cogos-home"
++        monkeypatch.setenv("COGOS_HOME", str(target))
++        from cogos.lm_service import config
++
++        importlib.reload(config)
++        try:
++            assert config.CONFIG_DIR == target / "lm-service"
++            assert config.CONFIG_FILE == target / "lm-service" / "config.yaml"
++            assert config.SECRETS_FILE == target / "lm-service" / "secrets.yaml"
++            assert config.STATE_FILE == target / "lm-service" / "state.yaml"
++        finally:
++            monkeypatch.delenv("COGOS_HOME", raising=False)
++            importlib.reload(config)
++
++    def test_config_dir_default(self, monkeypatch):
++        monkeypatch.delenv("COGOS_HOME", raising=False)
++        from cogos.lm_service import config
++
++        importlib.reload(config)
++        assert config.CONFIG_DIR == Path.home() / ".cogos" / "lm-service"
++
++
++class TestPhoneDefaultConfigUsesCogosHome:
++    def test_default_config_path_relocated(self, monkeypatch, tmp_path):
++        target = tmp_path / "cogos-home"
++        monkeypatch.setenv("COGOS_HOME", str(target))
++        from cogos.phone import term
++
++        importlib.reload(term)
++        try:
++            assert term._default_config_path() == str(
++                target / "phone" / "default" / "phone.json"
++            )
++        finally:
++            monkeypatch.delenv("COGOS_HOME", raising=False)
++            importlib.reload(term)
++
++    def test_default_config_path_default(self, monkeypatch):
++        monkeypatch.delenv("COGOS_HOME", raising=False)
++        from cogos.phone import term
++
++        importlib.reload(term)
++        assert term._default_config_path() == str(
++            Path.home() / ".cogos" / "phone" / "default" / "phone.json"
++        )
++
++
++class TestAgentLoopDefaultDirUsesCogosHome:
++    def test_agent_dir_default_relocated(self, monkeypatch, tmp_path):
++        target = tmp_path / "cogos-home"
++        monkeypatch.setenv("COGOS_HOME", str(target))
++        from cogos.agent import loop
++
++        importlib.reload(loop)
++        try:
++            assert loop._default_agent_dir() == target / "agent" / "tangyu"
++        finally:
++            monkeypatch.delenv("COGOS_HOME", raising=False)
++            importlib.reload(loop)
++
++    def test_agent_dir_default(self, monkeypatch):
++        monkeypatch.delenv("COGOS_HOME", raising=False)
++        from cogos.agent import loop
++
++        importlib.reload(loop)
++        assert loop._default_agent_dir() == Path.home() / ".cogos" / "agent" / "tangyu"

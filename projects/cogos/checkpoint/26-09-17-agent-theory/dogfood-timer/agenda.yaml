@@ -1,0 +1,21 @@
+max_steps: 8
+items:
+- id: list-timers
+  title: Add a list_timers tool to enumerate pending timers
+  goal: 'cogos/agent/timer.py''s TimerScheduler can set and cancel timers and persists
+    them to memory/timers.json (pending timers are restored on startup), but there
+    is no way to enumerate the pending ones. Add a list_timers capability: the scheduler
+    exposes the currently pending timers, and a list_timers tool is registered alongside
+    set_timer/cancel_timer. Each entry should let the caller identify the timer and
+    know when it fires: id, title, fire_at (absolute epoch seconds) and the remaining
+    seconds until it fires. Keep set_timer/cancel_timer behaviour unchanged. Write
+    tests that capture the required behaviour.
+
+    '
+  acceptance:
+  - cmd: python3.11 -m pytest -q
+  requires_criterion: true
+  status: done
+  risk: low
+  self_contained: high
+  notes: ''

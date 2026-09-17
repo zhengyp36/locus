@@ -1,0 +1,19 @@
+max_steps: 6
+items:
+- id: parse-duration
+  title: Implement parse_duration to convert '1h30m' style strings into seconds
+  goal: 'Implement parse_duration(text) in duration.py. It parses a compact duration
+    string made of <number><unit> segments, unit in h/m/s, summed in seconds: ''1h30m''
+    -> 5400, ''45s'' -> 45, ''2h'' -> 7200. Raise ValueError on malformed input. Write
+    a test that captures the required behaviour.
+
+    '
+  acceptance:
+  - cmd: python3.11 -m pytest -q
+  requires_criterion: true
+  refs:
+  - duration.py
+  status: done
+  risk: low
+  self_contained: high
+  notes: ''
