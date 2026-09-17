@@ -51,7 +51,7 @@
 
 ## 锚点
 
-- **评审中（新会话入口）**: 陪 YZ 从头过整体理论，顺序＝骨架→矛盾→未定项，**只讲不推进** → `checkpoint/handoff-cogos-theory-review.md`（从骨架第一拍起）
+- **评审中（新会话入口）**: 陪 YZ 从头过整体理论，顺序＝骨架→矛盾→未定项，**只讲不推进** → `work/A/checkpoint/handoff-cogos-theory-review.md`（从骨架第一拍起）
 - 当前口径: 本体 `../cogos/docs/design-selfdrive-agent.md`（**当前总纲／唯一权威口径**，09-17 由 #18 总纲整体化）。过程与依据已归入 `checkpoint/26-09-17-agent-theory/`（原 `work/A/checkpoint` 已并入并清理，含 #15~#18 handoff、六份旧 design、probe/ctx 旁证）；索引 `checkpoint/ARCHIVE-INDEX.md`，迁移映射 `MIGRATION-MAP.md`／`MIGRATION-COVERAGE.md`。六份旧 design 头部标注仍有效，**冲突以整体文档为准**
 - 并行支线: `../kilo-resident/checkpoint/26-09-17-phone-number-contacts/`（kilo-resident，别混 v0）
 - 工程管理: `README.md`（remote/本体/关键文件）、`CHANGELOG.md`、`ISSUES.md`、`ROADMAP.md`、`tasks/`
