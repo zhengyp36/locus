@@ -43,8 +43,16 @@
 - 新增 `memory.py`（log/root/profile + 土选取；log 首条 = 出生句）；consciousness 无状态、每回合从文档装配；拆 `render_system_prompt`（机制层/认知层都进 system）；帧 dump 观察口。
 - 验收改述：① 记得住 ② 输入不成待办 ③ 地基成立（经历累积 + 根在场 + 帧稳定）；"第一轮见分晓"降为长期观察项。
 
+## 补记（会话 #11，见 `2026-09-13-cogos-reprojection-events.md`）
+
+- **§一/§六 的"根每回合在场"被推翻**：根不在每回合帧里；改为"根**可用**"（结构，v0 保证）与"根**在场**"（行为，观察项）二分。
+- 统一出**重投影原语**：回看 / 换帧 / 事件处理 / 整理是同一动作（锚 + 注入 + 持久 三参数）；回看 = 根锚、默认瞬时。
+- 承重轴由"外部/内部"改为 **事件 / 执行轮**：事件根必在场，执行轮可沉浸。
+- 压力（回看）用**增量**、整理用**绝对量**，两个触发器。
+- 本文件其余内容仍有效；落地细节以该 entry 与（待回写的）handoff 为准。
+
 ## 锚
 
-- 交接：`work/A/checkpoint/handoff-build-agent-v0.md`（已更新）
+- 交接：`work/A/checkpoint/handoff-build-agent-v0.md`（**待按会话 #11 回写**）
 - 上会话推演：`entries/2026-09-13-cogos-motive-root.md`
 - 代码：`work/A/cogos-s2` @ `9563fe4`

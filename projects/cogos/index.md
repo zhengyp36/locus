@@ -4,6 +4,9 @@
 
 ## 当前 · 自驱回路（09-11 起，主线）
 
+- **自我收敛（09-14 会话 #14，最新）**：要"能自我长的 agent"；"好用"＝"自驱/有自我"（迎合≠好用）；自我＝环里**慢变量**（只能长不能装）；自驱三条件；探针到不了（离线单发＋手喂后果）；防偏靠"整合"；判断归它、决定权归规则 → entries/2026-09-14-cogos-self-convergence.md
+- **倾向探针（09-14 会话 #14）**：换倾向型素材重做 → 机制通（负向经历翻盘）但只是"照结局记账"、无解读；实验 B 事件单元 schema 初版 → entries/2026-09-14-cogos-tendency-probe.md；产物 `../checkpoint/probe-tendency/`（REPORT.md + event-unit-schema.md + arms/runs）
+- **#14 后半（未入 entries，交接）**：动因讨论→**饿/困/疼**（机制管机制、agent 只感知状态；饿→求助非谄媚；信号粗不细）→ `../checkpoint/handoff-cogos-drives.md`
 - 转向 + 行业评估 + 保命收编 → entries/2026-09-11-cogos-selfdrive-pivot.md
 - 计划 + S0 状态面 + 停点 → `../checkpoint/plan.md` / `state.md` / `status.md` / `checkpoint-3.md`（活文档）
 - 旧活文档归档 → checkpoint/26-09-11-live-checkpoint/
@@ -16,7 +19,11 @@
 - 工位隔离更正：服务是设备级单例共用、无 owner；`COGOS_HOME` 仅 dev 用 → entries/2026-09-11-cogos-workstation-isolation.md
 - **动机为根（09-13 会话 #8）**：根=动机，目的从动机长、任务从目的长 → entries/2026-09-13-cogos-motive-root.md
 - **v0 架构（09-13 会话 #9）**：记忆/整理/议程归机制层、婴儿期、不设 tick → entries/2026-09-13-cogos-v0-arch.md；交接 `work/A/checkpoint/handoff-build-agent-v0.md`
-- 下一步（待 YZ/动手）：搭 agent v0（落盘记忆 + 每回合装配 system prompt + 帧 dump）；根措辞；L2 最小自触发
+- **E0 手动探针（09-14 会话 #12）**：想/说通道跑通；根的作用边界（着色 vs C2 冲突下驱动）；temp=0 非确定等方法教训 → entries/2026-09-14-cogos-e0-root-probe.md；产物 `work/A/checkpoint/probe-e0/`
+- **转向：自我是经历长出来的（09-14，待讨论）**：根可能不是必须的；机制给"位置"、经历长"根" → entries/2026-09-14-cogos-self-grown-from-experience.md
+- **根/自我讨论（09-14 会话 #13）**：根是内容/槽位、自我=D(经历)；浓缩≠提取因果；权重须"挣来"；写回去要写过程不写结论；无"习以为常" → entries/2026-09-14-cogos-root-self-discussion.md
+- **压缩探针（09-14 会话 #13）**：因变量（说不说）被**世界话术+根**主导、记忆是弱变量 → 测不出压缩粒度；"学会说"是 affordance 不是 value → 素材选错 → entries/2026-09-14-cogos-compress-probe.md；报告 `../checkpoint/probe-compress/REPORT.md`
+- ~~下一步（待 YZ 讨论）：换倾向型素材 + 低基线话术 + 根有无作显式因子~~ → **已做，见上"倾向探针"**；判据/环境等仍待 YZ（见 self-convergence §七）
 
 ## 当前 · agent 认知架构（09-01 起）
 
