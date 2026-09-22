@@ -25,6 +25,16 @@
 - **压缩探针（09-14 会话 #13）**：因变量（说不说）被**世界话术+根**主导、记忆是弱变量 → 测不出压缩粒度；"学会说"是 affordance 不是 value → 素材选错 → entries/2026-09-14-cogos-compress-probe.md；报告 `../checkpoint/probe-compress/REPORT.md`
 - ~~下一步（待 YZ 讨论）：换倾向型素材 + 低基线话术 + 根有无作显式因子~~ → **已做，见上"倾向探针"**；判据/环境等仍待 YZ（见 self-convergence §七）
 
+## 当前 · agent 工具实现（09-18 起）
+
+- 工具分域 + 协议设计 + 实施分批（A 层 1/2/2.5/3/4a 已提交，4b 缓）→ `../checkpoint/plan-tools-impl.md` / `spec-tools-a.md` / `spec-tools-web.md` / `spec-phone-files.md`；进度 entries/2026-09-19-cogos-agent-tools-impl.md
+- **图形面（看屏/操作，09-20）**：see/act 三机跑通（本机 `:0` / 212 `Xvfb:99` / Windows Surface 标准账户交互会话）；设计级约束含 Windows DPI 感知与 Session 0 无桌面；设计稿 `../checkpoint/spec-screen-1.md`，原型 `../checkpoint/screen-lab/`，实测 `../checkpoint/checkpoint-3.md` + `checkpoint-4.md`；11 项裁决未定 → entries/2026-09-20-cogos-screen-face.md
+  - **P1 已落码 + 双机验收**（`screenlab/` 进 cogos 仓库根；分支 `feat/screenlab-p1` **未合并**；协议冻结；验收 1–7 / pytest 1198）→ `../checkpoint/handoff-screen-06.md`
+  - **多账户模型**（给 agent 一个账户 = 给它独立会话；`owned` vs `granted`）+ **修复无头外壳缺 X 鉴权**（3 文件未提交；212 真 reboot 通过）→ `../checkpoint/handoff-screen-08.md`
+  - **下一步 = P4 Windows 外壳讨论** → `../checkpoint/handoff-screen-08.md`
+  - **网络：大图慢根因 = VBox 桥接收包 bug，改走 Tailscale**（同走 enp0s8 却 4MB/s vs 原始 TCP 64KB/s）→ entries/2026-09-20-cogos-screen-net-vbox-bridge.md；交接 `../checkpoint/handoff-screen-10.md`
+  - **目标重置（#11）：Linux + 非无头 + agent 就是一个普通用户；a11y 优先** → `../checkpoint/handoff-screen-11.md`（新会话入口）
+
 ## 当前 · agent 认知架构（09-01 起）
 
 - 设计凝练 → entries/2026-09-02-cogos-agent-cog-arch.md

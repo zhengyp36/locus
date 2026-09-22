@@ -261,3 +261,29 @@ oneshot 改 cog-runtime cu 多轮续轮，打通 terminal/timer 工具闭环。
 
 → 细节：entries/2026-09-14-cogos-root-self-discussion.md、entries/2026-09-14-cogos-compress-probe.md
 → 报告：`work/A/checkpoint/probe-compress/REPORT.md`；交接：`../checkpoint/status.md` + `handoff-cogos-selfgrown.md`
+
+## 阶段 22 · agent 工具实现（A 层分批）+ phone 文件收发（09-18 ~ 09-20）
+
+按 `plan-tools-impl.md` 分批落地工具实现层（A），并补完 phone 的文件/图片收发与 bot↔bot 中继。
+
+- **批次**：1 本地三件（Clock/DraftStore/TimerService/phone ack）→ 2 term 核心（pty/VT）→ 2.5 远端 term + SecretStore/askpass → 3 FsChannel+TransferEngine（`3315562`）→ 4a ToolDef 单一来源。**4b 装配缓**（待第二消费者）。
+- **web 异步化**：`impl/web.py` WebService（search/fetch 走作业 + `web_cancel`，`time_form="async"`）；`c73630d` / `c91aee4`。
+- **phone 文件收发**：file/image 全链路（daemon 执行器 + `cogos/phone` + spool/作业/Signal + 工具装配）+ `@all /FILE` bot↔bot 中继（`5c5e1b4`）；真机全过——① 真人→bot 无 @ 事件直达并按消息 key 下载字节一致；② bot→真人手机可预览；③ bot↔bot（group-p2p）；④ mixed group 对端合成附件（sender 解析成 `COGOS002:A0001`）。`/FILE` 投递失败补 warn（`45ab216`）。已 push。
+- 测试：全量 **1181 passed / 4 skipped**。
+
+→ 依据/产物：`work/A/checkpoint/`（plan-tools-impl、spec-tools-a v1.4、spec-tools-web、spec-phone-files、checkpoint-1·2、handoff-tools-01~08、handoff-phone-files-01·02）
+→ 记忆：entries/2026-09-19-cogos-agent-tools-impl.md；ISSUES「`/FILE` 中继投递失败不重试」
+→ 缺口：09-14 后 #15~#18（自驱理论收敛）未入本 CHANGELOG，见 current.md 与本体 `checkpoint/26-09-17-agent-theory/`
+
+## 阶段 23 · 图形面（screen/1 看屏 / 操作）· 09-20
+
+把"图形化看电脑"从讨论推到**三平台可操作**并落最小原型。**未动 cogos 代码**（基线仍 `45ab216`）。
+
+- **设计**：`spec-screen-1.md`——协议 `screen/1`（`caps/displays/state/see/act/blob_get`）、快照世代、内容寻址 blob、不推事件（`frame_hash`+`wait_stable`）、客户端薄语义层。图形面 = 电脑的第二个面（与 `term`/`fs` 并列）；a11y 不是另一族工具，是 `see` 的一条 `mode` 与 `act` 的一种宾语。
+- **实测**：本机 `:0`（GNOME/Xorg，打通三段根因 = glamor 拒 llvmpipe / `/dev/dri` 权限 / Xfce XSMP 残留）、`192.168.1.212` `Xvfb :99`+openbox、Windows Surface `192.168.1.112`（建非管理员账户 `screen` 占交互会话 + loopback TCP + `ssh -L`）。Wayland 两条通路各自阻断（Xwayland 根窗口 `BadMatch`；Mutter RemoteDesktop 可达但看屏要叠 ScreenCast+PipeWire）。
+- **设计级约束**：daemon 必须活在目标会话内；`snapshot_id` 必需（装饰致坐标漂移）；WM 是 `act` 前置；`act` 即时帧可能早于渲染 → 判稳定须 `see --wait-stable`；Windows 需 **per-monitor DPI 感知**（否则图像坐标与注入空间差 1.5×）、Session 0 无桌面、OpenSSH 不支持 AF_UNIX 转发、标准账户不加 `Users` 组就不列入登录界面。
+- **原型**：`work/A/checkpoint/screen-lab/`（daemon + client + CLI，1082 行；X11 与 Windows adapter；Unix socket / TCP）；三环境 **LLM 在环** `see → act → see` 全过（Windows 另验 `Win+R` 起 notepad 打字）。
+- **未决**：11 项裁决（图 lineage、自建 vs 云桌面、客户端厚度、代码落点 `screen-lab` vs cogos 子包、Wayland 适配、安全收敛…）。**下一步 = Android 验证场**。
+
+→ 产物：`work/A/checkpoint/{spec-screen-1,checkpoint-3,checkpoint-4,handoff-screen-01..03}.md`、`work/A/checkpoint/screen-lab/`
+→ 记忆：entries/2026-09-20-cogos-screen-face.md
