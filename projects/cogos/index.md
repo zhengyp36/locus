@@ -34,6 +34,7 @@
   - **下一步 = P4 Windows 外壳讨论** → `../checkpoint/handoff-screen-08.md`
   - **网络：大图慢根因 = VBox 桥接收包 bug，改走 Tailscale**（同走 enp0s8 却 4MB/s vs 原始 TCP 64KB/s）→ entries/2026-09-20-cogos-screen-net-vbox-bridge.md；交接 `../checkpoint/handoff-screen-10.md`
   - **目标重置（#11）：Linux + 非无头 + agent 就是一个普通用户；a11y 优先** → `../checkpoint/handoff-screen-11.md`（新会话入口）
+  - **讨论·agent 与敏感信息边界（09-23）**：can≠know / agent=意图层非权限层 / 敏感是关系属性靠围堵不靠识别 / 致命三元组；对 cogos = ledger 已有围堵，缺 HITL + egress 限域 → entries/2026-09-23-cogos-sensitive-info-boundary.md
 
 ## 当前 · agent 认知架构（09-01 起）
 
