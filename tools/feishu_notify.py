@@ -2,8 +2,10 @@
 """Send a Feishu text message to a registered user (default: alias YZ).
 
 Usage:
-    tools/feishu_notify.py "text to send" [bot_name] [alias]
+    tools/feishu_notify.py "text to send" [bot_name] [alias] [--detail]
     echo "text to send" | tools/feishu_notify.py   # read message from stdin
+
+    --detail: print the full Feishu API response JSON (default: one-line summary)
 
 Dependencies (kept outside this repo):
     ~/.secrets/feishu.key        -> {"bots": [{"name": ..., "app_id": ..., "app_secret": ...}]}
@@ -38,6 +40,8 @@ def get_token(bot_name):
 
 def main():
     args = sys.argv[1:]
+    detail = "--detail" in args
+    args = [a for a in args if a != "--detail"]
     if not args or args[0] == "-":
         text = sys.stdin.read().strip()
         args = args[1:]
@@ -69,7 +73,10 @@ def main():
     ).json()
     if r.get("code") != 0:
         sys.exit(f"send failed: {r}")
-    print(json.dumps(r, ensure_ascii=False))
+    if detail:
+        print(json.dumps(r, ensure_ascii=False))
+    else:
+        print(f"sent to {alias}: {r['data']['message_id']}")
 
 
 if __name__ == "__main__":
