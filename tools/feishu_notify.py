@@ -76,7 +76,7 @@ def main():
     if detail:
         print(json.dumps(r, ensure_ascii=False))
     else:
-        print(f"sent to {alias}: {r['data']['message_id']}")
+        print(f"sent to {alias}")
 
 
 if __name__ == "__main__":
