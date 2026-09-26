@@ -1,6 +1,6 @@
 # scratch
 
-锚点目录。checkpoint 正文在 `../checkpoint/`(locus 之外,/undo 不回退),本目录只留指向它的锚点。
+任务内的工作 / 交接缓冲（locus 内、入库）——短命。
 
-- 工作方法 + checkpoint 路径 + 规则见根目录 `CHECKPOINT.md`。
-- 本目录不放草稿正文。
+- 收口：结论（含 why + 被否方案）进记忆层 → 删本目录草稿；方法见 `../rules/memory.md`（不要在此重述规则）。
+- 长任务的入口文件（如 `ENTRY.md`）放这里。

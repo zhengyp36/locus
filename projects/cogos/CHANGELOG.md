@@ -287,3 +287,19 @@ oneshot 改 cog-runtime cu 多轮续轮，打通 terminal/timer 工具闭环。
 
 → 产物：`checkpoint/26-09-26-screenlab/{spec-screen-1,checkpoint-3,checkpoint-4,handoff-screen-01..03}.md`、`checkpoint/26-09-26-screenlab/screen-lab/`
 → 记忆：entries/2026-09-20-cogos-screen-face.md
+
+## 阶段 24 · screenlab 图形面 v2 落地 + 封板（09-22 ~ 09-26，会话 #70~#78）
+
+从 screen/1 原型收束为「一个 agent 一台自己能用 / 受协助的电脑」，并冻结 v2 接口。
+
+- **目标重置（09-22）**：Linux、非无头、agent=普通用户；a11y 腿弃、图=主干；#9 轮工具层真机闭环。
+- **Goal 1 per-account 自管面 + Goal 2/3a 协助真人**真机验收（tag `screenlab-goal1-2026-09-24` / `screenlab-goal2-3a-2026-09-25`）。
+- **工具线盘点 / 接口对齐封板**（#72 / #73）→ `design-computer-v2-interface.md`。
+- **v2 落码 + 真机 + 独立验收**（#75 / #76 / #78）：三动词 `screen_fetch/act/save`、viewing 拆给通用视觉面 `image_ctx`、坐标恒相对 current frame、`on_change` 客户端判、settle 内化；X11/Windows usage 真值全过；回归 **1235 passed / 4 skipped**（`acceptance-screen-78.md`）。
+- **封板**：`feat/screenlab-p2` ff 合入 master（`2c82c09`）+ tag `screenlab-v2-freeze`，已 push origin。
+- **待 YZ（非承诺）**：D2（`acted` 透传设备像素）／D1（工具结果图未成模型附件＝上层装配）／gap C（Android app 端点 Java 未真机验）／Windows·Android 装配+同意入口、Wayland、`SETTLE`/`IDLE`。
+
+→ 收口件（本体、权威）：docs/screenlab-freeze.md + docs/screenlab-env.md + docs/design-agent-tools.md §16/§18
+→ 过程：`checkpoint/26-09-26-screenlab/`（工作单/规则/77 份 handoff-screen-*/design/spec/实测/原型 `screen-lab*`/dev-ops tools）
+→ 记忆：entries/2026-09-20-cogos-screen-face.md、entries/2026-09-23-cogos-sensitive-info-boundary.md
+→ 注：#15~#18 理论线（09-17）仍未入本 CHANGELOG，见 current.md「agent 理论」与本体 `checkpoint/26-09-17-agent-theory/`。

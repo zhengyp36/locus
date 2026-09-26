@@ -9,6 +9,14 @@
 - 入口: `cogos-feishu <command>`（`python3.11 -m cogos.feishu.cli`）
 - AI 开发由 locus 接管（cogos 仓库 AGENTS.md 已改为接管声明）
 
+## 当前主线（2026-09 起）
+
+自驱回路（L1→L4，造"能自己判断、长跑不偏"的 agent）→ agent 本体 = 动机为根 → agent 理论（重投影/回看/事件轴）。当前口径唯一权威 = `../cogos/docs/design-selfdrive-agent.md`。
+
+`computer` 工具第三面（图形面，与 `term`/`fs` 并列）v2 已封板（tag `screenlab-v2-freeze`）→ `../cogos/docs/screenlab-freeze.md`。
+
+> 下方「关键文件/关键设计决策/外部文档」记录的是通信层（`cogos/feishu/*`，08-07~08-24 的早期落点）；通信层已收口，使用见 `../cogos/docs/phone-usage.md`。后续主线不在其中。
+
 ## 前身 / 来源
 
 cogos 的前身是 `../agent-study/` 下的代码。agent-study 是"先学 agent 后开发 agent"的工程，cogos 是其中"开发 agent"的落点。
