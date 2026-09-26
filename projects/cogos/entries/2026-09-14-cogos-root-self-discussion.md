@@ -71,4 +71,4 @@
 
 - 上接：`2026-09-14-cogos-{e0-root-probe,self-grown-from-experience}.md`
 - 模型链：`2026-09-13-cogos-{motive-root,v0-arch,reprojection-events}.md`
-- 产物/交接：`work/A/checkpoint/handoff-agent-e0-to-selfgrown.md`、`probe-e0/`
+- 产物/交接：`../checkpoint/26-09-17-agent-theory/handoff-agent-e0-to-selfgrown.md`、`probe-e0/`

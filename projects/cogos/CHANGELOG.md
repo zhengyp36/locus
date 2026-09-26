@@ -192,7 +192,7 @@ oneshot 改 cog-runtime cu 多轮续轮，打通 terminal/timer 工具闭环。
 - **下一步**：S1 最小回路 spec → S2 用 ISSUES 候选 1 手跑。
 
 → 细节：entries/2026-09-11-cogos-selfdrive-pivot.md
-→ 交接：`../checkpoint/status.md` + `plan.md` + `state.md`（活文档）
+→ 交接：`checkpoint/26-09-17-agent-theory/status.md` + `plan.md` + `state.md`（活文档）
 
 ## 阶段 17 · 自驱回路第一阶（判据源外移）+ 分层验收（09-11）
 
@@ -206,7 +206,7 @@ oneshot 改 cog-runtime cu 多轮续轮，打通 terminal/timer 工具闭环。
 - **工位隔离更正**：服务（lm-service/feishu）是设备级单例、所有 agent 共用，无 owner；`COGOS_HOME` 仅 dev 用，非运行期需求。
 
 → 细节：entries/2026-09-11-cogos-selfdrive-pivot.md / -s3-trigger.md / -criterion-dogfood.md / -selfdrive-p0.md / -layered-acceptance.md
-→ 交接：`../checkpoint/status.md` + `handoff-layered-acceptance.md`
+→ 交接：`checkpoint/26-09-17-agent-theory/status.md` + `handoff-layered-acceptance.md`
 
 ## 阶段 18 · 路线修正：上下文组织是自驱地基（09-12）
 
@@ -219,7 +219,7 @@ oneshot 改 cog-runtime cu 多轮续轮，打通 terminal/timer 工具闭环。
 - ROADMAP 已同步：上下文组织 支线→主干；6 格"验证"格改述为判据谱系轴。
 
 → 细节：entries/2026-09-12-cogos-general-agent.md
-→ 交接：`../checkpoint/status.md`（已改道）
+→ 交接：`checkpoint/26-09-17-agent-theory/status.md`（已改道）
 
 ## 阶段 19 · 上下文组织实验链 → 判据重述：身份即锚（09-12 会话 #4~#7）
 
@@ -230,10 +230,10 @@ oneshot 改 cog-runtime cu 多轮续轮，打通 terminal/timer 工具闭环。
   - 复现实验（时序框架 + 出处；信任当下 vs 重验过去）→ entries/2026-09-12-cogos-recurrence-arm-analysis.md
   - 三处校正（投影≠替换、回取≠立即取、换帧要质变）→ entries/2026-09-12-cogos-distill-retrieval-frame-swap.md
   - 契约块一/二/三 → entries/2026-09-12-cogos-frame-swap-trigger.md
-  - **探针 1**（块一）：`recast` 3/3、`append` 3/3 均未换帧；正对照才换、帧 B 重做。主判据**不成立**且实验不可归因（把"是否换帧"交给 agent 自愿，违背自定"无主动"纪律）→ 报告 `../checkpoint/ctx-swap-probe-report.md`
+  - **探针 1**（块一）：`recast` 3/3、`append` 3/3 均未换帧；正对照才换、帧 B 重做。主判据**不成立**且实验不可归因（把"是否换帧"交给 agent 自愿，违背自定"无主动"纪律）→ 报告 `checkpoint/26-09-17-agent-theory/ctx-swap-probe-report.md`
 - **判据重述（会话 #7 追问，待 YZ 裁决）**：并置三条线 → **身份 = 锚/脊**；"丢 vs 模糊"分界=有无身份脊；块二信封=身份显式锚；**块一"目的≠身份"与身份线冲突**（任务 1→2 属"同主题换视角"，实验支持身份线）；判据改三问：身份是否延续 / 视角是否变 / 需旧帧哪层。悬置：底片是否常驻、帧职权、轨迹归帧还是归链、召回。
 - 细节：entries/2026-09-12-cogos-identity-anchor-frame.md
-- 交接：`../checkpoint/status.md` + `handoff-identity-anchor-frame.md`
+- 交接：`checkpoint/26-09-17-agent-theory/status.md` + `handoff-identity-anchor-frame.md`
 
 ## 阶段 20 · E0 手动探针：agent 模型第一次真跑（09-14 会话 #12）
 
@@ -246,7 +246,7 @@ oneshot 改 cog-runtime cu 多轮续轮，打通 terminal/timer 工具闭环。
 - **下一步（待 YZ 讨论，未动手）**：不给输入根 + 两条不同经历 + 同一提取机制 → 看长出什么、压力下守不守；`root.md` 从输入降级为"期望/假设"。
 
 → 细节：entries/2026-09-14-cogos-e0-root-probe.md、entries/2026-09-14-cogos-self-grown-from-experience.md
-→ 交接：`../checkpoint/status.md` + `handoff-agent-e0-to-selfgrown.md`；产物 `work/A/checkpoint/probe-e0/`
+→ 交接：`checkpoint/26-09-17-agent-theory/status.md` + `handoff-agent-e0-to-selfgrown.md`；产物 `checkpoint/26-09-17-agent-theory/probe-e0/`
 
 ## 阶段 21 · 根/自我讨论 + 压缩探针（09-14 会话 #13）
 
@@ -260,7 +260,7 @@ oneshot 改 cog-runtime cu 多轮续轮，打通 terminal/timer 工具闭环。
 - **下一步（待 YZ 讨论）**：换**倾向型素材**（同处境、不同历史 → 不同选择）+ 低基线话术 + **根有无作显式因子**；判据=固定处境只变历史→**分化且稳定**。
 
 → 细节：entries/2026-09-14-cogos-root-self-discussion.md、entries/2026-09-14-cogos-compress-probe.md
-→ 报告：`work/A/checkpoint/probe-compress/REPORT.md`；交接：`../checkpoint/status.md` + `handoff-cogos-selfgrown.md`
+→ 报告：`checkpoint/26-09-17-agent-theory/probe-compress/REPORT.md`；交接：`checkpoint/26-09-17-agent-theory/status.md` + `handoff-cogos-selfgrown.md`
 
 ## 阶段 22 · agent 工具实现（A 层分批）+ phone 文件收发（09-18 ~ 09-20）
 
@@ -271,7 +271,7 @@ oneshot 改 cog-runtime cu 多轮续轮，打通 terminal/timer 工具闭环。
 - **phone 文件收发**：file/image 全链路（daemon 执行器 + `cogos/phone` + spool/作业/Signal + 工具装配）+ `@all /FILE` bot↔bot 中继（`5c5e1b4`）；真机全过——① 真人→bot 无 @ 事件直达并按消息 key 下载字节一致；② bot→真人手机可预览；③ bot↔bot（group-p2p）；④ mixed group 对端合成附件（sender 解析成 `COGOS002:A0001`）。`/FILE` 投递失败补 warn（`45ab216`）。已 push。
 - 测试：全量 **1181 passed / 4 skipped**。
 
-→ 依据/产物：`work/A/checkpoint/`（plan-tools-impl、spec-tools-a v1.4、spec-tools-web、spec-phone-files、checkpoint-1·2、handoff-tools-01~08、handoff-phone-files-01·02）
+→ 依据/产物：`checkpoint/26-09-26-agent-tools/`（plan-tools-impl、spec-tools-a v1.4、spec-tools-web、spec-phone-files、checkpoint-1·2、handoff-tools-01~08、handoff-phone-files-01·02）
 → 记忆：entries/2026-09-19-cogos-agent-tools-impl.md；ISSUES「`/FILE` 中继投递失败不重试」
 → 缺口：09-14 后 #15~#18（自驱理论收敛）未入本 CHANGELOG，见 current.md 与本体 `checkpoint/26-09-17-agent-theory/`
 
@@ -282,8 +282,8 @@ oneshot 改 cog-runtime cu 多轮续轮，打通 terminal/timer 工具闭环。
 - **设计**：`spec-screen-1.md`——协议 `screen/1`（`caps/displays/state/see/act/blob_get`）、快照世代、内容寻址 blob、不推事件（`frame_hash`+`wait_stable`）、客户端薄语义层。图形面 = 电脑的第二个面（与 `term`/`fs` 并列）；a11y 不是另一族工具，是 `see` 的一条 `mode` 与 `act` 的一种宾语。
 - **实测**：本机 `:0`（GNOME/Xorg，打通三段根因 = glamor 拒 llvmpipe / `/dev/dri` 权限 / Xfce XSMP 残留）、`192.168.1.212` `Xvfb :99`+openbox、Windows Surface `192.168.1.112`（建非管理员账户 `screen` 占交互会话 + loopback TCP + `ssh -L`）。Wayland 两条通路各自阻断（Xwayland 根窗口 `BadMatch`；Mutter RemoteDesktop 可达但看屏要叠 ScreenCast+PipeWire）。
 - **设计级约束**：daemon 必须活在目标会话内；`snapshot_id` 必需（装饰致坐标漂移）；WM 是 `act` 前置；`act` 即时帧可能早于渲染 → 判稳定须 `see --wait-stable`；Windows 需 **per-monitor DPI 感知**（否则图像坐标与注入空间差 1.5×）、Session 0 无桌面、OpenSSH 不支持 AF_UNIX 转发、标准账户不加 `Users` 组就不列入登录界面。
-- **原型**：`work/A/checkpoint/screen-lab/`（daemon + client + CLI，1082 行；X11 与 Windows adapter；Unix socket / TCP）；三环境 **LLM 在环** `see → act → see` 全过（Windows 另验 `Win+R` 起 notepad 打字）。
+- **原型**：`checkpoint/26-09-26-screenlab/screen-lab/`（daemon + client + CLI，1082 行；X11 与 Windows adapter；Unix socket / TCP）；三环境 **LLM 在环** `see → act → see` 全过（Windows 另验 `Win+R` 起 notepad 打字）。
 - **未决**：11 项裁决（图 lineage、自建 vs 云桌面、客户端厚度、代码落点 `screen-lab` vs cogos 子包、Wayland 适配、安全收敛…）。**下一步 = Android 验证场**。
 
-→ 产物：`work/A/checkpoint/{spec-screen-1,checkpoint-3,checkpoint-4,handoff-screen-01..03}.md`、`work/A/checkpoint/screen-lab/`
+→ 产物：`checkpoint/26-09-26-screenlab/{spec-screen-1,checkpoint-3,checkpoint-4,handoff-screen-01..03}.md`、`checkpoint/26-09-26-screenlab/screen-lab/`
 → 记忆：entries/2026-09-20-cogos-screen-face.md

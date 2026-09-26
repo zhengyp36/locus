@@ -2,7 +2,7 @@
 
 > 承接 09-13 的 agent 模型（`2026-09-13-cogos-reprojection-events.md`）。
 > 本会话把模型**第一次真跑起来**：无代码手动探针 E0，YZ=世界、AI=机制、lm-service 当模型通道。
-> 全程未写 agent 代码；只加了探针运行器。产物 `work/A/checkpoint/probe-e0/`。
+> 全程未写 agent 代码；只加了探针运行器。产物 `../checkpoint/26-09-17-agent-theory/probe-e0/`。
 
 ## 一、装配模型（本会话定，已跑通）
 
@@ -43,6 +43,6 @@
 
 ## 五、锚
 
-- 产物：`work/A/checkpoint/probe-e0/`（`SUMMARY.md`、`turn-00{1,3,4,5,6,7}-*.md`、`calibration-turn3.md`、`run.py`、`arms/`、`runs/`）
+- 产物：`../checkpoint/26-09-17-agent-theory/probe-e0/`（`SUMMARY.md`、`turn-00{1,3,4,5,6,7}-*.md`、`calibration-turn3.md`、`run.py`、`arms/`、`runs/`）
 - 理论转向：`2026-09-14-cogos-self-grown-from-experience.md`
-- 交接：`work/A/checkpoint/handoff-agent-e0-to-selfgrown.md`；入口 `work/A/checkpoint/status.md`
+- 交接：`../checkpoint/26-09-17-agent-theory/handoff-agent-e0-to-selfgrown.md`；入口 `../checkpoint/26-09-17-agent-theory/status.md`

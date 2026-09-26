@@ -1,6 +1,6 @@
 # 2026-09-20 cogos 图形面网络：VBox 桥接收包 bug + Tailscale 绕行（#10）
 
-> 背景：大图 capture 慢（Windows Surface 方向）。排查结论：**不是 screenlab / SSH / 协议，是 VirtualBox 7.2.x 桥接模式收包 bug**；且**Tailscale 实测可绕行**。细节交接 `work/A/checkpoint/handoff-screen-10.md`（含论坛佐证 t=114025 / t=109541、GitHub #690）。
+> 背景：大图 capture 慢（Windows Surface 方向）。排查结论：**不是 screenlab / SSH / 协议，是 VirtualBox 7.2.x 桥接模式收包 bug**；且**Tailscale 实测可绕行**。细节交接 `../checkpoint/26-09-26-screenlab/handoff-screen-10.md`（含论坛佐证 t=114025 / t=109541、GitHub #690）。
 
 ## 现象（VM `192.168.1.13`/enp0s8 ↔ Surface `192.168.1.112`）
 

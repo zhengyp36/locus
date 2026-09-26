@@ -5,7 +5,7 @@
 > 前置：`2026-09-12-cogos-identity-anchor-frame.md`（身份即锚）、`2026-09-12-cogos-frame-swap-trigger.md`（块一 §十 冲突）、
 > `2026-09-12-cogos-distill-retrieval-frame-swap.md`、`2026-09-12-cogos-recurrence-arm-analysis.md`、
 > `2026-09-12-cogos-general-agent.md`。
-> 交接：`work/A/checkpoint/handoff-build-agent-v0.md`（要搭的东西）；入口 `work/A/checkpoint/status.md`。
+> 交接：`../checkpoint/26-09-17-agent-theory/handoff-build-agent-v0.md`（要搭的东西）；入口 `../checkpoint/26-09-17-agent-theory/status.md`。
 
 ## 零、路线回顾（本会话开头）
 
@@ -110,6 +110,6 @@
 
 ## 锚
 
-- 本会话交接：`work/A/checkpoint/handoff-build-agent-v0.md`（要搭的 v0）；入口 `work/A/checkpoint/status.md`
+- 本会话交接：`../checkpoint/26-09-17-agent-theory/handoff-build-agent-v0.md`（要搭的 v0）；入口 `../checkpoint/26-09-17-agent-theory/status.md`
 - 代码（现状）：`work/A/cogos-s2` @ `s2-selfdrive-loop` `9563fe4`（clean）→ `cogos/agent/{consciousness,app,config,perception,message,tools,timer,terminal}.py`
 - 上会话：`entries/2026-09-12-cogos-identity-anchor-frame.md`；块一 `entries/2026-09-12-cogos-frame-swap-trigger.md`

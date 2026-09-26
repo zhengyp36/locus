@@ -1,6 +1,6 @@
 # Agent 认知架构 v2 — 上下文自管理（凝练）
 
-> 完整原文：`checkpoint/26-09-02-agent-cog-arch/agent-prototype-design-v2.md`（含 v1 存档）。本文是记忆凝练版，供快速恢复核心概念与决策。
+> 完整原文：`../checkpoint/26-09-02-agent-cog-arch/agent-prototype-design-v2.md`（含 v1 存档）。本文是记忆凝练版，供快速恢复核心概念与决策。
 
 ## 核心转向
 

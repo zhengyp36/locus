@@ -3,7 +3,7 @@
 > 从探针 1（块一验证，主判据不成立）出发的追问，把三条此前分散的线并置，得到一次模型重述。
 > 前置：`2026-09-12-cogos-frame-swap-trigger.md`（块一/二/三）、`2026-09-12-cogos-distill-retrieval-frame-swap.md`（三处校正）、
 > `2026-09-12-cogos-ctx-seed-diagnosis.md`（§七 关系/身份层）、`2026-09-12-cogos-recurrence-arm-analysis.md`（时序框架+出处）。
-> 探针 1 原始结果：`work/A/checkpoint/ctx-swap-probe-report.md`。
+> 探针 1 原始结果：`../checkpoint/26-09-17-agent-theory/ctx-swap-probe-report.md`。
 
 ## 零、探针 1 的结论（背景）
 
@@ -88,7 +88,7 @@
 
 ## 锚
 
-- 探针 1：`work/A/checkpoint/ctx-swap-probe-report.md`；代码 `work/A/cogos-ctx/research/ctx_swap_probe.py`
+- 探针 1：`../checkpoint/26-09-17-agent-theory/ctx-swap-probe-report.md`；代码 `work/A/cogos-ctx/research/ctx_swap_probe.py`
 - 块一原文（待按本文重述）：`entries/2026-09-12-cogos-frame-swap-trigger.md`
 - 身份线：`entries/2026-09-12-cogos-ctx-seed-diagnosis.md` §七、`entries/2026-09-12-cogos-recurrence-arm-analysis.md`
-- 交接（新会话）：`work/A/checkpoint/handoff-identity-anchor-frame.md`；入口 `work/A/checkpoint/status.md`
+- 交接（新会话）：`../checkpoint/26-09-17-agent-theory/handoff-identity-anchor-frame.md`；入口 `../checkpoint/26-09-17-agent-theory/status.md`

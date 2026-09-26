@@ -28,4 +28,4 @@
 
 ## 关键文件
 - 工具/测试：/tmp/kilo/vision/{vf6.py,vf_tool.py,vf_box_proto.py}、vf6_repl_out_new/windows.png。
-- 上游交接 checkpoint/principle-exp/；本会话交接 `handoff-vf6-rect-marker-context.md`。
+- 上游交接 ../checkpoint/26-09-11-live-checkpoint/principle-exp/；本会话交接 `handoff-vf6-rect-marker-context.md`。

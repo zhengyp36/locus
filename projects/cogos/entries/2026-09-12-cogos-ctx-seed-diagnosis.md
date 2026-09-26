@@ -1,7 +1,7 @@
 # 2026-09-12 ctx-seed 探针首跑 + 诊断：种子缺主体/维度/时序
 
 > 承接 `2026-09-12-cogos-general-agent.md`（第一刀：状态对象 + 冷启动重启）。本 entry 记真机首跑结果与由此展开的三层诊断。
-> 项目侧报告：`work/A/checkpoint/ctx-seed-probe-report.md`。
+> 项目侧报告：`../checkpoint/26-09-17-agent-theory/ctx-seed-probe-report.md`。
 
 ## 一、真机首跑（埋雷取证靶）
 
@@ -59,7 +59,7 @@
   3. **旧 schema 危害升级**：多跳下从"重做"升级为**越权动作 + 链漂移**（改世界→污染真相→seed 膨胀→末跳跑偏）。
 - **暴露空档**：帧职权未定（`current` 直接改码 / `axes` 只验证不修），`next` 是"我做/交下一帧/parked"必须先裁。
 - **方法学坑**：n=1/臂、单靶、且是"问题已答完"任务，不能外推；`axes` 两次 `open` 空/非空不同=发现兼噪声；execute=任意 shell 必须独立副本。
-- 报告：`checkpoint/ctx-seed-experiments-e1-e2.md`。
+- 报告：`../checkpoint/26-09-17-agent-theory/ctx-seed-experiments-e1-e2.md`。
 
 ## 七、复现场景：缺的是"关系/身份"层（09-12 末）
 
@@ -83,5 +83,5 @@ YZ 用真人复现类比逼出下一个维度：①某天做过一个测试并�
 - 探针：`work/A/cogos-ctx/research/ctx_seed_probe.py`（含 `--b-strict`）
 - 靶：`work/A/cogos-ctx/research/target/`
 - raw：`/tmp/ctx-seed-probe/20260912-011828/raw.jsonl`（宽松）、`20260912-011952/raw.jsonl`（严格）
-- 报告：`checkpoint/ctx-seed-probe-report.md`；入口：`checkpoint/status.md`
+- 报告：`../checkpoint/26-09-17-agent-theory/ctx-seed-probe-report.md`；入口：`../checkpoint/26-09-17-agent-theory/status.md`
 - 前置：`2026-09-12-cogos-general-agent.md`；代码现状 `cogos-s2/cogos/agent/consciousness.py`

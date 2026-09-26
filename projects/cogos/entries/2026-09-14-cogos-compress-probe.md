@@ -1,7 +1,7 @@
 # 2026-09-14 压缩探针：因变量被框架主导（会话 #13）
 
 > 承 `2026-09-14-cogos-root-self-discussion.md` 的"下一步 1 + 2"。
-> 无 agent 代码；产物 `work/A/checkpoint/probe-compress/`，报告 `REPORT.md`。
+> 无 agent 代码；产物 `../checkpoint/26-09-17-agent-theory/probe-compress/`，报告 `REPORT.md`。
 > **结论一句话**：因变量（说不说）被**世界话术 + 根**主导，记忆是弱变量 → 测不出压缩粒度；这是**方法校准**，不是判决。
 
 ## 设计
@@ -35,5 +35,5 @@
 ## 锚
 
 - 讨论：`2026-09-14-cogos-root-self-discussion.md`
-- 报告：`work/A/checkpoint/probe-compress/REPORT.md`；交接 `work/A/checkpoint/handoff-cogos-selfgrown.md`
+- 报告：`../checkpoint/26-09-17-agent-theory/probe-compress/REPORT.md`；交接 `../checkpoint/26-09-17-agent-theory/handoff-cogos-selfgrown.md`
 - 上接：`2026-09-14-cogos-{e0-root-probe,self-grown-from-experience}.md`

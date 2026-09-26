@@ -1,7 +1,7 @@
 # cogos 判据源外移：真靶 dogfood + 假 done 修复（09-11 晚）
 
 > 承接 `2026-09-11-cogos-selfdrive-pivot.md`、`2026-09-11-cogos-s3-trigger.md`；
-> 过程/证据在 `/home/zhengyp/work/A/checkpoint/`（`status.md` = 新会话入口，`dogfood/report.md` = 本轮报告，`handoff-criterion-dogfood.md` = 方向候选）。
+> 过程/证据在 `../checkpoint/26-09-17-agent-theory/`（`status.md` = 新会话入口，`dogfood/report.md` = 本轮报告，`handoff-criterion-dogfood.md` = 方向候选）。
 
 ## S4 第一阶（判据源外移）
 
@@ -39,4 +39,4 @@
 ## 锚点
 
 - 代码：`/home/zhengyp/work/A/cogos-s2`（`4cf0f31`）、`/home/zhengyp/work/A/cogos-dogfood`（`738fdfe` + 未提交 agent 产出）。
-- 过程：`/home/zhengyp/work/A/checkpoint/`（`dogfood/report.md`、`runs*.jsonl`、`handoff-criterion-dogfood.md`）。
+- 过程：`../checkpoint/26-09-17-agent-theory/`（`dogfood/report.md`、`runs*.jsonl`、`handoff-criterion-dogfood.md`）。

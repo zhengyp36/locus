@@ -1,69 +1,60 @@
 # 索引
 
 > 分层：当前阶段（首页）→ 已收尾（归档入口）。细节按需去 entries/ 翻，不逐条占首页。
+> `checkpoint/26-09-26-*` = 2026-09-26 归档线；`checkpoint/26-09-17-agent-theory/` = cogos 理论归档。
 
-## 当前 · 自驱回路（09-11 起，主线）
+## 最近收口 · screenlab 图形面（09-20~26，#1~#78）
 
-- **自我收敛（09-14 会话 #14，最新）**：要"能自我长的 agent"；"好用"＝"自驱/有自我"（迎合≠好用）；自我＝环里**慢变量**（只能长不能装）；自驱三条件；探针到不了（离线单发＋手喂后果）；防偏靠"整合"；判断归它、决定权归规则 → entries/2026-09-14-cogos-self-convergence.md
-- **倾向探针（09-14 会话 #14）**：换倾向型素材重做 → 机制通（负向经历翻盘）但只是"照结局记账"、无解读；实验 B 事件单元 schema 初版 → entries/2026-09-14-cogos-tendency-probe.md；产物 `../checkpoint/probe-tendency/`（REPORT.md + event-unit-schema.md + arms/runs）
-- **#14 后半（未入 entries，交接）**：动因讨论→**饿/困/疼**（机制管机制、agent 只感知状态；饿→求助非谄媚；信号粗不细）→ `../checkpoint/handoff-cogos-drives.md`
-- 转向 + 行业评估 + 保命收编 → entries/2026-09-11-cogos-selfdrive-pivot.md
-- 计划 + S0 状态面 + 停点 → `../checkpoint/plan.md` / `state.md` / `status.md` / `checkpoint-3.md`（活文档）
+- **接口层通过独立验收**：三动词 `screen_fetch/act/save`、viewing 拆给 image_ctx、坐标恒相对 current frame、`on_change` 客户端判；X11/Windows usage 真值全过 → `checkpoint/26-09-26-screenlab/acceptance-screen-78.md`
+- **收口件（本体）**：`../cogos/docs/screenlab-freeze.md`（代码清单/设计索引/v2 终态/暂停点）· `../cogos/docs/screenlab-env.md` · `../cogos/docs/design-agent-tools.md §16/§18`
+- **工作单/规则**：`checkpoint/26-09-26-screenlab/screenlab-work.md` · `screenlab-rules.md` · `screenlab-tools-review.md`
+- **目标唯一约束**：`checkpoint/26-09-26-screenlab/spec-screen-1.md §0.0`；封板 `design-computer-v2-interface.md`
+- **分支**：`feat/screenlab-p2`（未合并 master、未 push）；合 master + tag `screenlab-v2-freeze` 待 YZ
+- **待 YZ**：D2（acted 透传设备像素）／D1（工具结果图未装配成模型附件）／gap C（Android app 端点未真机验）／装配+同意入口、Wayland、SETTLE/IDLE
+- 条目：`entries/2026-09-20-cogos-screen-face.md` · `entries/2026-09-20-cogos-screen-net-vbox-bridge.md` · `entries/2026-09-23-cogos-sensitive-info-boundary.md`
+
+## 当前 · agent 理论（09-14 起，#14~#18）
+
+- **自我收敛（09-14 #14）**：要"能自我长的 agent"；"好用"＝"自驱/有自我"；自我＝环里**慢变量**（只能长不能装）→ entries/2026-09-14-cogos-self-convergence.md
+- **倾向探针（#14）**：机制通但只"照结局记账"、无解读 → entries/2026-09-14-cogos-tendency-probe.md；产物 `checkpoint/26-09-17-agent-theory/probe-tendency/`
+- **#14 后半~#18（未入 entries，交接）**：动因证伪 → 感知/身份/事件驱动 → 运行框架/流与时间线 → 经历表示/切点=误差/取回内容寻址/整理=抽样重演。总纲 `../cogos/docs/design-selfdrive-agent.md`；过程 `checkpoint/26-09-17-agent-theory/`（handoff-cogos-{drives,scaffold,perception-tick,loop,experience}）
+- **理论评审入口（只讲不推进）**：`checkpoint/26-09-26-theory-residual/handoff-cogos-theory-review.md`
+
+## 当前 · 自驱回路（09-11 起主线）
+
+- 转向造自驱推进 agent（L1→L4）+ 行业评估 → entries/2026-09-11-cogos-selfdrive-pivot.md
+- S2/S3/S4：判据源外移 + 分层验收（真机省 ~33%）→ entries/2026-09-11-cogos-{s3-trigger,criterion-dogfood,layered-acceptance,selfdrive-p0}.md
+- 路线修正（09-12）：自驱地基=上下文组织 → entries/2026-09-12-cogos-general-agent.md
+- 上下文组织推演链 → entries/2026-09-12-cogos-{recurrence-arm-analysis,distill-retrieval-frame-swap,frame-swap-trigger,identity-anchor-frame}.md；报告 `checkpoint/26-09-17-agent-theory/ctx-swap-probe-report.md`
+- 动机为根（09-13 #8）→ entries/2026-09-13-cogos-motive-root.md
+- v0 架构（09-13 #9）→ entries/2026-09-13-cogos-v0-arch.md；交接 `checkpoint/26-09-17-agent-theory/handoff-build-agent-v0.md`
+- E0 探针（#12）→ entries/2026-09-14-cogos-e0-root-probe.md；产物 `checkpoint/26-09-17-agent-theory/probe-e0/`
+- 自我是经历长出来的（#13）→ entries/2026-09-14-cogos-self-grown-from-experience.md；压缩探针 → entries/2026-09-14-cogos-compress-probe.md、`checkpoint/26-09-17-agent-theory/probe-compress/REPORT.md`
 - 旧活文档归档 → checkpoint/26-09-11-live-checkpoint/
-- task-5 复核通过（验收遇错即止 + phase 计时）→ tasks/task-5-loop-verify-timing.md
-- task-6（测试提速）+ task-7（Kilo 常驻多通道 spike）已交工位 B → tasks/
-- S4 判据源外移 + 分层验收（真机 dogfood 验证省 ~33%）→ entries/2026-09-11-cogos-layered-acceptance.md；停点 `../checkpoint/status.md`
-- 上下文组织校正：复现实验 → 蒸馏再校正（投影≠替换、回取≠立即取、换帧要质变）→ entries/2026-09-12-cogos-recurrence-arm-analysis.md、entries/2026-09-12-cogos-distill-retrieval-frame-swap.md
-- 契约块一·换帧边界：唯一触发=目的变了；来源=内容+状态；agent 无"主动"只有机制触发；自评=传感器+概率提醒 → entries/2026-09-12-cogos-frame-swap-trigger.md（剩块二/三/四；§十 已标"身份优先于目的"冲突）
-- 探针 1 结果 + 并置讨论：**身份即锚/脊**；丢 vs 模糊的分界=有无身份脊；块一"目的≠身份"与身份线冲突；判据重述为三问（身份延续/视角变/需旧帧哪层）→ entries/2026-09-12-cogos-identity-anchor-frame.md；报告 `../checkpoint/ctx-swap-probe-report.md`
-- 工位隔离更正：服务是设备级单例共用、无 owner；`COGOS_HOME` 仅 dev 用 → entries/2026-09-11-cogos-workstation-isolation.md
-- **动机为根（09-13 会话 #8）**：根=动机，目的从动机长、任务从目的长 → entries/2026-09-13-cogos-motive-root.md
-- **v0 架构（09-13 会话 #9）**：记忆/整理/议程归机制层、婴儿期、不设 tick → entries/2026-09-13-cogos-v0-arch.md；交接 `work/A/checkpoint/handoff-build-agent-v0.md`
-- **E0 手动探针（09-14 会话 #12）**：想/说通道跑通；根的作用边界（着色 vs C2 冲突下驱动）；temp=0 非确定等方法教训 → entries/2026-09-14-cogos-e0-root-probe.md；产物 `work/A/checkpoint/probe-e0/`
-- **转向：自我是经历长出来的（09-14，待讨论）**：根可能不是必须的；机制给"位置"、经历长"根" → entries/2026-09-14-cogos-self-grown-from-experience.md
-- **根/自我讨论（09-14 会话 #13）**：根是内容/槽位、自我=D(经历)；浓缩≠提取因果；权重须"挣来"；写回去要写过程不写结论；无"习以为常" → entries/2026-09-14-cogos-root-self-discussion.md
-- **压缩探针（09-14 会话 #13）**：因变量（说不说）被**世界话术+根**主导、记忆是弱变量 → 测不出压缩粒度；"学会说"是 affordance 不是 value → 素材选错 → entries/2026-09-14-cogos-compress-probe.md；报告 `../checkpoint/probe-compress/REPORT.md`
-- ~~下一步（待 YZ 讨论）：换倾向型素材 + 低基线话术 + 根有无作显式因子~~ → **已做，见上"倾向探针"**；判据/环境等仍待 YZ（见 self-convergence §七）
 
 ## 当前 · agent 工具实现（09-18 起）
 
-- 工具分域 + 协议设计 + 实施分批（A 层 1/2/2.5/3/4a 已提交，4b 缓）→ `../checkpoint/plan-tools-impl.md` / `spec-tools-a.md` / `spec-tools-web.md` / `spec-phone-files.md`；进度 entries/2026-09-19-cogos-agent-tools-impl.md
-- **图形面（看屏/操作，09-20）**：see/act 三机跑通（本机 `:0` / 212 `Xvfb:99` / Windows Surface 标准账户交互会话）；设计级约束含 Windows DPI 感知与 Session 0 无桌面；设计稿 `../checkpoint/spec-screen-1.md`，原型 `../checkpoint/screen-lab/`，实测 `../checkpoint/checkpoint-3.md` + `checkpoint-4.md`；11 项裁决未定 → entries/2026-09-20-cogos-screen-face.md
-  - **P1 已落码 + 双机验收**（`screenlab/` 进 cogos 仓库根；分支 `feat/screenlab-p1` **未合并**；协议冻结；验收 1–7 / pytest 1198）→ `../checkpoint/handoff-screen-06.md`
-  - **多账户模型**（给 agent 一个账户 = 给它独立会话；`owned` vs `granted`）+ **修复无头外壳缺 X 鉴权**（3 文件未提交；212 真 reboot 通过）→ `../checkpoint/handoff-screen-08.md`
-  - **下一步 = P4 Windows 外壳讨论** → `../checkpoint/handoff-screen-08.md`
-  - **网络：大图慢根因 = VBox 桥接收包 bug，改走 Tailscale**（同走 enp0s8 却 4MB/s vs 原始 TCP 64KB/s）→ entries/2026-09-20-cogos-screen-net-vbox-bridge.md；交接 `../checkpoint/handoff-screen-10.md`
-  - **目标重置（#11）：Linux + 非无头 + agent 就是一个普通用户；a11y 优先** → `../checkpoint/handoff-screen-11.md`（新会话入口）
-  - **讨论·agent 与敏感信息边界（09-23）**：can≠know / agent=意图层非权限层 / 敏感是关系属性靠围堵不靠识别 / 致命三元组；对 cogos = ledger 已有围堵，缺 HITL + egress 限域 → entries/2026-09-23-cogos-sensitive-info-boundary.md
+- A 层分批（1/2/2.5/3/4a 已提交，4b 缓）→ `checkpoint/26-09-26-agent-tools/`（spec-tools-a / spec-tools-web / spec-phone-files / plan-tools-impl / handoff-tools-01..09 / handoff-phone-files-01/02）；进度 entries/2026-09-19-cogos-agent-tools-impl.md
+- 图形面（看屏/操作，09-20）→ entries/2026-09-20-cogos-screen-face.md；设计/实测见上"最近收口"
 
 ## 当前 · agent 认知架构（09-01 起）
 
-- 设计凝练 → entries/2026-09-02-cogos-agent-cog-arch.md
-- 设计原文归档 → checkpoint/26-09-02-agent-cog-arch/agent-prototype-design-v2.md
+- 设计凝练 → entries/2026-09-02-cogos-agent-cog-arch.md；归档 → checkpoint/26-09-02-agent-cog-arch/
 - 代码认知 + 实施状态 → entries/2026-09-02-cogos-agent-codebase.md
-- 视觉图组织/引用规范（域·FIG + 图块K轮寿命；FIG:/PATH:/ANNO:，定稿待实现）→ entries/2026-09-08-cogos-vision-image-fields.md；本体 `cogos/docs/design-vision-image-fields.md`
-- image_ctx P1~P4 落码 + 职责边界定案（图模块不管 K 轮/compile，归上下文管理器）+ 坐标基准统一 + 探针收口（§138/§139）→ entries/2026-09-08-cogos-image-ctx-boundary.md
-- 探针：`/tmp/kilo/vision/p3probe/{taskA,taskB,probe138}.py`（P3 目的层 A/B + §138 换算精度，非仓库）
-- 下一步：衍生推理档（用锚做新相对窗口，检验坐标教学必要性）——待 YZ 开题
+- 视觉图组织/引用规范 → entries/2026-09-08-cogos-vision-image-fields.md；本体 `cogos/docs/design-vision-image-fields.md`
+- image_ctx P1~P4 + 职责边界 → entries/2026-09-08-cogos-image-ctx-boundary.md
 
 ## 已收尾 · 底层三件实施（08-29 ~ 08-30）
 
-- 任务清单 → tasks/task-1-lm-service.md（✅ 完成）+ task-3-lm-service-fixes.md（✅ 完成）+ task-2-cog-runtime.md（✅ 设计收敛）+ task-4-cog-runtime-impl.md（✅ 完成）
-- lm-service 规格 → docs/design-lm-service-min.md
-- lm-service 实施过程归档 → checkpoint/archive/26-08-30-lm-service-impl/（task-1）+ checkpoint/archive/26-08-30-lm-service-fixes/（task-3）
-- cog-runtime 设计/实施过程归档 → checkpoint/archive/26-08-30-cog-runtime-impl/（task-2 设计 + task-4 实施）
-- lm-service 设计过程归档 → checkpoint/archive/26-08-29-impl-design/
+- 任务清单 → tasks/task-1-lm-service.md + task-3-lm-service-fixes.md + task-2-cog-runtime.md + task-4-cog-runtime-impl.md
+- 归档 → checkpoint/archive/26-08-30-* / 26-08-29-impl-design/
 - 开发计划 → docs/cogos-plan.md
 
 ## 已收尾 · 智能系统设计（08-24 ~ 08-27）
 
-- 概念体系 → docs/cogos-concept-system.md
-- 设计理论摘要 → docs/cogos-design-theory-summary.md
-- agent-study 挂接点 → docs/agent-study-hooks.md
-- 复习过程与阶段预估 → checkpoint/archive/26-08-27-agent-study-review/
+- 概念体系 → docs/cogos-concept-system.md；设计理论摘要 → docs/cogos-design-theory-summary.md；agent-study 挂接点 → docs/agent-study-hooks.md
+- 复习过程 → checkpoint/archive/26-08-27-agent-study-review/
 
 ## 已收尾 · 通信层（08-07 ~ 08-24）
 
-- 代码现状地图 → entries/project-map.md
-- 阶段脉络 → CHANGELOG.md（阶段 1 ~ 3）
-- 细节条目 → entries/（08-12 ~ 08-24 系列，按日期命名，含 phone / 群聊 / 账号）
+- 代码现状地图 → entries/project-map.md；阶段脉络 → CHANGELOG.md（阶段 1 ~ 3）；细节条目 → entries/（08-12 ~ 08-24 系列）

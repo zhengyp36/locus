@@ -50,4 +50,4 @@
   - `probe138.py`（§138 换算精度）：纯几何，全图 ref 上 `@窗口→@全图` delta≈0、实际下发像素偏差 0.56px（亚像素）、目标工具T(0.188,0.042) 仍覆盖、无短边失真；45 窗口回环最大 0.56px。
 - **checklist 回勾**（本会话）：§0 行为 6 项 + §0 禁区 3 项 + `文字预算摘要`（取消）+ 残留待核 `§138`（probe138 过）、`§139`（taskB 过）。P1~P4 原有 `[x]` 未动。
 - **遗留（本会话）**：坐标规则动态注入暂缓（静态前置照旧）；`desc/` canonical 层未落盘；超龄回收（Source.registry/cache 积压）未做；待实测 3 项（A-B 元信息短序 / 图像 token 纯尺寸函数 / 超限行为固化）未测。
-- **已交接** `checkpoint/principle-exp/handoff-vision-image-fields-8.md`（下一步=**衍生推理档**：用锚做新相对窗口，检验坐标教学必要性）。
+- **已交接** `../checkpoint/26-09-11-live-checkpoint/principle-exp/handoff-vision-image-fields-8.md`（下一步=**衍生推理档**：用锚做新相对窗口，检验坐标教学必要性）。

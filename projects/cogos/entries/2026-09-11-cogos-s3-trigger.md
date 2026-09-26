@@ -1,6 +1,6 @@
 # 2026-09-11 cogos S3：触发（启动即跑）+ 前置三修复
 
-关联：`checkpoint/s3-report.md`、`checkpoint/status.md`、`cogos/docs/design-selfdrive-loop-s3.md`、entry `2026-09-11-cogos-selfdrive-pivot.md`。
+关联：`../checkpoint/26-09-17-agent-theory/s3-report.md`、`../checkpoint/26-09-17-agent-theory/status.md`、`cogos/docs/design-selfdrive-loop-s3.md`、entry `2026-09-11-cogos-selfdrive-pivot.md`。
 
 ## 做什么
 

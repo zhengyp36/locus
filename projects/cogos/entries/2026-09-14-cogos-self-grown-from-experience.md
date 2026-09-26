@@ -42,5 +42,5 @@
 ## 六、锚
 
 - 实验事实：`2026-09-14-cogos-e0-root-probe.md`
-- 产物：`work/A/checkpoint/probe-e0/`
+- 产物：`../checkpoint/26-09-17-agent-theory/probe-e0/`
 - 上接模型：`2026-09-13-cogos-reprojection-events.md`、`2026-09-13-cogos-motive-root.md`、`2026-09-13-cogos-v0-arch.md`

@@ -1,7 +1,7 @@
 # 2026-09-12 复现实验逐臂分析：问题不在 agent，在壳的蒸馏/装载契约
 
 > 会话 #5。承接 `2026-09-12-cogos-ctx-seed-diagnosis.md`（E1/E2 + 关系/身份层假设）。
-> 项目侧：实验报告 `work/A/checkpoint/ctx-seed-recurrence-experiment.md`；逐臂分析 `work/A/checkpoint/ctx-recurrence-arm-analysis.md`；探针 `work/A/cogos-ctx/research/ctx_recurrence_probe.py`。
+> 项目侧：实验报告 `../checkpoint/26-09-17-agent-theory/ctx-seed-recurrence-experiment.md`；逐臂分析 `../checkpoint/26-09-17-agent-theory/ctx-recurrence-arm-analysis.md`；探针 `work/A/cogos-ctx/research/ctx_recurrence_probe.py`。
 
 ## 实验
 
@@ -42,7 +42,7 @@ seed v2 契约：①内容字段坚持维度分离（`known`/`open`阻塞/`next`
 
 ## 锚
 
-- 逐臂分析：`work/A/checkpoint/ctx-recurrence-arm-analysis.md`
-- 实验原始：`work/A/checkpoint/ctx-seed-recurrence-experiment.md`
-- 交接：`work/A/checkpoint/handoff-ctx-seed-distill-contract.md`；入口 `status.md`
+- 逐臂分析：`../checkpoint/26-09-17-agent-theory/ctx-recurrence-arm-analysis.md`
+- 实验原始：`../checkpoint/26-09-17-agent-theory/ctx-seed-recurrence-experiment.md`
+- 交接：`../checkpoint/26-09-17-agent-theory/handoff-ctx-seed-distill-contract.md`；入口 `status.md`
 - 探针：`work/A/cogos-ctx/research/ctx_recurrence_probe.py`（untracked，分支 `ctx-seed`）

@@ -88,4 +88,4 @@
 
 - 代码：`work/A/cogos-ctx` @ `ctx-seed`，`research/ctx_seed_probe.py`、`research/ctx_recurrence_probe.py`
 - 意识层现状：`cogos-s2/cogos/agent/consciousness.py`（append，未动）
-- 入口：`../../checkpoint/status.md`；交接 `../../checkpoint/handoff-ctx-seed-distill-contract.md`
+- 入口：`../checkpoint/26-09-17-agent-theory/status.md`；交接 `../checkpoint/26-09-17-agent-theory/handoff-ctx-seed-distill-contract.md`

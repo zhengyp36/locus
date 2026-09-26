@@ -1,6 +1,6 @@
 # #18 经历：表示 / 切分 / 取回 / 整理（09-17）
 
-会话 #18。**未改任何代码、未启动 lm-service**。产物是文档，已在 `work/A/checkpoint/` 整理成当前口径。
+会话 #18。**未改任何代码、未启动 lm-service**。产物是文档，已在 `../checkpoint/26-09-17-agent-theory/` 整理成当前口径。
 
 ## 1. 起点与一次否定
 
@@ -64,7 +64,7 @@ thread（= 起始段 id） / refs [(kind,id)]  kind=continue_of / cut_by（开�
 - 我之前把"链"当取回的正当手段夸了一遍，方向错了：**内容寻址的那个"丢"才是筛选，是方向来源**。
 - 表述风险：同一件事有两套词（`T`/`P整理` vs 活跃度；"流" vs 经历轴），必须钉死口径，否则新会话混用。
 
-## 8. 产物（`work/A/checkpoint/`）
+## 8. 产物（`../checkpoint/26-09-17-agent-theory/`）
 
 - **`design-cogos-agent-current.md`** —— 当前总纲，**唯一权威口径**。
 - **`design-cogos-open-items.md`** —— 未定表（§B 九项；**权重构造式**为关键路径，不打通则升格不工作）。

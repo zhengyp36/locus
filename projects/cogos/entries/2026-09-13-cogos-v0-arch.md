@@ -2,7 +2,7 @@
 
 > 承接同日的动机推演（会话 #8，`2026-09-13-cogos-motive-root.md`）。
 > 本会话从"root.md 措辞 + system prompt 身份表述"出发，把 v0 的架构原则定型。
-> 交接：`work/A/checkpoint/handoff-build-agent-v0.md`（已按本会话更新）。
+> 交接：`../checkpoint/26-09-17-agent-theory/handoff-build-agent-v0.md`（已按本会话更新）。
 
 ## 一、根与 system prompt 的关系 = 装配位
 
@@ -53,6 +53,6 @@
 
 ## 锚
 
-- 交接：`work/A/checkpoint/handoff-build-agent-v0.md`（**待按会话 #11 回写**）
+- 交接：`../checkpoint/26-09-17-agent-theory/handoff-build-agent-v0.md`（**待按会话 #11 回写**）
 - 上会话推演：`entries/2026-09-13-cogos-motive-root.md`
 - 代码：`work/A/cogos-s2` @ `9563fe4`

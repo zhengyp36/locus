@@ -1,6 +1,6 @@
 # task-4 — cog-runtime 实施
 
-> 状态：已完成（08-30）。段 1/2 全绿 + lm-service 续轮转换补齐 + 真实 deepseek 闭环三路全绿（A 文本 / B 工具续轮 / E 401→auth），全量 pytest 777 passed。详见 `checkpoint/checkpoint-3.md`（段 1）/ `checkpoint-4.md`（段 2）/ `checkpoint-5.md`（续轮转换）。遗留：告知值默认注入先不做。
+> 状态：已完成（08-30）。段 1/2 全绿 + lm-service 续轮转换补齐 + 真实 deepseek 闭环三路全绿（A 文本 / B 工具续轮 / E 401→auth），全量 pytest 777 passed。详见 `../checkpoint/archive/26-08-30-cog-runtime-impl/checkpoint-3.md`（段 1）/ `../checkpoint/archive/26-08-30-cog-runtime-impl/checkpoint-4.md`（段 2）/ `../checkpoint/archive/26-08-30-cog-runtime-impl/checkpoint-5.md`（续轮转换）。遗留：告知值默认注入先不做。
 
 ## 目标
 
@@ -62,6 +62,8 @@
 - 改动最小化：**不动 lm_service 任何代码**，cog-runtime 只依赖其冻结契约
 
 ## checkpoint 工作法（跨会话自动交接，分 2 段）
+
+> **历史记录（已废弃）**：本任务早已完成；下述 `../checkpoint/` 活文档工作法已退役，产物归档在 `../checkpoint/archive/26-08-30-cog-runtime-impl/`。保留原文仅为记录当时流程。
 
 - 6 轮分 **2 段**，每段一个新会话，段间人工开新会话（最小动作 = 粘贴 `handoff.md` 提示词）
 - 段 1 = 轮 1-3（契约层 + CogUnit + 状态机支路 A 闭环）；段 2 = 轮 4-6（工具续轮 + 并发 + 细节 + 全量回归）

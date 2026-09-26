@@ -77,4 +77,4 @@ delete_anno(fig_ref, anno_id) -> 消息块
 
 ## 关键文件
 - 本体：`cogos/docs/design-vision-image-fields.md`；上游 `vision-system-design.md`。
-- /tmp/kilo/vision/{vf6.py, vf_tool.py, vf_box_proto.py}；交接 `checkpoint/principle-exp/handoff-vision-image-fields.md`。
+- /tmp/kilo/vision/{vf6.py, vf_tool.py, vf_box_proto.py}；交接 `../checkpoint/26-09-11-live-checkpoint/principle-exp/handoff-vision-image-fields.md`。

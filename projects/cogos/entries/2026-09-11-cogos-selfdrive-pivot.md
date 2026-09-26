@@ -25,7 +25,7 @@
 ## 保命收编
 
 - `/tmp/kilo`（易失）→ `cogos/research/`（脚本 + raw.jsonl 等非图片，526 文件；图 133MB 未收）；push `c3ad76f`。
-- 旧活文档 `../checkpoint` 87 文件 → `locus/projects/cogos/checkpoint/26-09-11-live-checkpoint/`；push `ace9c95`；随后清理 `../checkpoint`（留 README 指针）。
+- 旧活文档 `../checkpoint` 87 文件 → `locus/projects/cogos/checkpoint/26-09-11-live-../checkpoint/`；push `ace9c95`；随后清理 `../checkpoint`（留 README 指针）。
 - LM key `ik_c47...` 在新提交替换为 `ik_REDACTED`（原值仍在 locus 历史；YZ 已知，内部 key 外部不可用）。
 
 ## S0 状态面（缺口）
@@ -39,7 +39,7 @@
 
 ## 产物锚
 
-- 计划：`../checkpoint/plan.md`
-- S0 状态面：`../checkpoint/state.md`
-- 交接：`../checkpoint/status.md`
+- 计划：`../checkpoint/26-09-17-agent-theory/plan.md`
+- S0 状态面：`../checkpoint/26-09-17-agent-theory/state.md`
+- 交接：`../checkpoint/26-09-17-agent-theory/status.md`
 - 架构视阈：`cogos/agent/*`（consciousness/tools/terminal/timer/events/perception）

@@ -1,6 +1,6 @@
 # 读图精度 · 思考/注意力/提示词/模型/像素 关系（09-07，principle-exp）
 
-> 交接：`/home/zhengyp/work/A/checkpoint/principle-exp/handoff-read-precision-context.md`（新会话先读它）。
+> 交接：`/home/zhengyp/checkpoint/26-09-11-live-../checkpoint/26-09-11-live-checkpoint/principle-exp/handoff-read-precision-context.md`（新会话先读它）。
 
 > 场景：`vf6.py`（/tmp/kilo/vision）读体温单 p062（姓名/年龄/住院号/科室/单位符号）。跟 YZ 一轮轮用「无思考 / 有思考 / 提示词 / 不同模型 / 不同像素」做对照，挖"模型到底怎么读图"的机制层。聚焦**读准到底靠什么**。
 

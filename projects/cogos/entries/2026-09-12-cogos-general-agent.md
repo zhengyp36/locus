@@ -108,4 +108,4 @@
 - 代码现状：`cogos-s2/cogos/agent/consciousness.py`（append 上下文）
 - 已设计未落：09-02 `entries/2026-09-02-cogos-agent-cog-arch.md`（覆盖式回合 / 状态对象 / scratch 引用 / 目录 ID 化）
 - 同构先例：`cog_ctx`（compile/K 轮老化/strip）
-- 路线图：`ROADMAP.md`；入口：`../../checkpoint/status.md`
+- 路线图：`ROADMAP.md`；入口：`../checkpoint/26-09-17-agent-theory/status.md`

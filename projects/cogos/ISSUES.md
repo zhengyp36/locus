@@ -44,7 +44,7 @@
 - 现象：`cogos/feishu/file_cmd.py` 的 `_handle_file` 在 `deliver_inbound` **之前** `_mark_seen(mid)`，投递失败（sender 解析不到 / `ref.ensure()` 拿不到账号）即被当成已处理，**不重试** → 该文件消息对 agent 永久消失。
 - 现状处置（2026-09-20，commit `45ab216`）：只补 `logger.warning`，把「静默丢」变「可观测丢」，**不动 mark 语义**（YZ 裁决，最小方案）。
 - 根修建议（未做，三者是一套）：① 上游保证群命令到达时对端 daemon 已建该群 tracker（`daemon._build_group_trackers` / `get_tracker`），让 sender 一次解析成功；② 改「先占位、失败回滚」的 at-least-once（`try_reserve`/`release`，防 `await` 交错）；③ 下游按 `mid` 去重，使重复投递无害。单独做回滚只有半套。
-- 相关：`work/A/checkpoint/handoff-phone-files-02.md`、`spec-phone-files.md` §13/§14。
+- 相关：`checkpoint/26-09-26-agent-tools/handoff-phone-files-02.md`、`spec-phone-files.md` §13/§14。
 
 ### screenlab P4：安全项搁置（2026-09-20 裁决，带前提）
 
@@ -53,7 +53,7 @@
 - ② **autologon 凭据托管**：密码以可恢复形式落盘（注册表 / LSA）；"临时 dedicated"的收尾 / 清理未机制化。
 - ③ **档二未实现**：UIAccess / SYSTEM 服务 / 登录前 / 锁屏后控制；默认关，未来做需签名 + 明示同意。
 - ④ **`granted` 撤销 / consent 未实现**：与 P3 的 `stop` 同源。
-- 细节 → `work/A/checkpoint/checkpoint-6.md`（P4 决议）、`handoff-screen-08.md` §B。
+- 细节 → `checkpoint/26-09-26-screenlab/checkpoint-6.md`（P4 决议）、`handoff-screen-08.md` §B。
 
 ## 封存 / 暂停
 

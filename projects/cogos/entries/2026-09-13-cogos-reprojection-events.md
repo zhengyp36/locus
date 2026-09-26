@@ -2,7 +2,7 @@
 
 > 承接同日的动机推演（会话 #8，`2026-09-13-cogos-motive-root.md`）与 v0 架构定型（会话 #9，`2026-09-13-cogos-v0-arch.md`）。
 > 本会话从"根每回合在场"一句出发，逐步推翻了它，并收敛出：双流模型 / 重投影原语 / 事件-执行轴 / 双触发器。
-> 全程未写代码。落地交接 `work/A/checkpoint/handoff-build-agent-v0.md`（**待按本会话回写**）。
+> 全程未写代码。落地交接 `../checkpoint/26-09-17-agent-theory/handoff-build-agent-v0.md`（**待按本会话回写**）。
 
 ## 一、根在场 = 行为事件，不是文本常驻（YZ 纠正）
 
@@ -117,6 +117,6 @@
 ## 锚
 
 - 上接：`entries/2026-09-13-cogos-v0-arch.md`、`entries/2026-09-13-cogos-motive-root.md`
-- 落地：`work/A/checkpoint/handoff-agent-experiments.md`（**现行交接**：手动探针 E0 + E1 观测台）
-- 旧交接（**已被取代**）：`work/A/checkpoint/handoff-build-agent-v0.md`
-- 入口：`work/A/checkpoint/status.md`
+- 落地：`../checkpoint/26-09-17-agent-theory/handoff-agent-experiments.md`（**现行交接**：手动探针 E0 + E1 观测台）
+- 旧交接（**已被取代**）：`../checkpoint/26-09-17-agent-theory/handoff-build-agent-v0.md`
+- 入口：`../checkpoint/26-09-17-agent-theory/status.md`

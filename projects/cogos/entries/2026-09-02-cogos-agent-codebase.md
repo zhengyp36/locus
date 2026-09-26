@@ -1,6 +1,6 @@
 # Agent 代码认知 + 实施状态
 
-> 原文 codebase.md + status.md：`checkpoint/26-09-02-agent-cog-arch/`。本文是交接凝练版。
+> 原文 codebase.md + status.md：`../checkpoint/26-09-02-agent-cog-arch/`。本文是交接凝练版。
 
 ## 已实施（6 期，全量回归 856 passed，已推 origin/master）
 

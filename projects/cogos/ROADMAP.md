@@ -1,7 +1,7 @@
 # ROADMAP
 
 > 2026-09-11。主线自「视觉/机制细节」转回「造能自驱推进的 cogos agent」后的路线图。
-> 过程记录与讨论见 `../checkpoint/`（`plan.md` / `state.md` / `checkpoint-3/4/5.md`），机制 spec 见 cogos 本体 `docs/design-selfdrive-loop-s{1,3,4}.md`。
+> 过程记录与讨论见 `checkpoint/26-09-17-agent-theory/`（`plan.md` / `state.md` / `checkpoint-3/4/5.md`），机制 spec 见 cogos 本体 `docs/design-selfdrive-loop-s{1,3,4}.md`。
 
 ## 目标
 
@@ -30,7 +30,7 @@
 
 进一步收敛：**根 = 动机**（目的从动机长、任务从目的长）；"连续"是纵向的（同一个根下的兄弟，非帧链父子）；"我"= 持有/增删/拒绝的那个位置。
 → 落地第一个可动的东西不是大结构，而是 **agent v0**：把内存裸上下文换成**落盘记忆 + 每次重新装配**、拆掉 system prompt 里安装的身份/目的、**议程只有 agent 自己能写**。
-→ 详见 `entries/2026-09-13-cogos-motive-root.md`、`../checkpoint/handoff-build-agent-v0.md`。
+→ 详见 `entries/2026-09-13-cogos-motive-root.md`、`checkpoint/26-09-17-agent-theory/handoff-build-agent-v0.md`。
 
 ## 回路 6 格 × 源
 

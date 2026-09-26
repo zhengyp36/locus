@@ -1,13 +1,13 @@
 # 2026-09-20 cogos 图形面（看屏 / 操作）
 
 > 工作流：cogos 的"图形化看电脑"。本会话把 see/act 从纸面推到**两台真机实物**，并把实测约束回写 spec。
-> 产物都在工作区 `work/A/checkpoint/`（未归位 locus）。
+> 产物都在工作区 `../checkpoint/26-09-26-screenlab/`（未归位 locus）。
 
 ## 产物
 
-- 设计稿：`work/A/checkpoint/spec-screen-1.md`（screen/1 协议 + 客户端 + 平台 + 验收 + 运行时约束；§5.7 = Windows 约束；本会话新建）。
-- 实测：`work/A/checkpoint/checkpoint-3.md`（X11 三段根因 / Wayland 两通路 / §五 设计级结论 / §七 安全事件 / §八 系统改动）；`work/A/checkpoint/checkpoint-4.md`（本会话：落码 + Windows 打通 + 系统改动清单）。
-- 原型：`work/A/checkpoint/screen-lab/`（daemon + client + CLI，1082 行；README 有用法与验收）。
+- 设计稿：`../checkpoint/26-09-26-screenlab/spec-screen-1.md`（screen/1 协议 + 客户端 + 平台 + 验收 + 运行时约束；§5.7 = Windows 约束；本会话新建）。
+- 实测：`../checkpoint/26-09-26-screenlab/checkpoint-3.md`（X11 三段根因 / Wayland 两通路 / §五 设计级结论 / §七 安全事件 / §八 系统改动）；`../checkpoint/26-09-26-screenlab/checkpoint-4.md`（本会话：落码 + Windows 打通 + 系统改动清单）。
+- 原型：`../checkpoint/26-09-26-screenlab/screen-lab/`（daemon + client + CLI，1082 行；README 有用法与验收）。
 - 讨论：`handoff-screen-01.md` → `checkpoint-3.md` → `handoff-screen-02.md` → `checkpoint-4.md` → `handoff-screen-03.md` → `checkpoint-5.md` → **`handoff-screen-04.md`（下一步 = Phase 2 形态讨论）**。
 
 ## 已通（可当既定）
@@ -35,7 +35,7 @@
 
 - 回写设计（**本会话已做** → `spec-screen-1.md`）。
 - 环境固化脚本：212 `Xvfb+openbox+应用` 收成 bootstrap。
-- **最小 daemon + client + CLI**（Phase 1 自洽工具，不被裁决 1–3 阻塞，但受裁决 7 影响落地位置）。**本会话已落原型** → `../checkpoint/screen-lab/`（746 行）；两环境 LLM 在环验收通过（212 `:99` 与 本机 `:0` 各完整 `see→act→see`；`:0` 先经 YZ 授权用密码解锁）。
+- **最小 daemon + client + CLI**（Phase 1 自洽工具，不被裁决 1–3 阻塞，但受裁决 7 影响落地位置）。**本会话已落原型** → `../checkpoint/26-09-26-screenlab/screen-lab/`（746 行）；两环境 LLM 在环验收通过（212 `:99` 与 本机 `:0` 各完整 `see→act→see`；`:0` 先经 YZ 授权用密码解锁）。
   - 新观察：`act` 即时抓帧可能早于渲染 → 返回世代只当提示，判稳定态须再 `see --wait-stable`（已记入 spec §2）。
   - 安全：`act type` 响应只回 `text_length`，不回文本。
 - Wayland 适配 / Android-scrcpy 场（**下一步**：`handoff-screen-03.md` 已备，待选设备/连接方式/是否 root；本机与 212 均无 `adb`/`scrcpy`）。
@@ -47,7 +47,7 @@
 - **实测约束**：服务**不驻留目标会话内**（服务在宿主、经 adb 驱动）；screencap = input = uiautomator bounds **同一坐标空间**（无 Windows 式 DPI 偏移）；刘海只造成尺寸口径差（2312 vs 2231）不影响注入；`input text` 不支持中文。
 - **术语定案**：面向 agent="**工具 → 能力面**"，面向实现="**客户端 / 服务**"。`computer` 工具三能力面 `term`/`fs`/**`graphics`**；agent 侧=**图形客户端**、目标侧=**图形服务**（目标侧不叫 agent，`daemon` 只是进程形态）。**三面目标侧支撑异构、不合并**：term→sshd、fs→sftp（既有）、graphics→**自建图形服务**；统一只在 agent 侧 `ComputerSession`，**无"一个服务全包"**。
 - **Android 免 root 只有 `graphics` 面**（无 term/fs）；通用形态待定 = 设备内 app 服务（无障碍 + 前台服务 + MediaProjection），仍需一次性装配通道。
-- 详情：`work/A/checkpoint/checkpoint-5.md`（§八 术语）+ `spec-screen-1.md`（§0.1 / §5.8）。
+- 详情：`../checkpoint/26-09-26-screenlab/checkpoint-5.md`（§八 术语）+ `spec-screen-1.md`（§0.1 / §5.8）。
 
 ## 注意
 
@@ -81,4 +81,4 @@
 ## P4 议题（下一步）
 
 - **Windows 实现面只需服务端**：协议 / 客户端 / `ssh -L` / 工具面全复用；要补的是 ① 服务端 backend（`backends_win.py` 已有、**未真机复验**）② **装配/自启外壳**（`screenlab/install/` **仅 Linux**）+ 装配期配对 `graphics.endpoint`。
-- 9 项待裁决 + 新增 2 项（分支/提交策略、文档回写）见 `work/A/checkpoint/handoff-screen-08.md`。
+- 9 项待裁决 + 新增 2 项（分支/提交策略、文档回写）见 `../checkpoint/26-09-26-screenlab/handoff-screen-08.md`。

@@ -119,7 +119,7 @@
 
 ## 九、探针 1 结果（09-12 会话 #7）：块一行为主张**不成立**
 
-> 原始结果 `../../checkpoint/ctx-swap-probe-report.md`；代码 `work/A/cogos-ctx/research/ctx_swap_probe.py`（untracked，骨架抄 `ctx_seed_probe.py`，neutral `swap_frame` 动作，未碰 `consciousness.py`）。
+> 原始结果 `../checkpoint/26-09-17-agent-theory/ctx-swap-probe-report.md`；代码 `work/A/cogos-ctx/research/ctx_swap_probe.py`（untracked，骨架抄 `ctx_seed_probe.py`，neutral `swap_frame` 动作，未碰 `consciousness.py`）。
 
 - 设置：帧 A 给任务+工具（含中性 `swap_frame`），第 2 次 chat 前注入事件（唯一自变量）；双事件 `recast`（改要紧）vs `append`（只加数据）；真 deepseek flash，temperature=0，n=3。
 - **结果**：`recast` 3/3 未换帧；`append` 3/3 未换帧。`recast` 里 agent 读到"改问 rounding"后**原帧内直接转向**，全程不出现 `swap_frame`。
@@ -140,6 +140,6 @@
 ## 锚
 
 - 前置：`entries/2026-09-12-cogos-distill-retrieval-frame-swap.md`
-- 交接（新会话动手）：`../../checkpoint/handoff-ctx-swap-probe.md`（探针 1 验证块一）
+- 交接（新会话动手）：`../checkpoint/26-09-17-agent-theory/handoff-ctx-swap-probe.md`（探针 1 验证块一）
 - 代码：`work/A/cogos-ctx` @ `ctx-seed`；`research/ctx_seed_probe.py`
-- 入口：`../../checkpoint/status.md`
+- 入口：`../checkpoint/26-09-17-agent-theory/status.md`

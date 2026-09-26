@@ -1,14 +1,14 @@
 # 2026-09-19 cogos agent 工具实现（A 层分批）
 
 > 工作流：`cogos` 的 agent 工具实现（A 实现层）。一批一会话，逐批交接。
-> 产物与依据都在工作区 `work/A/checkpoint/`（尚未归位 locus）。
+> 产物与依据都在工作区 `../checkpoint/26-09-26-agent-tools/`（尚未归位 locus）。
 
 ## 依据与产物
 
 - 权威：`cogos/docs/design-agent-tools.md`（工具分册）；总纲 `design-selfdrive-agent.md`。
-- 计划：`work/A/checkpoint/plan-tools-impl.md`（4 批、铁律、会话协议）。
-- 接口：`work/A/checkpoint/spec-tools-a.md` v1.1。
-- 过程/裁决：`work/A/checkpoint/checkpoint-1.md` §19~§22；每批 `handoff-tools-0N.md`。
+- 计划：`../checkpoint/26-09-26-agent-tools/plan-tools-impl.md`（4 批、铁律、会话协议）。
+- 接口：`../checkpoint/26-09-26-agent-tools/spec-tools-a.md` v1.1。
+- 过程/裁决：`../checkpoint/26-09-26-theory-residual/checkpoint-1.md` §19~§22；每批 `handoff-tools-0N.md`。
 
 ## 进度
 
@@ -27,7 +27,7 @@
 - 账号 `tangyu` / 密码 `cog-ty-0005`；家目录 `/home/tangyu`，机器根 `/home/tangyu/machine`。
 - 用途：**同一账号既可当本地账号（`su - tangyu` / `sudo -u tangyu`），也可当远端账号（`ssh tangyu@localhost` 密码登录）**，同时验证本地与远端两种情况。
 - 环境已就绪：本机 sshd 在 22 端口、密码登录可用（用 `SSH_ASKPASS` 验证过 `ssh tangyu@localhost` 成功）。
-- 创建/清理脚本：`work/A/checkpoint/setup-test-account.sh`（`create`/`check`/`su`/`ssh`/`clean`）。
+- 创建/清理脚本：`../checkpoint/26-09-26-agent-tools/setup-test-account.sh`（`create`/`check`/`su`/`ssh`/`clean`）。
 
 ## 远端 term（09-19 已实现并验证）
 
@@ -35,12 +35,12 @@
 - 测试：`tests/agent/test_impl_term_remote.py`（fake ssh 注入 4 例 + `COGOS_SSH_TEST=1` 真实 localhost 例）。
 - 真机验证：`ssh tangyu@localhost` 密码登录 → 远端 shell，`whoami`/`$HOME` 正确，`exit`→`term.done`。
 - `pytest tests/ -q`：1086 passed, 2 skipped。
-- 裁决与口径：`work/A/checkpoint/checkpoint-1.md` §23；spec 升 v1.2（§9.2）。
+- 裁决与口径：`../checkpoint/26-09-26-theory-residual/checkpoint-1.md` §23；spec 升 v1.2（§9.2）。
 - 待 YZ：远端目标是否接入 `agent.json`「电脑」配置 + `sync_reachable` 归属（批次 3）。
 
 ## 凭证/密码注入（09-19 已实现并验证）
 
-- 方案草案：`work/A/checkpoint/design-secrets.md`。原则：**登录自动完成、agent 不见密码；write_key 是受控出口（绑定+不回显）**。
+- 方案草案：`../checkpoint/26-09-26-agent-tools/design-secrets.md`。原则：**登录自动完成、agent 不见密码；write_key 是受控出口（绑定+不回显）**。
 - 代码：`impl/secret.py`（`SecretStore` 槽位 id 不透明、不随值变、0600；`askpass_env`）、`impl/askpass_helper.py`（SSH_ASKPASS helper）；`terminal.py` 加 `ssh_env`/`secrets`/`session.context`/`write_secret`（绑定校验+`_muted_echo`）；薄 B `terminal_write_key`。
 - 真机验证：`SSH_ASKPASS_REQUIRE=force` 自动登录（无提示、agent 不参与）；`write_secret` 绑定+不回显。需 OpenSSH ≥8.4；host key 必须 accept-new/no，否则密码会当 host-key 答案。
 - `pytest tests/ -q`：1096 passed, 3 skipped。

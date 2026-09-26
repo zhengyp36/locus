@@ -51,4 +51,4 @@
 
 - 探针：`/tmp/kilo/vision/image_field_chat.py`（已接 coord，SYSTEM 为隔离版无 coord 提示）
 - 验证目录：`/home/zhengyp/work/A/workspace/{coord_1,coord_2}`（raw.jsonl + crosses.jsonl + shots/）
-- 交接：`checkpoint/principle-exp/handoff-vision-image-fields-15.md`
+- 交接：`../checkpoint/26-09-11-live-checkpoint/principle-exp/handoff-vision-image-fields-15.md`

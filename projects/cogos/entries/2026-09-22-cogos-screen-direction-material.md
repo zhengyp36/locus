@@ -66,6 +66,6 @@
 - 目标：`handoff-screen-18.md §5.1`、`spec-screen-1.md §0.0`
 - 方案：`spec-screen-client-api.md`、`spec-screen-ledger.md`
 - 总纲：`cogos/docs/design-selfdrive-agent.md`
-- 理论评审入口：`checkpoint/handoff-cogos-theory-review.md`
+- 理论评审入口：`../checkpoint/26-09-26-theory-residual/handoff-cogos-theory-review.md`
 - 代码：`cogos/screenlab/` @ `0670849` / tag `screenlab-freeze-2026-09-22`
-- 交接：`checkpoint/handoff-screen-26.md`
+- 交接：`../checkpoint/26-09-26-screenlab/handoff-screen-26.md`

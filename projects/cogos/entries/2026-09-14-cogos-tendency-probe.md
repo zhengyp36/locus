@@ -1,6 +1,6 @@
 # 倾向型探针（09-14 会话 #14）：机制通，但只是"照结局记账"
 
-> 承接 `2026-09-14-cogos-compress-probe.md`。产物 `work/A/checkpoint/probe-tendency/`（报告 `REPORT.md`）。
+> 承接 `2026-09-14-cogos-compress-probe.md`。产物 `../checkpoint/26-09-17-agent-theory/probe-tendency/`（报告 `REPORT.md`）。
 > 一句话：**只注入同类经历，选择就翻转 → 证明"记忆确实进到决策"；但它是照着后果记账，没有解读——对"自我长出来"不构成证据。**
 
 ## 设计
