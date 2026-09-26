@@ -1,0 +1,29 @@
+
+(mutter:11801): mutter-WARNING **: 23:45:30.077: Failed to open gpu '/dev/dri/card0': Failed to open DRM device: 权限不够
+VMware: No 3D enabled (0, 成功).
+libEGL warning: egl: failed to create dri2 screen
+libEGL warning: DRI2: failed to create screen
+VMware: No 3D enabled (0, 成功).
+libEGL warning: egl: failed to create dri2 screen
+libEGL warning: DRI2: failed to create screen
+libEGL warning: failed to open /dev/dri/card0: 权限不够
+
+mutter-Message: 23:45:30.354: Created surfaceless renderer without GPU
+mutter-Message: 23:45:30.933: Disabling DMA buffer screen sharing (surfaceless)
+mutter-Message: 23:45:30.950: Using public X11 display :1, (using :2 for managed services)
+mutter-Message: 23:45:30.950: Using Wayland display name 'wl-slice2'
+Window manager warning: Failed to set environment variable GNOME_SETUP_DISPLAY for gnome-session: GDBus.Error:org.freedesktop.DBus.Error.NameHasNoOwner: Destination does not exist
+Window manager warning: Failed to set environment variable DISPLAY for gnome-session: GDBus.Error:org.freedesktop.DBus.Error.NameHasNoOwner: Destination does not exist
+Window manager warning: Failed to set environment variable XAUTHORITY for gnome-session: GDBus.Error:org.freedesktop.DBus.Error.NameHasNoOwner: Destination does not exist
+Window manager warning: Failed to set environment variable WAYLAND_DISPLAY for gnome-session: GDBus.Error:org.freedesktop.DBus.Error.NameHasNoOwner: Destination does not exist
+mutter-Message: 23:45:30.960: Added virtual monitor Meta-0
+Xwayland glamor: GBM Wayland interfaces not available
+Failed to initialize glamor, falling back to sw
+libEGL warning: failed to open /dev/dri/card0: Permission denied
+
+libEGL warning: failed to open /dev/dri/card0: Permission denied
+
+libEGL warning: failed to open /dev/dri/card0: Permission denied
+
+Window manager warning: META_CURRENT_TIME used to choose focus window; focus window may not be correct.
+mutter-Message: 23:45:42.644: Removed virtual monitor Meta-0

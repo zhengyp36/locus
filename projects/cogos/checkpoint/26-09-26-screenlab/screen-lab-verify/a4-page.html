@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>A4 Ground Truth</title>
+<style>
+  body { font-family: sans-serif; font-size: 18px; margin: 20px; }
+  .row { margin: 10px 0; }
+  [role=button], button { padding: 4px 10px; }
+</style>
+</head>
+<body>
+<h1>A4 control coverage</h1>
+
+<div class="row"><button id="b1" aria-label="A4-BUTTON" onclick="hit('BUTTON')">A4-BUTTON</button></div>
+
+<div class="row"><a id="l1" href="#" aria-label="A4-LINK" onclick="return hit('LINK')">A4-LINK</a></div>
+
+<div class="row"><label><input type="checkbox" id="c1" aria-label="A4-CHECK" onchange="hit('CHECK')"> A4-CHECK</label></div>
+
+<div class="row"><label><input type="radio" name="rg" id="r1" aria-label="A4-RADIO" onchange="hit('RADIO')"> A4-RADIO</label></div>
+
+<div class="row"><label>A4-TEXT <input type="text" id="t1" aria-label="A4-TEXT" oninput="hit('TEXT')"></label></div>
+
+<div class="row"><label>A4-RANGE <input type="range" id="g1" aria-label="A4-RANGE" onchange="hit('RANGE')"></label></div>
+
+<div class="row"><label>A4-SELECT <select id="s1" aria-label="A4-SELECT" onchange="hit('SELECT')"><option>one</option><option>two</option></select></label></div>
+
+<div class="row"><textarea id="ta1" aria-label="A4-TEXTAREA" oninput="hit('TEXTAREA')" rows="2" cols="30">seed</textarea></div>
+
+<div class="row"><input type="submit" id="sb1" value="A4-SUBMIT" aria-label="A4-SUBMIT" onclick="hit('SUBMIT');return false"></div>
+
+<div class="row"><div id="d1" role="button" tabindex="0" aria-label="A4-DIVROLE" onclick="hit('DIVROLE')" onkeydown="if(event.key==='Enter'){hit('DIVROLE')}">A4-DIVROLE</div></div>
+
+<div class="row"><span id="sp1" onclick="hit('SPANCLICK')">A4-SPANCLICK</span></div>
+
+<div class="row"><canvas id="cv1" width="200" height="50" onclick="hit('CANVAS')">A4-CANVAS</canvas></div>
+
+<div class="row"><details id="dt1"><summary>A4-DETAILS</summary><p>hidden content</p></details></div>
+
+<div class="row"><img id="im1" alt="A4-IMG" width="40" height="20"
+  src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+  onclick="hit('IMG')"></div>
+
+<script>
+function hit(n) {
+  try { fetch('/hit?c=' + encodeURIComponent(n), {cache: 'no-store'}); } catch (e) {}
+  return false;
+}
+</script>
+</body>
+</html>

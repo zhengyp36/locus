@@ -1,0 +1,42 @@
+#!/bin/bash
+set -u
+export XDG_RUNTIME_DIR=/run/user/1001
+export DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1001/bus
+export WAYLAND_DISPLAY=screenlab-0
+unset NO_AT_BRIDGE
+export GTK_MODULES=gail:atk-bridge
+export XAUTHORITY="$(ls -t /run/user/1001/.mutter-Xwaylandauth.* 2>/dev/null | head -1)"
+export DISPLAY=":1"
+
+PROFILE="${PROFILE:-/tmp/a4c3}"
+URL="${URL:-http://127.0.0.1:8765/}"
+
+systemctl --user start at-spi-dbus-bus.service >/dev/null 2>&1
+gdbus call --session --dest org.a11y.Bus --object-path /org/a11y/bus \
+  --method org.freedesktop.DBus.Properties.Set org.a11y.Status IsEnabled "<true>" >/dev/null 2>&1
+gdbus call --session --dest org.a11y.Bus --object-path /org/a11y/bus \
+  --method org.freedesktop.DBus.Properties.Set org.a11y.Status ScreenReaderEnabled "<true>" >/dev/null 2>&1
+
+pkill -f "user-data-dir=/tmp/a4" 2>/dev/null
+pkill -f "a4-serve.py" 2>/dev/null
+sleep 2
+rm -f /tmp/a4-hits.log /tmp/a4-requests.log
+nohup python3 /tmp/a4-serve.py >/tmp/a4-serve.log 2>&1 &
+sleep 1
+rm -rf "$PROFILE"
+
+FLAGS="--no-sandbox --disable-gpu --disable-dev-shm-usage --no-first-run
+--no-default-browser-check --force-renderer-accessibility
+--user-data-dir=$PROFILE --window-size=1200,900"
+echo "### launch --app=$URL"
+setsid google-chrome $FLAGS --app="$URL" >/tmp/a4-app.log 2>&1 < /dev/null &
+sleep 12
+echo "### requests"; cat /tmp/a4-requests.log 2>/dev/null || echo "(none)"
+if [ ! -s /tmp/a4-requests.log ]; then
+  echo "### retry navigate"
+  setsid google-chrome --user-data-dir="$PROFILE" "$URL" >/dev/null 2>&1 < /dev/null &
+  sleep 8
+  echo "### requests2"; cat /tmp/a4-requests.log 2>/dev/null || echo "(none)"
+fi
+echo "### app log"; tail -5 /tmp/a4-app.log 2>&1
+echo "### probe"; python3 /tmp/a4-probe.py 2>&1 | head -30

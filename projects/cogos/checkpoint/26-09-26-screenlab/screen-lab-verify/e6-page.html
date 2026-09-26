@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>E6 Humanization</title>
+<style>
+  body { margin: 0; font: 14px monospace; }
+  #hud { position: fixed; left: 0; top: 0; padding: 4px; background: #eee; }
+  #t { position: absolute; left: 900px; top: 600px; width: 160px; height: 60px;
+       background: #48f; color: #fff; font: 16px sans-serif; text-align: center; line-height: 60px; }
+</style></head>
+<body>
+<div id="hud">E6: waiting</div>
+<div id="t">E6-TARGET</div>
+<script>
+const pts = [];
+let t0 = null;
+addEventListener('mousemove', e => {
+  if (t0 === null) t0 = performance.now();
+  pts.push([Math.round(e.clientX), Math.round(e.clientY), Math.round(performance.now() - t0)]);
+});
+let sent = false;
+function send(kind) {
+  if (sent) return; sent = true;
+  const body = JSON.stringify({ kind, n: pts.length, dur: Math.round(performance.now() - t0), pts: pts.slice(0, 600) });
+  document.getElementById('hud').textContent = kind + ' n=' + pts.length + ' dur=' + body.length;
+  fetch('/traj?d=' + encodeURIComponent(body), { cache: 'no-store' });
+}
+document.getElementById('t').addEventListener('click', () => send('click'));
+setTimeout(() => { if (pts.length) send('timeout'); }, 15000);
+</script>
+</body>
+</html>

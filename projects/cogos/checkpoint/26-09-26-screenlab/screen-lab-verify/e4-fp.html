@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>E4 FP</title></head>
+<body>
+<div id="bench"></div>
+<script>
+const CONF = new URLSearchParams(location.search).get('c') || '?';
+async function fp() {
+  let webgl = null;
+  try {
+    const cv = document.createElement('canvas');
+    const gl = cv.getContext('webgl') || cv.getContext('experimental-webgl');
+    if (gl) {
+      const dbg = gl.getExtension('WEBGL_debug_renderer_info');
+      webgl = {
+        vendor: dbg ? gl.getParameter(dbg.UNMASKED_VENDOR_WEBGL) : gl.getParameter(gl.VENDOR),
+        renderer: dbg ? gl.getParameter(dbg.UNMASKED_RENDERER_WEBGL) : gl.getParameter(gl.RENDERER),
+        version: gl.getParameter(gl.VERSION),
+        maxTex: gl.getParameter(gl.MAX_TEXTURE_SIZE),
+      };
+    }
+  } catch (e) { webgl = { err: String(e) }; }
+  const d = {
+    conf: CONF,
+    ua: navigator.userAgent,
+    uaData: navigator.userAgentData ? { platform: navigator.userAgentData.platform, mobile: navigator.userAgentData.mobile, brands: (navigator.userAgentData.brands || []).map(b => b.brand) } : null,
+    webdriver: navigator.webdriver,
+    platform: navigator.platform,
+    hc: navigator.hardwareConcurrency,
+    dm: navigator.deviceMemory,
+    tz: Intl.DateTimeFormat().resolvedOptions().timeZone,
+    langs: navigator.languages,
+    screen: { w: screen.width, h: screen.height, aw: screen.availWidth, ah: screen.availHeight, cd: screen.colorDepth, dpr: devicePixelRatio },
+    outer: [outerWidth, outerHeight],
+    inner: [innerWidth, innerHeight],
+    screenXY: [screenX, screenY],
+    maxTouch: navigator.maxTouchPoints,
+    webgl,
+  };
+  const t0 = performance.now();
+  const root = document.getElementById('bench');
+  for (let i = 0; i < 3000; i++) { const s = document.createElement('span'); s.textContent = 'x'; root.appendChild(s); }
+  root.innerHTML = '';
+  d.benchDomMs = Math.round((performance.now() - t0) * 100) / 100;
+  d.benchRaf = await new Promise(res => {
+    let n = 0, last = performance.now(), max = 0, sum = 0;
+    function f() { const t = performance.now(); const dt = t - last; last = t; sum += dt; if (dt > max) max = dt; if (++n >= 60) { res({ avg: Math.round(sum / n * 100) / 100, max: Math.round(max * 100) / 100 }); return; } requestAnimationFrame(f); }
+    requestAnimationFrame(f);
+  });
+  return d;
+}
+(async () => {
+  const d = await fp();
+  try { await fetch('/fp?c=' + encodeURIComponent(CONF) + '&d=' + encodeURIComponent(JSON.stringify(d)), { cache: 'no-store' }); } catch (e) {}
+  document.title = 'FP-DONE-' + CONF;
+})();
+</script>
+</body>
+</html>

@@ -58,3 +58,20 @@
 
 - `MIGRATION-MAP.md`：源→目标映射。
 - `MIGRATION-COVERAGE.md`：覆盖实测（5143 ＝ 迁入 5134 ＋ 缓存排除 9）。
+
+---
+
+# ARCHIVE-INDEX｜增量（2026-09-26 · screenlab 收口）
+
+源 `work/A/checkpoint/`（09-18~09-26，34M）按线增量归入：
+
+| 目标目录 | 内容 | 量 |
+|---|---|---|
+| `26-09-26-screenlab/` | screenlab 线：工作单/规则/验收 + `handoff-screen-01..77` + design/spec-screen + 实测 + `checkpoint-3..6` + 原型 `screen-lab*` + `tools/`（排除 keys/blobs/cache/build） | 203 文件 + tools 64 |
+| `26-09-26-agent-tools/` | 工具 A 层线：`handoff-tools-01..09`、`handoff-phone-files-01/02`、spec-tools/phone、plan、design-secrets、codebase、checkpoint-2、setup 脚本 | 19 |
+| `26-09-26-theory-residual/` | cogos 理论残留（**避开与 26-09-17 同名**的 `checkpoint-1.md` 等）：theory-review / tool-org / loop-invariants | 4 |
+
+- **收口件（权威）**：cogos 本体 `docs/screenlab-freeze.md`、`docs/screenlab-env.md`、`docs/design-agent-tools.md §18`。
+- **未归档（有意排除）**：`centos.key`（密钥，交 YZ shred）；`tools/{keys,blobs,.imgctx,__pycache__,android-probe/{build,runs},state.json}`（运行时/密钥）、`.pytest_cache`。
+- **覆盖核对**：源 128 个顶层 md → 全部有归档（0 missing）；`tools/` 64=64。
+- 清理清单 `work/A/checkpoint-1/delete-list.txt` 交 YZ；`work/A/checkpoint/` 本体删除动作由 YZ 执行。

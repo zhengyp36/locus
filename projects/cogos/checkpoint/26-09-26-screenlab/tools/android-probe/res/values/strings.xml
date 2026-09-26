@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">screenlab probe</string>
+    <string name="chan_name">probe</string>
+    <string name="notif_text">screen change probe running</string>
+    <string name="a11y_desc">screenlab research probe: counts accessibility change events</string>
+</resources>
