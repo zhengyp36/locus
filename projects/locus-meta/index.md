@@ -9,3 +9,4 @@
 - 2026-08-13: 单元式讨论历史（/save /load 机制与方法论结论）→ projects/locus-meta/entries/2026-08-13-active-discussion.md
 - 2026-08-13: 单元式讨论全文归档 → projects/locus-meta/entries/history-260813-2014.discussion.md
 - 2026-08-23: 并行工作流方法论（多工位 + 异步执行 + 记忆归并，checkpoint 移出 /tmp）→ projects/locus-meta/entries/2026-08-23-parallel-workspace.md
+- 2026-09-27: 规则重构（两文件：AGENTS 常驻 + rules/task 执行期；不怕错/思路先行/求助/提交默认自主；环境数据迁 cogos）→ projects/locus-meta/entries/2026-09-27-rules-restructure.md

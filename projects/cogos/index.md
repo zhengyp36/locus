@@ -7,7 +7,7 @@
 
 - **接口层通过独立验收**：三动词 `screen_fetch/act/save`、viewing 拆给 image_ctx、坐标恒相对 current frame、`on_change` 客户端判；X11/Windows usage 真值全过 → `checkpoint/26-09-26-screenlab/acceptance-screen-78.md`
 - **收口件（本体）**：`../cogos/docs/screenlab-freeze.md`（代码清单/设计索引/v2 终态/暂停点）· `../cogos/docs/screenlab-env.md` · `../cogos/docs/design-agent-tools.md §16/§18`
-- **工作单/规则**：`checkpoint/26-09-26-screenlab/screenlab-work.md` · `screenlab-rules.md` · `screenlab-tools-review.md`
+- **工作单/规则**：`checkpoint/26-09-26-screenlab/screenlab-work.md` · `screenlab-tools-review.md`（原 `screenlab-rules.md` 已拆出——通用纪律 → locus `rules/task.md`，环境值 → `../cogos/screenlab/tools/README.md`）
 - **目标唯一约束**：`checkpoint/26-09-26-screenlab/spec-screen-1.md §0.0`；封板 `design-computer-v2-interface.md`
 - **分支**：`feat/screenlab-p2` 已 ff 合入 master（`2c82c09`）+ tag `screenlab-v2-freeze`，master/tag 已 push origin
 - **待 YZ**：D2（acted 透传设备像素）／D1（工具结果图未装配成模型附件）／gap C（Android app 端点未真机验）／装配+同意入口、Wayland、SETTLE/IDLE

@@ -26,7 +26,7 @@ AI 按 cwd（locus 根）解析，拼成 `/home/zhengyp/locus/docs/token-cost-an
 
 1. **locus 内部文件指针**：一律从 locus 根写完整相对路径 `projects/<工程>/...`。
    - 例：`projects/locus-meta/docs/token-cost-analysis.md`、`projects/cogos/entries/2026-08-14-cogos-bugfix.md`。
-2. **外部本体路径**：以 locus 根为基准的相对路径 `../<工程名>`（外部工程与 locus 平级，放在工位目录下）。remote 清单见根目录 `workspace.json`。例：cogos 本体 = `../cogos`。（2026-09-26：`../checkpoint/` 已退休，过程草稿入 locus 内 `scratch/`，见 `rules/memory.md`。）
+2. **外部本体路径**：以 locus 根为基准的相对路径 `../<工程名>`（外部工程与 locus 平级，放在工位目录下）。remote 清单见根目录 `workspace.json`。例：cogos 本体 = `../cogos`。（2026-09-26：`../checkpoint/` 已退休，过程草稿入 locus 内 `scratch/`，见 `AGENTS.md` 记忆。）
 3. **历史 tag 引用**：用 `git tag X \`path\`` 形式，path 相对该 tag 的仓库根（如 locus-original 的 `entries/...`）。不是当前树指针，不改。
 4. **文档正文里的概念提及**（讲机制时提到 `entries/`、`current.md` 作为目录/概念）：不是活跃指针，不改。
 

@@ -4,8 +4,10 @@
 **收口件（权威/当前）**：cogos 本体 `docs/screenlab-freeze.md`、`docs/screenlab-env.md`、`docs/design-agent-tools.md §16/§18`。
 **独立验收结论**：v2 图形面**接口层通过**（X11/Windows usage 真值全过；回归 1235 passed / 4 skipped）。
 
+> **注**：`screenlab-rules.md` 已迁出本目录——通用纪律 → locus `rules/task.md`，环境值 → `../cogos/screenlab/tools/README.md`。本目录 `handoff-screen-*.md` 里对它的引用为历史，不再维护。
+
 ## 目录内容
-- **工作单/规则/验收**：`screenlab-work.md`（任务态总档）· `screenlab-rules.md`（规则）· `screenlab-tools-review.md`（#72 盘点）· `acceptance-screen-78.md`（独立验收，修订版）
+- **工作单/规则/验收**：`screenlab-work.md`（任务态总档）· `screenlab-tools-review.md`（#72 盘点）· `acceptance-screen-78.md`（独立验收，修订版）
 - **handoff**：`handoff-screen-01..77.md`（**77 份**；**无 -78**，#78 证据见上条）
 - **设计**：`design-computer-v2-interface.md`（封板 #73）· `design-vision-computer-fusion.md`（#63）· `design-vision-scripting.md` · `design-screen-system.md` · `design-screen-assist.md` · `design-screen-antidetect.md`
 - **规格**：`spec-screen-1.md`（目标唯一约束 §0.0）· `spec-screen-client-api.md` · `spec-screen-element-act.md`（作废）· `spec-screen-ledger.md`（作废）

@@ -12,7 +12,9 @@
 - 记忆/管理协议：极简记忆契约（指令两条、更新=重写、摘要+索引、细节入 entries；projects 分工程 + active 指针 + timeline）+ 两层模型（管理层=确定锚、除 CHANGELOG 外可重写需慎重；记忆层=类人印象；大写=管理/小写=记忆）+ 目录整理（顶层 README 给 AI、docs/ 为本体）。→ projects/locus-meta/entries/2026-08-14-locus-meta-structure.md + projects/locus-meta/docs/minimal-memory.md + projects/locus-meta/docs/design-v2.md
 - 路径锚点约定：locus 内部文件指针一律从 locus 根写完整相对路径（projects/<工程>/...）；新会话 cwd 是 locus 根，相对工程目录的短路径会解析错。→ projects/locus-meta/docs/path-anchor-convention.md + projects/locus-meta/entries/2026-08-14-path-anchor-convention.md
 - 认知地图方法论：目的优先 + 状态轴，代码是已实现子集；维护=AI 触发+人纠偏；验收=AI 验形式+人验实质；八节骨架 + 建图过程（口述→文档核对→偏差清单→人工裁决→代码核验→成图）。→ projects/locus-meta/entries/2026-08-14-code-map-revision.md + projects/locus-meta/docs/project-map-method.md
-- 并行工作流：多工位（`~/work/<工位>/{locus,<外部工程>}`，总工位 main + 临时工位）+ 异步执行 + 记忆归并（人工在总工位归并，AI 合并时被一句话唤醒），工位间 git 合入；路径相对 locus 根（外部 `../<name>`）；外部工程按需 clone。**（2026-09-26 修订：`../checkpoint/` 退休——过程草稿入 locus 内 `scratch/`，收口删、只留结论；见 `rules/memory.md`）** → projects/locus-meta/entries/2026-08-23-parallel-workspace.md
+- 并行工作流：多工位（`~/work/<工位>/{locus,<外部工程>}`，总工位 main + 临时工位）+ 异步执行 + 记忆归并（人工在总工位归并，AI 合并时被一句话唤醒），工位间 git 合入；路径相对 locus 根（外部 `../<name>`）；外部工程按需 clone。**（2026-09-26 修订：`../checkpoint/` 退休——过程草稿入 locus 内 `scratch/`，收口删、只留结论；见 `AGENTS.md` 记忆）** → projects/locus-meta/entries/2026-08-23-parallel-workspace.md
+
+- 规则重构（2026-09-27）：规则分两文件——`AGENTS.md` 常驻基线（讨论期足够）+ `rules/task.md` 执行期规则（YZ 在不在场都适用）；判据=讨论期 vs 执行期。旧 memory/handoff/screenlab 解散，环境数据迁 cogos tools，`screenlab-rules.md` 消失；关键裁决：不怕错/思路先行/求助/提交默认自主。→ projects/locus-meta/entries/2026-09-27-rules-restructure.md
 
 ## 下一步
 

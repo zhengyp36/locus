@@ -6,8 +6,8 @@
 
 - `active.md` — 焦点指针，内容 = 当前工程名
 - `timeline.md` — 最近聊过哪些工程
-- `scratch/` — 任务内的工作 / 交接缓冲；收口后删（方法见 `rules/memory.md`）
-- `rules/` — 任务规则（按名加载，索引见 `rules/README.md`）
+- `scratch/` — 任务内的工作 / 交接缓冲；收口后删（方法见 `AGENTS.md` 记忆）
+- `rules/` — 任务规则（讨论收口、执行时按名加载）
 - `projects/` — 各工程自己的目录
 - `tools/` — locus 自身工作流的工具（如飞书通知）
 
@@ -26,8 +26,10 @@
 - `index.md` — 索引，指向 entries/
 - `entries/` — 细节
 
+命名约定（子工程内）：**大写 = 工程管理（确定，是锚——记忆乱了可从它拉回）；小写 = 记忆（模糊）**；顶层指针 / 草稿（`active.md`、`timeline.md`、`scratch/`）不套此约定。
+
 证据 / 历史（可选）：
-- `checkpoint/` — 旧归档层（历史保留）；新过程默认不留，证据类另存（见 `rules/memory.md`）
+- `checkpoint/` — 旧归档层（历史保留）；新过程默认不留，证据类另存（见 `AGENTS.md` 记忆）
 
 本体（可选）：
 - `docs/` — 本体文档；仅当工程本体落在 locus 内时才有，本体在外部的工程没有这个目录

@@ -4,7 +4,8 @@ Encapsulates the repetitive, per-session work (find password, re-type long ssh/r
 commands, re-derive coordinates, re-write throwaway probe scripts). Source `env.sh`
 once and use the commands below; the environment facts live in one place.
 
-Rules & discipline: `../screenlab-rules.md`. Target/account values here are
+Rules & discipline: locus `rules/task.md` (task execution); the archived
+`../screenlab-rules.md` is superseded. Target/account values here are
 *environment facts* (rediscoverable), not rules.
 
 ## Bootstrap a new session
