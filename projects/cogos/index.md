@@ -17,7 +17,9 @@
 
 - **呈现层可停手 + 转向外圈/内圈**（依据/做法/前置语义/代码事实/抹痕归属）→ `entries/2026-09-28-cogos-loop-pivot.md`
 - **学习通道**（先猜 vs 先学 → 选通道）+ 用法知识归记忆 → `entries/2026-09-28-cogos-learning-channels.md`
-- **意图（完整口径）**：意图＝意识角色的作用域（就地执行＋渲染隐藏；程序式记忆；渲染三律/吸收-上浮/不泄漏）→ `entries/2026-09-28-cogos-intent-view.md`
+- **意图（完整口径）**：意图＝意识角色的作用域（就地执行＋渲染隐藏；程序式记忆；渲染三律/吸收-上浮；回看只留结果）→ `entries/2026-09-28-cogos-intent-view.md`｜**目的＝注意力减负、非保密**
+- **意图执行模型**：**模式决定允许集**（意图态=视角全集 / 非意图态=缓存集）；`toolbox(intent, enter|exit, content|result)`；入口加载经验/粗 help（只为会用法、不解锁）；出口缓存真实调用过的用法（机制固定格式，驻留≠经验）；append 原地＋短 TTL；尾注提示自判收尾；结果当场＋方法睡中蒸馏；上限=有界失败＋升级梯 执行→诊断→求助 → `entries/2026-09-28-cogos-intent-execution.md`
+- **非意图 · 配额/节奏（动机层）**：无任务型预算，按时间窗配额/速率，节流非断崖，余量足也要缓 → `entries/2026-09-28-cogos-quota-pacing.md`
 - 依据 `checkpoint/26-09-26-theory-residual/checkpoint-1.md` §四~§七（动手纪律/现状摸底/外圈零件序）；本体 `../cogos/docs/design-selfdrive-agent.md`
 
 ## 最近收口 · screenlab 图形面（09-20~26，#1~#78）
