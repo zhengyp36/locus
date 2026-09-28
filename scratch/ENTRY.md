@@ -33,7 +33,8 @@
 
 ## 交接执行记录
 
-- （待填）handoff.py 起会话时间 / 新会话是否确认已起。
+- 2026-09-28 12:09 起新会话：title `26-09-28-cogos-toolbox-fix`，session `ses_f19cc408fffegQmp7cDmKkr2mJ`（pid 125448），`handoff.py` exit 0。
+- 本会话**不封笔**（用户指定），继续存活供讨论；异步源无残留（timer/watch 已撤、terminal 已关、LM service 已停）。
 
 ## 下一步
 
