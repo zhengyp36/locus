@@ -8,6 +8,7 @@
 - **实现已提交**：cogos master `f8ef94a`(S0) `67011d0`(S1) `fd2752b`(S2) `8a5cdf1` `42f09aa`(S3) `9183508`(S4)；工作树干净；`tests/agent tests/cog_runtime` **300 passed / 3 skipped**（用 `python3.11`）。
 - **分层验收全过**：阶段 I/II 真实模型探针（判据 1、2）；阶段 III 主路径真机模型；**S5 真实飞书身份 e2e 本次跑通**——唐钰`COGOS002:A0005` ← 李恪`A0001`，模型 `call run cat E2E-S5.txt` → `S5-REAL-E2E-OK`，并出现 `help` 自纠（判据 3）。
 - **教训**：此前误判 S5 为"外部阻塞"（daemon/profile/账号），实为可自解；校准——**判阻塞前先穷举本地可自解项**。
+- **行为复跑（09-28，无外溢 harness）**：真实模型 + FakeTelecom 采样 16 次，行为高度一致——首调用前**不** help、直接猜错 `communication.message.send` 的参数（`to`→`target`）撞**裸 Python 异常**、靠 `help` 自纠；**16/16 外发 2 条**（根因 `consciousness.py:52` 去重判断写死 `send_msg`，S3 后失效）。harness 已入库 `66bf679`；详情 `entries/2026-09-28-cogos-toolbox-behaviour-probe.md`。
 - 详情 `entries/2026-09-28-cogos-toolbox-presentation.md`。
 
 ## 最近收口：screenlab 图形面（09-20 ~ 09-26，会话 #1~#78）

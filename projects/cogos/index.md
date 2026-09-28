@@ -8,7 +8,8 @@
 - **工具从"散"到"可用"**：3 组常驻总览（`system-reminder`）＋ 单一 `toolbox`；schema 恒定吃前缀缓存；`help` 逐级发现 / `call` 精确执行
 - **代码**：cogos master `f8ef94a`(S0) `67011d0`(S1) `fd2752b`(S2) `8a5cdf1` `42f09aa`(S3) `9183508`(S4)；工作树干净；`tests/agent tests/cog_runtime` 300 passed / 3 skipped（用 `python3.11`）
 - **验收全过**：阶段 I/II 真实模型探针；阶段 III 主路径真机；**S5 真实飞书身份 e2e**——唐钰`COGOS002:A0005` ← 李恪`A0001`，`call run cat E2E-S5.txt` → `S5-REAL-E2E-OK`（判据 3）
-- 条目：`entries/2026-09-28-cogos-toolbox-presentation.md`
+- **行为复跑（无外溢 harness，16 次）**：行为高度一致（先猜错参数撞裸异常→help 自纠；每次都外发 2 条）
+- 条目：`entries/2026-09-28-cogos-toolbox-presentation.md` · `entries/2026-09-28-cogos-toolbox-behaviour-probe.md`
 
 ## 最近收口 · screenlab 图形面（09-20~26，#1~#78）
 

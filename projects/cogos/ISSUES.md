@@ -2,6 +2,12 @@
 
 ## 遗留（待处理）
 
+### toolbox 工具呈现两处问题（09-28 行为复跑发现，待 YZ 裁）
+
+- ① **每次重复外发一条**（bug）：`cogos/agent/consciousness.py:52` 去重判断写死 `call["name"] == "send_msg"`，S3 暴露 `toolbox` 后恒假 → `_handle_done` 兜底又补发最终文本。真实模型 16/16 复现；S5 真身份亦 2 条。倾向按 `toolbox` 调用的内层 `name` 判，或在 registry 层记"是否发生过 send"。
+- ② **裸 Python 异常回给模型**：`toolbox._call` 把 args 当 kwargs 直透实现层，未知键 → `TypeError: ... unexpected keyword argument 'to'` 原文。倾向调用边界按 `catalog.params` 校验，回结构化、模型面向的错误（顺带省一次 help 往返）。
+- 背景/证据 → `entries/2026-09-28-cogos-toolbox-behaviour-probe.md`（含 harness `../cogos/scripts/exp_agent_behaviour_probe.py`）。
+
 ### load_bot 与 AccountRef.ensure 分层错位
 
 - 多处 `load_bot` 读 agent 账号，文件删了直接报错，应从云端兜底；但两者层次不同，不能一刀切替换。
