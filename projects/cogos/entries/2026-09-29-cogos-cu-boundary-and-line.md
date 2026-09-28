@@ -34,7 +34,7 @@
 - **事实（已核代码）**：`parent=` **零生产调用**（仅 `tests/cog_runtime/test_parent.py`、`test_unit.py`、`test_lifecycle.py`）；机制只保证"父等子 done"的**顺序**（`_all_children_done`，`runtime.py:68/71`），**不给数据流**——`test_parent.py:61-101` 要绕 `on_done`+`on_ready` 传结果。且 **done 前并不等子**（`_finish` 不查子）。
 - **决定：本轮只拆、不建**。拆掉的是**约定**（自动记父子/自动等子），**能力一直在原语里**（`cu()`＋`wait()`/`no_wait()`）；替代形态——**回看＝`on_tool_call` 内 `await` 子 cu**（该回调本就 async，`runtime.py:118`，比 on_ready 绕法更顺）、**fan-in＝编排层 `gather`**——**留到编排真需要时再建**（父子只是概念，建不难）。
 - **拆清单**：`unit.py` 删 `parent/children`(17-18)、`add_child/remove_child`(46-51) ＋ docstring；`runtime.py` 删 `cu(parent=)`/`add_child`(25,37-38)、两处 `_all_children_done`(68-69,71-73)、`_all_children_done`(153-154)、`_finish` 唤醒父(172-173)；`tests` 删 `test_parent.py` 整篇、`test_unit.py:30-44`，改 `test_lifecycle.py:43-69`。**不加**编排层示例测试。验收＝`tests/cog_runtime` 全过＋全量回归。
-- 状态：**未执行**（YZ 尚未下令动手）。
+- 状态：**已执行**（cogos `6c33380`，已 push origin master）：`unit.py`／`runtime.py`／3 处测试均按清单删除；`tests/cog_runtime` 31 passed，全量 1276 passed / 5 skipped（仅 1 个已知无关 `image_ctx` 素材缺失 fail）。
 - **被否**：Y（搬到新编排对象）＝为不存在的需求造对象；"现在就把替代能力重建"＝越界（**建**属后面编排阶段）。
 
 ## 4. 无名的连续线索（开放）
