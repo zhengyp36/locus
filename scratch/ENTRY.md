@@ -116,6 +116,6 @@
 
 ## 交接
 
-**本会话（讨论 ＋ 准备）已交接 → `scratch/handoff-09.md`；后继直接开工（阶段 I）。**
+**S0–S4 已实现并提交；阶段 I/II 真实探针 ＋ 阶段 III 主路径真实模型验收已过。本会话已交接 → `scratch/handoff-10.md`。**
 
-新会话续接：**读本文件 ＋ `toolset-decisions.md` ＋ `toolbox-design.md` ＋ `toolbox-walkthrough.md` ＋ `code-map.md`（先读，避免重读代码）**。下一步＝**按 `toolbox-walkthrough.md §2` 落地：阶段 I（造入口 S0–S2）→ II（上线 S3–S4）→ III（跑通 S5）**（开工前决策见 §4；**执行纪律与阶段门见 §6，须严格执行**）；一切改动以目标为准绳。
+新会话续接：**读本文件 ＋ `code-map.md`（含阶段 I 决策 ＋ II/III 状态）＋ `handoff-10.md` ＋ `toolbox-walkthrough.md`（§2 / §6）＋ `toolbox-design.md` ＋ `toolset-decisions.md`**。唯一剩余＝**S5 的「真实飞书身份 / 公开入口」验收**（外部阻塞，需 YZ）；其步骤与判据见 `handoff-10.md`。执行纪律与阶段门见 `toolbox-walkthrough.md §6`。
