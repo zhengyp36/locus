@@ -1,6 +1,6 @@
 # cogos toolbox：run 语义定稿（N3 收口，2026-09-28）
 
-> **状态**：讨论定稿（YZ 同意），**未落码**。N4 并入。前序 `entries/2026-09-28-cogos-toolbox-fix.md`（其"未决"里的 N3/N4）。
+> **状态**：**已落码并验证**（cogos `ab46a5b`，A 工位执行，09-28）。N4／`to` 一并。前序 `entries/2026-09-28-cogos-toolbox-fix.md`（其"未决"里的 N3/N4）。
 
 ## 结论
 
@@ -33,11 +33,24 @@
   - **不重复**：同一作业只一条取消路径、一个词。
 - **命名分层原则**（本决定引出，普适）：模型面名只描述**能力语义**、**不泄漏机制实现**（同 fix 3 删 help"绑定"行）；机制名本身干净达意（`read`/`send`/`cancel`）**可同名**，带实现气味（`terminal_cancel`/`send_msg`）**须换**；组织按**能力心智模型**（command/file/screen/web/message），非代码分包（terminal/phone/timer）。
 
-## 落地（建议批次）
+## 落地（已执行，09-28）
 
-- **B1**：`run` 去取值（改 exec 语义，删 `_run_composed` / `_observe_settled`）＋ 暴露 `cancel`(N4) ＋ time_form 修正（run 现标 `async`，catalog.py:94；改语义后明确为后果型）＋ help 写 redirect 指引与 notify token 用法。
-- **B2**：不新建；仅把 `term.notify` 接到模型面（随 B1 的 notify 参数）。
-- **过渡**（若 B1 不即落）：`run` 返回加 `settled: true/false`，不冒充完成。
+- **run**：catalog 改 `impl=terminal_exec`（去 `steps` 组合机制，删 `_run_composed`／`_observe_settled`）；结果＝中性发起回执（去 `id`/`session`，带一句读法 note）；`computer.command` 面级 help 给取值配方（`catalog.FACE_NOTES`：observe 看屏／大输出重定向＋`file.read`）；暴露可选 `notify` token 参数。time_form 仍 `async`（后果型）。
+- **N4**：新增 `computer.web.cancel`(`web_cancel`)、`communication.file.cancel`(`phone_cancel`) catalog 条目（参数 `job_id`）。
+- **`to`**：`communication.message.send`／`communication.file.send` 模型面改 `to`，catalog `arg_map={"to":"target"}` 映射到 impl，impl 不动。
+- 提交 `ab46a5b`（push origin master）＋ doc `ea2812c`。测试：`tests/agent` 277 passed／3 skipped；全量 1281 passed／5 skipped（唯一 fail `tests/image_ctx/test_p2.py::test_mark_pixel_lands_on_tool` 系缺外部 `/tmp/kilo/vision/...` 素材，与本改无关）。
+
+## 批 0 复评（n=10，真实 deepseek + FakeTelecom，harness `scripts/exp_agent_behaviour_probe.py`）
+
+- **判据（重设后）全过**：成功 10/10、**help 0/10**、工具错 **0/10**、往返 **5**（基线 4）。
+- **实测轨迹**（10/10 一致）：`run{cat}` → `run{cat … > out.txt 2>&1; echo done}` → `file.read{out.txt}` → `send{to}`。取值**全走重定向＋file.read**（设计期望路径），非 observe。
+- **why（取向）**：批 0 首轮的"往返不达"＝**不公平基准**（4 轮是"猜完成"换来的）＋三个正交摩擦（`to` 猜错 ×10、`session` 回显诱导 ×5、run 无回执→重跑/help）。A（读法可见性）＋B（去 session）＋`to` 落地后摩擦尽消，往返 5 可接受 → **保留 N3 健全语义**。
+- **被否**：**C `settled` 过渡**——既不取值也非真完成信号，模型无从行动，且近"猜完成"边界；要真信号只能是 `observe`（真屏）或 OSC `term.notify`（真事件）。**D 原样接受 8.2**——漏掉已识别的确定性摩擦，不采（取其"可靠优先"排序，不取其内容）。
+- **遗留观察**：模型先跑一次裸 `cat`、再重跑带重定向（多 1 轮）；可在描述里更明确引导"一开始就重定向"，或接受（不阻塞）。
+
+## 过渡（未采用）
+
+- ~~`run` 返回加 `settled: true/false`~~（见上"被否 C"）。
 
 ## 被否
 

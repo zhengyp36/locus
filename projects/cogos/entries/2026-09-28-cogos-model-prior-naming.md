@@ -1,6 +1,6 @@
 # cogos 模型面命名：模型先验准则（2026-09-28）
 
-> **状态**：讨论定稿（YZ 同意）。准则已落设计 `../cogos/docs/design-agent-tools.md` §19；案例 `target→to` **待验、未落码**。
+> **状态**：讨论定稿（YZ 同意）。准则已落设计 `../cogos/docs/design-agent-tools.md` §19；案例 `target→to` **已落码并验证**（cogos `ab46a5b`／doc `ea2812c`）。
 > 来源：toolbox 行为复跑稳定猜错参数（`entries/2026-09-28-cogos-toolbox-behaviour-probe.md`）。
 
 ## 结论：一条命名准则
@@ -13,11 +13,11 @@
 - **整族一致 > 单点迎合**：同族能力要改一起改（只改一处 = 制造新的不一致）。
 - **别名映射**：模型面用先验名、映射到 impl（模型面 `to` → impl `target`），**impl 不改**。
 
-## 案例：`target` → `to`（待验）
+## 案例：`target` → `to`（已落码验证）
 
 - 依据：真实模型 **16/16 + 10/10** 稳定猜 `to`（应 `target`）。
 - `target` 是通信族统一用词：`communication.message.send`（catalog.py:257）/ `communication.file.send`（:268），impl `send_msg`/`send_file` 亦用。
-- 落地：**整族**改模型面为 `to`；impl 不动；catalog 映射；改后 harness 复跑验（首猜命中率↑、往返↓）。
+- 落地：**整族**改模型面为 `to`；impl 不动；catalog `arg_map={"to":"target"}` 映射。**复跑验证**（n=10）：`to` 首猜命中 10/10、**0 参数错**、0 help、往返 5 → 准则实践成立。
 - 注意：`to` 在本 catalog 别处另指 drag 终点（`computer.screen.act`，catalog §18），**同名不同义**须权衡。
 
 ## 边界 / 被否

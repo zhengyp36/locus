@@ -9,14 +9,16 @@
 - **分层验收全过**：阶段 I/II 真实模型探针（判据 1、2）；阶段 III 主路径真机模型；**S5 真实飞书身份 e2e 本次跑通**——唐钰`COGOS002:A0005` ← 李恪`A0001`，模型 `call run cat E2E-S5.txt` → `S5-REAL-E2E-OK`，并出现 `help` 自纠（判据 3）。
 - **教训**：此前误判 S5 为"外部阻塞"（daemon/profile/账号），实为可自解；校准——**判阻塞前先穷举本地可自解项**。
 - **行为复跑（09-28，无外溢 harness）**：真实模型 + FakeTelecom 采样 16 次，行为高度一致——首调用前**不** help、直接猜错 `communication.message.send` 的参数（`to`→`target`）撞**裸 Python 异常**、靠 `help` 自纠；**16/16 外发 2 条**（根因 `consciousness.py:52` 去重判断写死 `send_msg`，S3 后失效）。harness 已入库 `66bf679`；详情 `entries/2026-09-28-cogos-toolbox-behaviour-probe.md`。
-- **修复批（09-28）**：提交 `225c902`（已 push）——① registry 层记"是否已 send"（覆盖 message/file）修重复外发；② `toolbox` 调用边界按 catalog 校验参数 + 结构化可读错误；③ help 删"绑定"行；N2 catalog↔registry 启动期断言。**N1 裁断=撤下 `open`/`list`/`answer_auth`**（单会话 toolbox 无法定向会话，避免陷阱；多会话=A2，B 被否）。度量（真实模型 n=10）：外发 1 条 10/10、help 0/10、往返数全 4（原 5~7）。**N3 定稿｜N4 并入**（09-28 讨论，YZ 同意，未落码）：`run` 语义错位（后果型被当取值型）→ 正解＝run 改发起即返回、取值收敛到读类（`read`/`observe`，回到 §5.2）；命令结束通知机制**已实现**（`term.notify`），只需暴露 run 的 notify 参数；N4（`cancel` 未暴露）同源并入。建议 5 搁置。详情 `entries/2026-09-28-cogos-toolbox-fix.md`。
+- **修复批（09-28）**：提交 `225c902`（已 push）——① registry 层记"是否已 send"（覆盖 message/file）修重复外发；② `toolbox` 调用边界按 catalog 校验参数 + 结构化可读错误；③ help 删"绑定"行；N2 catalog↔registry 启动期断言。**N1 裁断=撤下 `open`/`list`/`answer_auth`**（单会话 toolbox 无法定向会话，避免陷阱；多会话=A2，B 被否）。度量（真实模型 n=10）：外发 1 条 10/10、help 0/10、往返数全 4（原 5~7）。**N3 定稿｜N4 并入**（09-28 讨论，YZ 同意）：`run` 语义错位（后果型被当取值型）→ 正解＝run 改发起即返回、取值收敛到读类（`read`/`observe`，回到 §5.2）；命令结束通知机制**已实现**（`term.notify`），只需暴露 run 的 notify 参数；N4（`cancel` 未暴露）同源并入。建议 5 搁置。详情 `entries/2026-09-28-cogos-toolbox-fix.md`。
 
 - **N3 定稿细节**：`entries/2026-09-28-cogos-toolbox-run-semantics.md`。
 
-- **模型面命名准则（09-28 定稿）**：模型好理解优先、与机制实现名解耦（catalog 层映射）；元工具下参数名不可见、模型只能猜 → 稳定猜成同一合理值则对齐先验（三闸：一致性/合理性/证据）；案例 `target→to` 待验。落设计 `../cogos/docs/design-agent-tools.md §19`；`entries/2026-09-28-cogos-model-prior-naming.md`。
+- **模型面命名准则（09-28 定稿）**：模型好理解优先、与机制实现名解耦（catalog 层映射）；元工具下参数名不可见、模型只能猜 → 稳定猜成同一合理值则对齐先验（三闸：一致性/合理性/证据）；案例 `target→to` 已落码验证（n=10 首猜 10/10）。落设计 `../cogos/docs/design-agent-tools.md §19`；`entries/2026-09-28-cogos-model-prior-naming.md`。
 
-- **落地已交 B 工位（09-28）**：toolbox 模型面修订（run 语义 + N4 cancel 暴露 + `to`）由 **B 工位执行会话**承接（title `26-09-28-cogos-toolbox-model-face`）；工作单 `B/locus/scratch/26-09-28-toolbox-model-face/`（plan + handoff-01，`7ef657a` 已 push）；**批 0 验证闸**先行（模型能否用「发起即返回 run + read/observe」取值，不合即停回讨论），完成/遇问题飞书通知 YZ。A↔B 已同步（cogos `c42c452` / locus `10d5fe0`→`7ef657a`）。
-- 详情 `entries/2026-09-28-cogos-toolbox-presentation.md`。
+- **模型面修订已落码并验证（09-28）**：`run` 发起即返回、不取值（删 `_run_composed`/`_observe_settled`＋`steps` 机制；回执去 `session`、带读法 note；`computer.command` 面级 help 给配方；暴露 `notify`）＋ `computer.web.cancel`/`communication.file.cancel` 暴露 ＋ `communication.*.send` 参数 `target→to`（catalog `arg_map` 映射，impl 不动）。cogos `ab46a5b` ＋ doc `ea2812c` 已 push；测试 `tests/agent` 277 passed、全量 1281 passed（1 个无关 image_ctx 素材缺失 fail）。
+- **批 0 闸复评（n=10）**：成功 10/10、help 0/10、工具错 0/10、往返 5（基线 4）；取值全走重定向＋`file.read`。首轮"不达"＝不公平基准＋`to`/`session`/help 三摩擦，消除后达标；否 `settled` 过渡、否原样接受。证据 `checkpoint/26-09-28-toolbox-model-face/`。
+- **执行口径**：本改由 **A 工位**执行（原指派 B 未执行）；**B/cogos 与 B/locus 恢复前需 pull**（A 已 push 到 origin master）。
+- 详情 `entries/2026-09-28-cogos-toolbox-presentation.md` · `entries/2026-09-28-cogos-toolbox-run-semantics.md` · `entries/2026-09-28-cogos-model-prior-naming.md`。
 
 ## 最近收口：screenlab 图形面（09-20 ~ 09-26，会话 #1~#78）
 

@@ -7,7 +7,7 @@
 - ① **每次重复外发一条**（bug）→ **已修**（`225c902`）：改为 registry 层记"是否已 send"（`SendState`，覆盖 message/file），不再在 `consciousness` 解析工具名。
 - ② **裸 Python 异常回给模型** → **已修**（`225c902`）：`toolbox._call` 进实现层前按 `catalog.params` 校验未知键/缺必填/类型，回结构化可读错误。
 - **N1（YZ 同意 A）**：catalog 撤下 `computer.command.open`/`list`/`answer_auth`。理由：单会话 toolbox 强制注入默认会话 id，模型无法操作自己 open 的会话=陷阱。**否 B**（补齐 id 传参=A2 多会话）：独立设计，A2 再带回。
-- **N3 定稿（YZ 同意，未落码）**：定性＝`computer.command.run` **语义错位**（后果型却被声明为取值型 `returns="命令输出文本"`），故用"屏稳定"猜完成 → 静默截断；正解＝run 改"发起即返回"（exec 语义、不取值），**取值收敛到读类**（`file.read` 走重定向 + `observe` 屏态，回到 §5.2）；命令结束通知机制**已实现**（`term.notify`，terminal.py），只需暴露 run 的可选 `notify` 参数 + help。落地批次 B1（run 去取值＋暴露 cancel＋time_form 修正＋help）／B2（接线 term.notify 到模型面）／过渡（run 标 `settled`）。详 `entries/2026-09-28-cogos-toolbox-run-semantics.md`。
+- **N3 已落码验证（09-28，cogos `ab46a5b`）**：定性＝`computer.command.run` **语义错位**（后果型却被声明为取值型），机制用"屏稳定"猜完成 → 静默截断；正解＝run 改"发起即返回"（不取值）、取值收敛到读类（重定向＋`file.read`／`observe` 屏态，§5.2）。已落：run 去取值＋去 session＋面级 help 给读法＋暴露 `notify`；N4 `cancel` 暴露；`to` 整族。复跑 n=10：成功 10/10、help 0、工具错 0、往返 5。**否** `settled` 过渡。详 `entries/2026-09-28-cogos-toolbox-run-semantics.md`、证据 `checkpoint/26-09-28-toolbox-model-face/`。
 - **N4（并入 N3）**：`web_cancel` / `phone_cancel` 已实现并注册但未进 catalog ＝ 与 N3 同源（工具原语暴露不完整），随 B1 暴露为 `computer.web.cancel` / `communication.file.cancel`。**命名定案（YZ）**：有 job 句柄的取消统一用 `cancel`、归类按发起面；**`interrupt` 不并入 `cancel`**（打断前台命令 ≠ 撤销作业）。
 - **建议 5**（按误差=切点记账）：搁置。
 - 背景/证据 → `entries/2026-09-28-cogos-toolbox-behaviour-probe.md`、`entries/2026-09-28-cogos-toolbox-fix.md`（harness `../cogos/scripts/exp_agent_behaviour_probe.py`）。

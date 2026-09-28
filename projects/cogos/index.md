@@ -9,7 +9,8 @@
 - **代码**：cogos master `f8ef94a`(S0) `67011d0`(S1) `fd2752b`(S2) `8a5cdf1` `42f09aa`(S3) `9183508`(S4)；工作树干净；`tests/agent tests/cog_runtime` 300 passed / 3 skipped（用 `python3.11`）
 - **验收全过**：阶段 I/II 真实模型探针；阶段 III 主路径真机；**S5 真实飞书身份 e2e**——唐钰`COGOS002:A0005` ← 李恪`A0001`，`call run cat E2E-S5.txt` → `S5-REAL-E2E-OK`（判据 3）
 - **行为复跑（无外溢 harness，16 次）**：行为高度一致（先猜错参数撞裸异常→help 自纠；每次都外发 2 条）
-- **修复批（09-28，`225c902` 已 push）**：registry 层记"已 send"（修重复外发）＋ 调用边界按 catalog 校验 + 可读错误 ＋ help 删"绑定"行 ＋ N2 启动期断言；**N1 裁断=撤下 `open`/`list`/`answer_auth`**（多会话=A2，B 否）。度量 n=10：外发 1、help 0/10、往返 4（原 5~7）。**N3 定稿｜N4 并入**（YZ 同意，未落码）：`run` 语义错位→改发起即返回、取值收敛读类；命令结束通知机制已实现（`term.notify`），只需暴露；建议 5 搁置
+- **修复批（09-28，`225c902` 已 push）**：registry 层记"已 send"（修重复外发）＋ 调用边界按 catalog 校验 + 可读错误 ＋ help 删"绑定"行 ＋ N2 启动期断言；**N1 裁断=撤下 `open`/`list`/`answer_auth`**（多会话=A2，B 否）。度量 n=10：外发 1、help 0/10、往返 4（原 5~7）。**N3 定稿｜N4 并入**（YZ 同意）：`run` 语义错位→改发起即返回、取值收敛读类；命令结束通知机制已实现（`term.notify`），只需暴露；建议 5 搁置
+- **模型面修订已落码验证（09-28，`ab46a5b`＋`ea2812c`）**：`run` 发起即返回不取值（去 session、面级 help 给读法、暴露 notify）＋ `web.cancel`/`file.cancel` 暴露 ＋ `target→to`（arg_map）；n=10 复跑成功 10/10、help 0、工具错 0、往返 5。证据 `checkpoint/26-09-28-toolbox-model-face/`
 - 条目：`entries/2026-09-28-cogos-toolbox-presentation.md` · `entries/2026-09-28-cogos-toolbox-behaviour-probe.md` · `entries/2026-09-28-cogos-toolbox-fix.md` · `entries/2026-09-28-cogos-toolbox-run-semantics.md` · `entries/2026-09-28-cogos-model-prior-naming.md`
 
 ## 最近收口 · screenlab 图形面（09-20~26，#1~#78）
