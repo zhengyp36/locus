@@ -33,6 +33,17 @@
   3. `call computer.file.read {"path":"…/_out.txt"}`
   4. `call communication.message.send {"to":"COGOS002:A0001","content":"…S5-REAL-E2E-OK"}`
 
+## 复查修复（09-28，`8bb00b3`）
+
+检视本次改动时发现两处内部 session id 泄漏（均为模型面，非崩溃）：
+
+1. **工具结果泄漏 numeric `id`**：N3 后 `observe` 成为主取值路径，而 `terminal_observe`/`_exec`/`_write`/`_cancel` 结果都带 `id=<n>`（机制内部会话号），模型会看到一个无法合法回传的句柄——正是 B 要消除的"session 诱导"。修：`toolbox._call` 对所有需注入 session 的能力，结果统一 `pop("id")`。
+2. **事件键不匹配**：`impl/terminal.py` 事件 payload 用 `session_id`，而 `events.render_event` 只认 `id` → `term.done`/`term.notify` 实际渲染成 `session_id=1 …`（泄漏内部名、S4 的对象标签从未生效）。修：render_event 对 term 事件把 `session_id`/`id` 映射为 `session="tN"`；测试改用真实 payload 键。
+3. 附带：`catalog.py` 顶部 docstring 仍写"binding … or a composition of them"，随 `steps` 移除一并改。
+
+- 修复后测试：`tests/agent` 278 passed / 3 skipped；全量 1282 passed / 5 skipped（同一无关 image_ctx fail）。
+- 修复后复跑（n=10，`probe-after-n10-fixed.json`）：结果与修复前一致（10/10、help 0、错 0、往返 5），确认无回归。
+
 ## 对照：批 0 冒烟（N3 模拟，run 不取值，未改仓库）— 停回讨论的依据
 
 - `scratch` 已删；摘要见 `entries/2026-09-28-cogos-toolbox-run-semantics.md` 与旧 `batch0-gate-result`（收口前）。

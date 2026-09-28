@@ -48,6 +48,13 @@
 - **被否**：**C `settled` 过渡**——既不取值也非真完成信号，模型无从行动，且近"猜完成"边界；要真信号只能是 `observe`（真屏）或 OSC `term.notify`（真事件）。**D 原样接受 8.2**——漏掉已识别的确定性摩擦，不采（取其"可靠优先"排序，不取其内容）。
 - **遗留观察**：模型先跑一次裸 `cat`、再重跑带重定向（多 1 轮）；可在描述里更明确引导"一开始就重定向"，或接受（不阻塞）。
 
+## 复查修复（09-28，cogos `8bb00b3`）
+
+- **工具结果泄漏 numeric `id`**：`observe`/`interrupt`/`send`（及 `run`）的结果带内部会话号 `id=<n>`；N3 后 observe 成主路径，此泄漏＝给模型一个"无法合法回传"的句柄（B 要消除的 session 诱导）。修：需注入 session 的能力结果统一去掉 `id`。
+- **事件键不匹配**：terminal 事件 payload 用 `session_id`，`render_event` 只认 `id` → `term.done`/`term.notify` 实际渲染成 `session_id=…`（泄漏内部名、S4 对象标签从未生效）。修：term 事件把 `session_id`→`session="tN"`；测试改真实 payload 键。
+- 修复后 `tests/agent` 278 passed；复跑 n=10 无回归（10/10、help 0、错 0、往返 5）。证据 `checkpoint/26-09-28-toolbox-model-face/`。
+- **遗留（未改，属设计判断）**：单会话期事件仍带 `session="tN"` 标签，但 `open`/`list` 已撤、模型无法定向会话 → 该标签暂时是"inert handle"，长期可能重引 session 诱导；是否在单会话期也从事件里去掉，待 YZ 定。
+
 ## 过渡（未采用）
 
 - ~~`run` 返回加 `settled: true/false`~~（见上"被否 C"）。
