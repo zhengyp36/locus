@@ -3,6 +3,13 @@
 > 分层：当前阶段（首页）→ 已收尾（归档入口）。细节按需去 entries/ 翻，不逐条占首页。
 > `checkpoint/26-09-26-*` = 2026-09-26 归档线；`checkpoint/26-09-17-agent-theory/` = cogos 理论归档。
 
+## 最近收口 · 工具呈现 toolbox（09-28）
+
+- **工具从"散"到"可用"**：3 组常驻总览（`system-reminder`）＋ 单一 `toolbox`；schema 恒定吃前缀缓存；`help` 逐级发现 / `call` 精确执行
+- **代码**：cogos master `f8ef94a`(S0) `67011d0`(S1) `fd2752b`(S2) `8a5cdf1` `42f09aa`(S3) `9183508`(S4)；工作树干净；`tests/agent tests/cog_runtime` 300 passed / 3 skipped（用 `python3.11`）
+- **验收全过**：阶段 I/II 真实模型探针；阶段 III 主路径真机；**S5 真实飞书身份 e2e**——唐钰`COGOS002:A0005` ← 李恪`A0001`，`call run cat E2E-S5.txt` → `S5-REAL-E2E-OK`（判据 3）
+- 条目：`entries/2026-09-28-cogos-toolbox-presentation.md`
+
 ## 最近收口 · screenlab 图形面（09-20~26，#1~#78）
 
 - **接口层通过独立验收**：三动词 `screen_fetch/act/save`、viewing 拆给 image_ctx、坐标恒相对 current frame、`on_change` 客户端判；X11/Windows usage 真值全过 → `checkpoint/26-09-26-screenlab/acceptance-screen-78.md`
@@ -58,3 +65,7 @@
 ## 已收尾 · 通信层（08-07 ~ 08-24）
 
 - 代码现状地图 → entries/project-map.md；阶段脉络 → CHANGELOG.md（阶段 1 ~ 3）；细节条目 → entries/（08-12 ~ 08-24 系列）
+
+## 参考 · 认知基元索引
+
+- cog-unit / cog-func / cog-object 理论锚点 → entries/cog-primitives-index.md
