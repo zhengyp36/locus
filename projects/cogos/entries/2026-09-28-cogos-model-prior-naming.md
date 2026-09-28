@@ -18,7 +18,7 @@
 - 依据：真实模型 **16/16 + 10/10** 稳定猜 `to`（应 `target`）。
 - `target` 是通信族统一用词：`communication.message.send`（catalog.py:257）/ `communication.file.send`（:268），impl `send_msg`/`send_file` 亦用。
 - 落地：**整族**改模型面为 `to`；impl 不动；catalog `arg_map={"to":"target"}` 映射。**复跑验证**（n=10）：`to` 首猜命中 10/10、**0 参数错**、0 help、往返 5 → 准则实践成立。
-- 注意：`to` 在本 catalog 别处另指 drag 终点（`computer.screen.act`，catalog §18），**同名不同义**须权衡。
+- **caveat 已撤销（09-28 复盘）**：曾记"`to` 在本 catalog 别处另指 drag 终点（`computer.screen.act` §18），**同名不同义**须权衡"——**不成立**。参数名作用域＝**能力（path）**、非全局：各 path 独立命名空间，模型先定 path 再按该能力 help 填 args，逐能力描述已区分，无冲突。§19 三闸②"跨能力一致"实指**同族内部**（所有 `*.send` 统一接收者参数名），此义成立；从未要求跨族一致。教训：勿把设计文档留的谨慎话当缺陷放大。
 
 ## 边界 / 被否
 

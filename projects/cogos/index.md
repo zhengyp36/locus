@@ -13,6 +13,13 @@
 - **模型面修订已落码验证（09-28，`ab46a5b`＋`ea2812c`）**：`run` 发起即返回不取值（去 session、面级 help 给读法、暴露 notify）＋ `web.cancel`/`file.cancel` 暴露 ＋ `target→to`（arg_map）；n=10 复跑成功 10/10、help 0、工具错 0、往返 5。证据 `checkpoint/26-09-28-toolbox-model-face/`
 - 条目：`entries/2026-09-28-cogos-toolbox-presentation.md` · `entries/2026-09-28-cogos-toolbox-behaviour-probe.md` · `entries/2026-09-28-cogos-toolbox-fix.md` · `entries/2026-09-28-cogos-toolbox-run-semantics.md` · `entries/2026-09-28-cogos-model-prior-naming.md`
 
+## 当前 · 转外圈/内圈（09-28，工具呈现收口后）
+
+- **呈现层可停手 + 转向外圈/内圈**（依据/做法/前置语义/代码事实/抹痕归属）→ `entries/2026-09-28-cogos-loop-pivot.md`
+- **学习通道**（先猜 vs 先学 → 选通道）+ 用法知识归记忆 → `entries/2026-09-28-cogos-learning-channels.md`
+- **意图（完整口径）**：意图＝意识角色的作用域（就地执行＋渲染隐藏；程序式记忆；渲染三律/吸收-上浮/不泄漏）→ `entries/2026-09-28-cogos-intent-view.md`
+- 依据 `checkpoint/26-09-26-theory-residual/checkpoint-1.md` §四~§七（动手纪律/现状摸底/外圈零件序）；本体 `../cogos/docs/design-selfdrive-agent.md`
+
 ## 最近收口 · screenlab 图形面（09-20~26，#1~#78）
 
 - **接口层通过独立验收**：三动词 `screen_fetch/act/save`、viewing 拆给 image_ctx、坐标恒相对 current frame、`on_change` 客户端判；X11/Windows usage 真值全过 → `checkpoint/26-09-26-screenlab/acceptance-screen-78.md`
