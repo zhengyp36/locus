@@ -14,6 +14,8 @@
 - **N3 定稿细节**：`entries/2026-09-28-cogos-toolbox-run-semantics.md`。
 
 - **模型面命名准则（09-28 定稿）**：模型好理解优先、与机制实现名解耦（catalog 层映射）；元工具下参数名不可见、模型只能猜 → 稳定猜成同一合理值则对齐先验（三闸：一致性/合理性/证据）；案例 `target→to` 待验。落设计 `../cogos/docs/design-agent-tools.md §19`；`entries/2026-09-28-cogos-model-prior-naming.md`。
+
+- **落地已交 B 工位（09-28）**：toolbox 模型面修订（run 语义 + N4 cancel 暴露 + `to`）由 **B 工位执行会话**承接（title `26-09-28-cogos-toolbox-model-face`）；工作单 `B/locus/scratch/26-09-28-toolbox-model-face/`（plan + handoff-01，`7ef657a` 已 push）；**批 0 验证闸**先行（模型能否用「发起即返回 run + read/observe」取值，不合即停回讨论），完成/遇问题飞书通知 YZ。A↔B 已同步（cogos `c42c452` / locus `10d5fe0`→`7ef657a`）。
 - 详情 `entries/2026-09-28-cogos-toolbox-presentation.md`。
 
 ## 最近收口：screenlab 图形面（09-20 ~ 09-26，会话 #1~#78）
