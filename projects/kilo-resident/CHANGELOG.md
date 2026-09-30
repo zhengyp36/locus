@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 2026-09-30
+
+- feat/kilo-phone：飞书 image/file 入站下载并注入会话（`3c91429`），失败回执/重投去重/异常兜底（`997bc6d`），`/new` `/pin` 后重 arm autoWatch（`70b5290`）。
+- 修在途回复静默丢：`/new` `/pin` 加忙碌保护，正忙拒绝切换；`switchSession` 遇 live inflight 打 warn。补发方案评估后被否（路径已不可达）。本体提交 `7bfcd0a`，bridge 已重启部署。
+
 ## 2026-09-12
 
 - task-7 收尾：attach + TUI 唤醒通道打通并实测，terminal 长命令与窗口 timer 均能唤醒会话。

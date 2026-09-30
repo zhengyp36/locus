@@ -7,3 +7,5 @@
 - 2026-09-11: 转实现；最小飞书双通道 + timer 实测通，宿主暂用 kilo serve → entries/2026-09-11-task7-implementation.md
 - 2026-09-12: 验证 attach + TUI 唤醒通道；QUEUED 孤儿根因与修法、attach 坑 → entries/2026-09-12-task7-tui-wake.md
 - 2026-09-12: task-7 收尾；修 timer 窗口 origin（"fired without a delivery channel"），terminal/timer 唤醒实测，本体提交 4bae464
+- 2026-09-30: feat/kilo-phone：飞书 image/file 入站（3c91429、997bc6d）、/new /pin 重 arm autoWatch（70b5290）→ 见 current.md 与 git log
+- 2026-09-30: /new /pin 忙碌保护（7bfcd0a）：正忙拒绝切换，在途回复不再静默丢；补发方案被否 → entries/2026-09-30-switch-busy-guard.md
