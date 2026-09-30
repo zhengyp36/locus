@@ -14,3 +14,5 @@
 - 2026-09-24: cogos — screenlab Goal 1（per-account 自管面）与 Goal 2/3a（协助真人）真机验收；tag `screenlab-goal1-2026-09-24`/`screenlab-goal2-3a-2026-09-25`
 - 2026-09-25: cogos — 工具线盘点（#72）；computer 图形面 v2 接口对齐封板（#73）
 - 2026-09-26: cogos — screenlab v2 接口落码+#75/76 真机验证、#78 独立验收**接口层通过**；收口包进本体 `docs/screenlab-freeze.md`；旧 checkpoint 归档为 locus `checkpoint/26-09-26-*`（工程停得干净、可接回）
+- 2026-09-28~29: cogos — 工具呈现 toolbox 收口（run 语义/命名/修复）；主线转外圈/内圈：过程与命名（思考控制·动手控制·经验）、槽/流/自指、cu 边界
+- 2026-10-01: cogos — 外圈/内圈过程 × 工具面**收口**：工具二分（外部不占住/自身有界，裁 P2）、工具层只报事实、槽＝分布式并集（解 P1）、P3 降为命名；下一步＝落首个受控循环逼 P7/P8 长出来
