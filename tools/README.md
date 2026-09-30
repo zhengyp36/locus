@@ -15,15 +15,9 @@ echo "文本消息" | tools/feishu_notify.py   # stdin 输入
 - 依赖（在 repo 外，勿提交）：`~/.secrets/feishu.key`、`~/.secrets/feishu-users.json`。
 - 别名注册：见飞书 MCP 的 `register_feishu_alias` / `list_feishu_aliases`。
 
-## handoff.py
+## 交接（handoff）
 
-起新 Kilo session 并确认已起来（交接用）。默认 `--dir`=cwd、`--attach`=`http://127.0.0.1:4097`、账号 `kilo/kilo`、`--timeout`=120s。
-
-```bash
-tools/handoff.py "<title>" "<第一句话>"
-tools/handoff.py "<title>" -f handoff-NN.md   # 首句取自文件
-echo "第一句话" | tools/handoff.py "<title>"   # 或 stdin
-```
+交接用 Kilo 的 `handoff` 工具（由 kilo-resident 的 resident 桥接提供），**不在本目录**：起新 session 并确认已起来，默认同目录、默认继承本会话模型，可用 `model: "providerID/modelID"` 覆盖。用法见 `../rules/task.md` 的「交接」。
 
 ## 约定
 

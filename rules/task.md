@@ -32,14 +32,14 @@
 
 - 交接 = 当前会话自己起后继，不等 YZ。
 - 顺序：写 `handoff-NN.md`（正文 + 给新会话的**第一句话**，单列便于取用）→ 更新滚动状态 → **交接即封笔**：清掉本会话所有异步源（timer / terminal / background_process / 飞书 pin 与 inbox）。
-- 起后继用 `tools/handoff.py`（默认同目录、attach / 账号已内置；起新 session 并确认已起来，默认等 120s）：
+- 起后继用 Kilo 的 `handoff` 工具（resident 桥接提供；默认同目录、默认继承本会话模型；起新 session 并确认已起来，默认等 120s）：
   ```
-  tools/handoff.py "<title>" "<第一句话>"
+  handoff(title: "<title>", message: "<第一句话>")
   ```
-  首句来源三选一：inline（上面）、stdin（`echo … | tools/handoff.py "<title>"`）、或 `-f <file>`——**`-f` 把整份文件当首句**，故该文件里只放那一句（别传整份 `handoff-NN.md`）。标题先定好。**交接到本目录**，首句不必交代目录 / 路径。
+  首句即 `message`；`handoff-NN.md` 里把那一句**单列**便于取用。标题先定好。**交接到本目录**，首句不必交代目录 / 路径。需换模型时传 `model: "<providerID>/<modelID>"`。
 - bridge 侧（最易漏）：该工程的飞书 bot / session pin 若仍指旧会话，入站会唤醒旧会话 → 改指后继（Feishu `/pin`）、清 `inbox`。兜底：交接后若仍被唤醒，开头先判"本会话已交接"，立即停并把事件转给后继。
 - 通知 YZ：已交接 + 新会话 title。
-- 权限：后继**不得 `--auto`**；防失控：链式交接设上限。
+- 权限：防失控——链式交接设上限。
 - 唤醒：唤醒源创建即 `markWatched`（TTL 1h）；>1h 才触发的会被压住，定时留 ≤1h 内续 TTL。
 
 ## 验收
