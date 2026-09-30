@@ -1,5 +1,6 @@
 # cogos 意图的整体看法（2026-09-28 讨论收口）
 
+> ⚠️ **术语现义见 `glossary.md`**（09-30 立）：本文"意图＝意识角色的作用域"口径已于 09-29 收回，现义＝**无声动作指令＝思考→动手的桥**（`entries/2026-09-29-cogos-outer-loop-process.md` §4）。本文留档作旧义来路与机制素材（渲染三律/程序式记忆/边界判据仍有效）。
 > 结论：**意图 ＝ 意识角色的一个作用域**，不是工具、不是一次调用、不是层。同一模型换一套视图与工具面：看见能力、看不见用法；产出目标、收回结果。它是「就地执行 + 渲染选择 + 角色边界」的同一件事。本文件为 09-28 会话收敛的完整口径。
 > **目的重框（09-28 晚）**：意图的意义是**给模型注意力减负**（把注意力留给推理），**不是保密**——少量工具用法留在上下文可接受；执行侧口径见 `entries/2026-09-28-cogos-intent-execution.md`。
 > 前史（意图方案的来路）：`checkpoint/26-09-11-live-checkpoint/checkpoint-6.md`（意图=工具集标签+自然语言、结构下沉、结果=对象、消息合并）· `checkpoint-15.md §7`（意图=任务、工具集=执行器/子任务划分）· `checkpoint-17/18`（反转：主 LLM 自己理解、工具按需加载、摘要作废）· `checkpoint/26-09-26-agent-tools/checkpoint-2.md §十/§十五`（四原子：意图=assistant 正文、动作落 user、`tool` role 永不使用）· 上游 `../cogos/docs/cogos-concept-system.md`（显意识=意图产生点）· `../cogos/docs/cogos-design-theory-summary.md:19`（主链零工具+意图网关）。同批：`entries/2026-09-28-cogos-loop-pivot.md`（代码事实/落段）、`entries/2026-09-28-cogos-learning-channels.md`（选通道）。
