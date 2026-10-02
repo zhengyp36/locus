@@ -25,12 +25,26 @@
 
 ## 结果（10-03 执行）
 
-- **代码**：cogos master `7a67fc3`（7 files changed，未 push）。`experience.py`(新)·`flow.py`·`consciousness.py`·`app.py`·`tests/agent/test_experience.py`(新)·`test_flow.py`·`scripts/exp_experience_recall.py`(新)。
+- **代码**：cogos master `7a67fc3`（7 files changed，**已 push**）。`experience.py`(新)·`flow.py`·`consciousness.py`·`app.py`·`tests/agent/test_experience.py`(新)·`test_flow.py`·`scripts/exp_experience_recall.py`(新)。
 - **机制**：`tests/agent tests/cog_runtime` = **324 passed / 3 skipped**；全量 = **1290 passed / 1 failed / 5 skipped**（唯一 fail `tests/image_ctx/test_p2.py` 硬编码临时素材缺失，与本刀无关）。
 - **行为探针**（真 deepseek-v4-flash ＋ FakeTelecom；同事件＋同 seeded `未了` 段，仅 recall 开关）：**分叉=True**。
   - `recall_on`：采纳=理，6 轮，`toolbox`×4，外发 1。
   - `recall_off`：采纳=理，12 轮（撞满工具轮），`toolbox`×13，外发 0。
   - 结果文件 `/tmp/kilo/experience_recall_probe/result.json`。
 - **跨事件稳定**：新增 `test_open_knot_stable_across_events`——第二事件装载读回第一事件 `<未了>`；新 `SegmentStore` rebuild 后 `open_knots` 仍稳定。
-- **未跑**：真身份 e2e（真 daemon＋真 app，真发飞书＝外溢＋第二账号编排）→ 留 YZ。
+- **真身份 e2e（YZ 授权后补跑，10-03）通过**：真 daemon＋lm-service＋app，A0001 真发两事件；事件 2 装载读回事件 1 同来源近段、`open_knots` 稳定空、旧段 rebuild 兼容、公开入口未崩。证据已转存 `projects/cogos/checkpoint/26-10-03-experience-axis/e2e-readback-evidence.md`。
 - **收口**：entry `projects/cogos/entries/2026-10-03-cogos-experience-axis-readback.md`；glossary 更新 `段`/`经历轴`＋新增 `回边`；`current.md` 更新。
+
+## P8 关联第一刀（机械打关联，10-03 续）
+
+> 承 `handoff-02 #3`。目标＝装载直取的关联入口，**先只机械打**（不做模型抽取）。
+
+- **D7 首刀＝机械打关联，不做模型抽取**。why：当前唯一可靠信号＝事件来源＋已有开放线；模型抽取需要锚分类学（P8 本体）先长出来；认可口径明写「首版 P8＝只机械打(来源→人/thread/结)」。**被否**：让装载/判结模型抽关联（无本体、易编、不可重建）。
+- **D8 续线判据＝按「线」而非「段」判开放**：某 `thread` 开放 iff 其**最新**落段 `结∈{未了,挂起}`；`了` 段关闭该线。why：`open_knots` 是段级，旧未了段被后续 `了` 段关闭后仍留在段级视图里，照段级续线会把**已关闭的线一直续下去**（工作树原实现即此漏）。**被否**：段级 `open_knots` 直接续线。
+- **D9 选线**：来源 `person` 在开放线中取**最近**一条。**被否**：一人多开放线全并（过并）；按主题/时间窗匹配（需主题索引，本刀不建）。
+- **D10 thread 继承线根**（`prior.thread or prior.id`）；`refs=[{kind:continue_of,id:prior.id}]` 指向**该线最新开放段**（非线根，保留链）。
+- **D11 人并集**：`人 = 该线人 ∪ {来源}`，顺序去重，喂 `by_person`。
+- **D12 落点＝`_land`（写侧唯一落段点）**；读侧不改（`_past_context` 仍只用 `open_knots`＋同来源近段）。**被否**：新增独立「关联拍」；本刀就改装载按 thread 取回（留待读侧真需要时）。
+- **实现**：`experience.py` 加 `open_thread_for`/`continuation_for`，`segment_from_flow` 收 `people/thread/refs`；`consciousness.py::_land` 传续线。cogos **`9775293`（已 push）**。
+- **验收**：`tests/agent` 300 passed/3 skipped；`tests/agent tests/cog_runtime` 329 passed/3 skipped；全量 1296 passed/1 fail（唯一 fail＝`tests/image_ctx/test_p2.py` 素材缺失，无关）/5 skipped。
+- **洞**：一人多开放线只取最近（未并/未选）· `open_knots()`（段级）与续线（线级）口径暂不一致 · 关联仍**无读侧用法**（本刀只写）· thread 关闭无「兑现/放弃」细分。

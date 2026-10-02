@@ -8,10 +8,11 @@
 
 - **过程 v2.2（去投影·控制拍）**：环＝**事件→装载→生成⇄动手→判结→沉淀**；独立"控制拍"降可插拔占位、第一刀不实现，**投影只剩"自指＝认领"**。why：投影作为推理质量手段**必要性未证**。被否：控制拍必选、think 伪工具、彻底删投影。
 - **第一刀（G2 脊柱＋G1 退化解）**：cogos `91fd1de`（已 push）——一事件开一流，装载产「定性＋采纳(理｜搁置｜不理)」，`理`跑生成⇄动手、其余不推进，**每流恰落一段**（`memory/segments.jsonl`，只写不读）。目标重评：#1 否决、#3 消解、#2 存活；**新焦点 G1 认领/自指**＝"自驱 vs 反应式"分界。
-- **第二刀（经历轴读侧＋回边）**：cogos **`7a67fc3`（未 push）**——`agent/experience.py`＝段 schema（补 `人[]/主题`）＋读侧 `SegmentStore`（L0 不变；扫 L0 重建 `by_time/by_person/open_knots/by_thread`；`retrieve`＝去重→近因→预算，**权重=0**；`open_knots()`）；`consciousness.py` 加 `recall` 开关，认领与生成注入 `open_knots`＋同来源近段（回边）。**从"只写"到"能读回"**。
-- **验收**：机制—`tests/agent tests/cog_runtime` 324 passed/3 skipped；全量 1290 passed（1 无关 image_ctx 素材缺失 fail）。行为—真模型探针（同一事件＋同一 seeded 未了段，仅 `recall` 开关不同）**分叉=True**（on：外发1/6轮；off：外发0/撞满工具轮）。跨事件—deterministic 测试证装载读回旧 `<未了>`、新进程 rebuild 后仍稳定。**真身份 e2e 本刀未跑**（需真发飞书＝外溢＋第二账号编排）。
-- **设计遗留**：装载 regex 异常表述默认"理"；**锚 P8 仍手写『我』占位**；生成/动手未物理分离；占位字段 `thread=id/refs=[]/主题/预测` 待升级；`host` 无生产者；权重=0、无主题/工具索引、无误差切点/后压/读时现整。
-- **承重缺口**：**P7 判"结"主体**、**P8 锚分类学**仍在；第一/二刀＝G2 脊柱＋G1 退化解＋读回，逼 P7/P8 长出来。命名：`time-axis.md` 提 经历轴→时间轴，未收口。
+- **第二刀（经历轴读侧＋回边）**：cogos **`7a67fc3`（已 push）**——`agent/experience.py`＝段 schema（补 `人[]/主题`）＋读侧 `SegmentStore`（L0 不变；扫 L0 重建 `by_time/by_person/open_knots/by_thread`；`retrieve`＝去重→近因→预算，**权重=0**；`open_knots()`）；`consciousness.py` 加 `recall` 开关，认领与生成注入 `open_knots`＋同来源近段（回边）。**从"只写"到"能读回"**。
+- **P8 关联机械第一刀**：cogos **`9775293`（已 push）**——`experience.py` 加 `open_thread_for`/`continuation_for`：事件来源若落在一条**开放线**上就续该线（`thread` 继承线根、`refs=[continue_of]`、`人` 取并集）；开放＝该线**最新**落段 `结∈{未了,挂起}`（修：按**线**判、非段级，否则已关线被一直续）。落点 `_land`（只写不读）。收口件 `entries/2026-10-03-cogos-p8-association-mechanical.md`。
+- **验收**：机制—`tests/agent` 300 passed/3 skipped、`tests/agent tests/cog_runtime` 329 passed/3 skipped；全量 1296 passed（1 无关 image_ctx 素材缺失 fail）/5 skipped。行为—真模型探针（同一事件＋同一 seeded 未了段，仅 `recall` 开关不同）**分叉=True**（on：外发1/6轮；off：外发0/撞满工具轮）。跨事件—deterministic 测试证装载读回旧 `<未了>`、新进程 rebuild 后仍稳定、P8 续线关线后不再续。**真身份 e2e 已跑**（真 daemon＋lm-service＋真 app `tangyu`，A0001 真发两事件）：事件 2 装载 prompt 读回事件 1 同来源近段（`<近来>`＋`沿经历轴读回的过去`）、模型据此认出"重复要求"；`open_knots` 稳定为空、旧形状段 rebuild 兼容、公开入口未崩。证据 `checkpoint/26-10-03-experience-axis/e2e-readback-evidence.md`。
+- **设计遗留**：装载 regex 异常表述默认"理"；**锚 P8 仍手写『我』占位**；生成/动手未物理分离；占位字段 `主题/预测/host` 待升级（`thread/refs` 已随 P8 升级）；权重=0、无主题/工具索引、无误差切点/后压/读时现整；**关联无读侧用法**、`open_knots`（段级）与续线（线级）口径暂不一致。
+- **承重缺口**：**P7 判"结"主体**、**P8 锚分类学**仍在；下一刀方向未定（关联读侧用法 / 模型抽取＋锚分类学）。命名：`time-axis.md` 提 经历轴→时间轴，未收口。
 
 ## 前情：外圈/内圈 × 工具面（10-01 口径；被 v2.2 覆盖处已注明）
 

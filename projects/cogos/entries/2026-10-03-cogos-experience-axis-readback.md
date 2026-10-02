@@ -1,7 +1,7 @@
 # cogos：经历轴读侧落地（骨架 ＋ 回边）（10-03）
 
 > 性质：**第二刀收口件**——把经历轴从"只写"推到"能读回"。承第一刀 `entries/2026-10-03-cogos-first-cut-flow-claim.md`（段/流脊柱）＋ scratch `2026-10-03-experience-axis/`（YZ 认可口径 · 最小形状）。
-> 术语权威＝`glossary.md`。代码 cogos master **`7a67fc3`（未 push）**。写法：结论 + why + 被否。
+> 术语权威＝`glossary.md`。代码 cogos master **`7a67fc3`（已 push）**。写法：结论 + why + 被否。
 
 ## 1. 落地
 
@@ -20,7 +20,7 @@
   - `recall_off`：12 轮（撞满工具轮）、`toolbox`×13、外发 0 → 空转。
   - 证据 `/tmp/kilo/experience_recall_probe/result.json`。
 - **自指/跨事件**：deterministic 测试证明第二事件的装载读回第一事件的 `<未了>`，且新进程 `rebuild()` 后 `open_knots()` 仍稳定。
-- **未跑**：真身份 e2e（真 daemon＋真 app）——需真发飞书消息（外溢）＋第二账号编排，留待与 YZ 确认。
+- **真身份 e2e（已跑，10-03 补）**：真 feishu daemon＋lm-service＋真 app `python -m cogos.agent.app --agent ~/.cogos/agent/tangyu`（YZ 授权外溢）；`COGOS002:A0001`（李恪）真发两条飞书至 `COGOS002:A0005`（唐钰），两条均落段（新 schema、`人=["COGOS002:A0001"]`、判**不理**、`结=了`）。**跨事件读回证实**：事件 2 装载 prompt 含「沿经历轴读回的过去 / `<近来>`」，列回事件 1 同来源近段（＋旧段），模型据此认出"重复要求"→ 仍判不理。新进程 `SegmentStore.rebuild` 后 `open_knots()` 稳定为空、旧形状段（无 `人`）经 D4 回退纳入 `retrieve`、公开入口全程未崩。证据 `checkpoint/26-10-03-experience-axis/e2e-readback-evidence.md`。
 
 ## 3. 目标内自决（why ＋ 被否）
 

@@ -5,10 +5,11 @@
 > 权威口径（冲突以它为准）：`entries/2026-10-03-cogos-first-cut-flow-claim.md`（v2.2＋第一刀）· `entries/2026-09-29-cogos-slot-flow-selfref.md §1`（槽/流/经历轴）· `glossary.md`。
 
 ## 状态
-- **交接入口 = `handoff-02.md`**（第二刀已落；剩真身份 e2e，须 YZ）。
-- **第二刀已落（10-03）**：`agent/experience.py`（段 schema＋读侧索引/`retrieve`/`open_knots`）＋ `consciousness.py` 回边（`recall` 开关）。cogos **`7a67fc3`（未 push）**。决策见 `DECISIONS.md`；收口件 `entries/2026-10-03-cogos-experience-axis-readback.md`。
-- 机制 `tests/agent tests/cog_runtime` 324 passed；全量 1290 passed（1 无关 fail）；真模型探针 recall on/off **分叉=True**。**真身份 e2e 未跑**（需真发飞书＝外溢）。
-- 现实现：第一刀 `flow.py` 只写；第二刀读回 `memory/segments.jsonl`（L0）＋进程内可重建索引；`thread=id/refs/主题/预测` 仍占位。
+- **交接入口 = `handoff-02.md`**（第二刀＋真身份 e2e＋P8 机械第一刀均落；下一刀待 YZ）。
+- **第二刀已落（10-03）**：`agent/experience.py`（段 schema＋读侧索引/`retrieve`/`open_knots`）＋ `consciousness.py` 回边（`recall` 开关）。cogos **`7a67fc3`（已 push）**。决策见 `DECISIONS.md`；收口件 `entries/2026-10-03-cogos-experience-axis-readback.md`。
+- **P8 关联机械第一刀已落（10-03 续）**：`open_thread_for`/`continuation_for`＋`_land` 续线（按**线**判开放）。cogos **`9775293`（已 push）**。收口件 `entries/2026-10-03-cogos-p8-association-mechanical.md`。
+- 机制 `tests/agent tests/cog_runtime` 329 passed/3 skipped；全量 1296 passed（1 无关 fail）/5 skipped；真模型探针 recall on/off **分叉=True**；**真身份 e2e 已跑**（证据已转存 `projects/cogos/checkpoint/26-10-03-experience-axis/e2e-readback-evidence.md`）。
+- 现实现：第一刀 `flow.py` 只写；第二刀读回 `memory/segments.jsonl`（L0）＋进程内可重建索引；P8 机械续线（`人/thread/refs`）；`主题/预测/host` 仍占位。
 
 ## 本会话推演链（结论 ＋ why ＋ 被否）
 
