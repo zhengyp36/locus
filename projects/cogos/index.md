@@ -4,6 +4,14 @@
 > **术语单一权威 → `glossary.md`**（09-30 立；新词/旧义/撞名当场钉，entry 与本表冲突以本表为准）。
 > `checkpoint/26-09-26-*` = 2026-09-26 归档线；`checkpoint/26-09-17-agent-theory/` = cogos 理论归档。
 
+## 最近收口 · 过程 v2.2 + 第一刀（10-03）
+
+- **过程 v2.2（去投影·控制拍）**：环＝事件→装载→生成⇄动手→判结→沉淀；独立控制拍**降可插拔占位、第一刀不实现**（判停并入生成拍＋硬闸；整理/对齐/取回→装载/生成上下文或不做）；**投影只剩自指＝认领**。why：投影必要性未证（E1 天花板）。被否：控制拍必选、think 伪工具、彻底删投影 → `entries/2026-10-03-cogos-first-cut-flow-claim.md §1`、`glossary.md`
+- **第一刀已落**：cogos master `91fd1de`（已 push）——`flow.py`＋`consciousness.py`/`app.py`：一事件开一流，装载产「定性＋采纳(理｜搁置｜不理)」，`理`跑生成⇄动手（思考＋工具事实入段`过程`）、其余不推进，**每流恰落一段**（`memory/segments.jsonl`）。承重重评：#1 否决、#3 消解、#2 存活；新焦点 **G1 认领/自指**
+- **验收**：机制—`tests/agent tests/cog_runtime` 314 passed；全量 1281 passed（1 无关 image_ctx 素材缺失 fail）。语义—探针固定事件×两套『我』→采纳/行为分叉。真实身份—真 daemon＋真 app `~/.cogos/agent/tangyu`，真机 `A0001→A0005`，默认『我』判**不理**、落一段
+- **遗留**：装载 regex 只认 `采纳: 理|搁置|不理`；**锚 P8 仍手写『我』占位**；生成/动手未物理分离；未了→回边、控制拍均占位。承重缺口 P7/P8 仍在
+- 实验：`entries/2026-10-03-cogos-projection-experiment-e1.md`（纯推理靠投影持续——天花板未证）；证据 `checkpoint/26-10-03-first-cut/`
+
 ## 最近收口 · 工具呈现 toolbox（09-28）
 
 - **工具从"散"到"可用"**：3 组常驻总览（`system-reminder`）＋ 单一 `toolbox`；schema 恒定吃前缀缓存；`help` 逐级发现 / `call` 精确执行
