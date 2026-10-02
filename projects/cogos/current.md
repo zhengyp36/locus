@@ -2,15 +2,16 @@
 
 多 agent 运行时，飞书作通信总线。通信层已收口，底层三件（lm-service + cog-runtime）完成。主线 = **自驱回路** → **agent 本体 = 动机为根** → 会话 #11~#18 收敛出 **agent 模型（重投影/回看/事件轴）**。**本体 `../cogos/docs/design-selfdrive-agent.md` 已落后，不以其为准**；当前口径＝过程 **v2.2**（10-03，见下），术语权威＝`glossary.md`。
 
-## 当前：过程 v2.2 + 第一刀（10-03 收口）
+## 当前：过程 v2.2 + 第一/二刀（10-03）
 
-> 收口件＝`entries/2026-10-03-cogos-first-cut-flow-claim.md`（第一刀＋v2.2 增量/决策/遗留/被否）· `entries/2026-10-03-cogos-projection-experiment-e1.md`（投影实验）。主干＝`entries/2026-09-29-cogos-outer-loop-process.md`。
+> 收口件＝`entries/2026-10-03-cogos-first-cut-flow-claim.md`（第一刀＋v2.2）· `entries/2026-10-03-cogos-experience-axis-readback.md`（第二刀：经历轴读侧＋回边）· `entries/2026-10-03-cogos-projection-experiment-e1.md`（投影实验）。主干＝`entries/2026-09-29-cogos-outer-loop-process.md`。讨论过程 scratch `2026-10-03-experience-axis/`（认可口径＋最小形状）。
 
-- **过程 v2.2（去投影·控制拍）**：环＝**事件→装载→生成⇄动手→判结→沉淀**。原先每轮生成后的独立"**控制拍**"（整理/对齐/取回经验/判停）**降可插拔占位、第一刀不实现**——**判停**并入生成拍自带决定（继续动手/收束）＋机制硬闸；**投影只剩"自指＝认领"**。why：投影作为推理质量手段**必要性未证**（主流单趟长思考/外部反馈；E1 天花板未证）。被否：控制拍必选、think 伪工具、彻底删投影。
-- **第一刀已落（含 G1/G2）**：cogos master `91fd1de`（已 push）——`flow.py`＋`consciousness.py`/`app.py` 接入：一事件开一流，装载产出「定性＋采纳(理｜搁置｜不理)」，`理`跑生成⇄动手（思考＋工具事实入段`过程`）、其余不推进，**每流恰落一段**（`memory/segments.jsonl`）。承重目标重评：**#1 生成/投影可分→否决**、**#3 reasoning 捕获→消解**、**#2 流是沉淀单位→存活**；**新焦点 G1 认领/自指**＝"自驱 vs 反应式"分界。
-- **验收全过**：机制—`tests/agent tests/cog_runtime` 314 passed；全量 1281 passed（1 无关 image_ctx 素材缺失 fail）。语义—探针（真模型＋FakeTelecom）固定事件×两套『我』→ **采纳分叉（理/不理）＋行为分叉**（take：toolbox×4、外发1、段`过程`6项；ignore：不动手、外发0）。真实身份—起真 daemon＋lm-service 跑真 app `~/.cogos/agent/tangyu`，真机 `A0001→A0005`，默认『我』判**采纳=不理**（陌生来源、安全风险）、落一段；公开入口全链路通。
-- **设计遗留**：装载 regex 只认 `采纳: 理|搁置|不理`（异常表述默认"理"）；**锚 P8 仍手写『我』占位**；生成/动手未物理分离（D1 甲）；未了→回边、控制拍均占位。
-- **承重缺口**：**P7 判"结"主体**（自驱开关）、**P8 锚分类学**（装载直取前提）仍在；第一刀＝G2 脊柱＋G1 退化解，逼 P7/P8 长出来。
+- **过程 v2.2（去投影·控制拍）**：环＝**事件→装载→生成⇄动手→判结→沉淀**；独立"控制拍"降可插拔占位、第一刀不实现，**投影只剩"自指＝认领"**。why：投影作为推理质量手段**必要性未证**。被否：控制拍必选、think 伪工具、彻底删投影。
+- **第一刀（G2 脊柱＋G1 退化解）**：cogos `91fd1de`（已 push）——一事件开一流，装载产「定性＋采纳(理｜搁置｜不理)」，`理`跑生成⇄动手、其余不推进，**每流恰落一段**（`memory/segments.jsonl`，只写不读）。目标重评：#1 否决、#3 消解、#2 存活；**新焦点 G1 认领/自指**＝"自驱 vs 反应式"分界。
+- **第二刀（经历轴读侧＋回边）**：cogos **`7a67fc3`（未 push）**——`agent/experience.py`＝段 schema（补 `人[]/主题`）＋读侧 `SegmentStore`（L0 不变；扫 L0 重建 `by_time/by_person/open_knots/by_thread`；`retrieve`＝去重→近因→预算，**权重=0**；`open_knots()`）；`consciousness.py` 加 `recall` 开关，认领与生成注入 `open_knots`＋同来源近段（回边）。**从"只写"到"能读回"**。
+- **验收**：机制—`tests/agent tests/cog_runtime` 324 passed/3 skipped；全量 1290 passed（1 无关 image_ctx 素材缺失 fail）。行为—真模型探针（同一事件＋同一 seeded 未了段，仅 `recall` 开关不同）**分叉=True**（on：外发1/6轮；off：外发0/撞满工具轮）。跨事件—deterministic 测试证装载读回旧 `<未了>`、新进程 rebuild 后仍稳定。**真身份 e2e 本刀未跑**（需真发飞书＝外溢＋第二账号编排）。
+- **设计遗留**：装载 regex 异常表述默认"理"；**锚 P8 仍手写『我』占位**；生成/动手未物理分离；占位字段 `thread=id/refs=[]/主题/预测` 待升级；`host` 无生产者；权重=0、无主题/工具索引、无误差切点/后压/读时现整。
+- **承重缺口**：**P7 判"结"主体**、**P8 锚分类学**仍在；第一/二刀＝G2 脊柱＋G1 退化解＋读回，逼 P7/P8 长出来。命名：`time-axis.md` 提 经历轴→时间轴，未收口。
 
 ## 前情：外圈/内圈 × 工具面（10-01 口径；被 v2.2 覆盖处已注明）
 
