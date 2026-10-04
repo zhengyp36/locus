@@ -75,3 +75,14 @@
 - **未归档（有意排除）**：`centos.key`（密钥，交 YZ shred）；`tools/{keys,blobs,.imgctx,__pycache__,android-probe/{build,runs},state.json}`（运行时/密钥）、`.pytest_cache`。
 - **覆盖核对**：源 128 个顶层 md → 全部有归档（0 missing）；`tools/` 64=64。
 - 清理清单 `work/A/checkpoint-1/delete-list.txt` 交 YZ；`work/A/checkpoint/` 本体删除动作由 YZ 执行。
+
+---
+
+# ARCHIVE-INDEX｜增量（2026-10-04 · 记忆模型外部调研）
+
+| 目标目录 | 内容 | 量 |
+|---|---|---|
+| `26-10-04-memory-survey/` | 记忆模型外部调研（AI agent memory ＋ 神经/认知）：`ENTRY.md`＋`LANDSCAPE.md`（地形/来源总表）＋ 3 篇精读 `paper-grid-clustering` / `paper-memory-reconstructed` / `paper-human-to-ai-memory` | 5 |
+
+- **收口件（权威）**：`entries/2026-10-04-cogos-memory-external-survey.md`（结论/对应物/共同空白/好处地图）。
+- 来源：原 `locus/scratch/2026-10-04-memory-survey/`（已收口并删 scratch）。
