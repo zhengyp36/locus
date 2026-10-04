@@ -9,3 +9,4 @@
 - 2026-09-12: task-7 收尾；修 timer 窗口 origin（"fired without a delivery channel"），terminal/timer 唤醒实测，本体提交 4bae464
 - 2026-09-30: feat/kilo-phone：飞书 image/file 入站（3c91429、997bc6d）、/new /pin 重 arm autoWatch（70b5290）→ 见 current.md 与 git log
 - 2026-09-30: /new /pin 忙碌保护（7bfcd0a）：正忙拒绝切换，在途回复不再静默丢；补发方案被否 → entries/2026-09-30-switch-busy-guard.md
+- 2026-10-04: 富文本 post 入站被静默丢（飞书自动编号→post）+ 入站必有回执；解析 post/内嵌图、不支持类型回执、ack always/delayed/off（88c8ac4，已部署）→ entries/2026-10-04-inbound-rich-text-and-ack.md

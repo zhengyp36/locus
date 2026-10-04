@@ -2,13 +2,15 @@
 
 Kilo 常驻 + 飞书/窗口双通道桥接；源码工程在 `../kilo-resident`（remote `zhengyp36/kilo-resident`），栈 Node/TS，宿主 `kilo serve`（4097）。承接工位 B task-7。
 
-## 状态（2026-09-30，feat/kilo-phone 已 push）
+## 状态（2026-10-04，feat/kilo-phone 已 push）
 
 - 现役分支 `feat/kilo-phone`；两个飞书 bot：`KILO-LOCUS-A`（dir `locus`）、`KILO-DOCTOR`（dir `withdrawal-reactions`）。
 - 飞书 image/file 入站：下载到 `~/.local/state/kilo-resident/inbox/`，本地路径注入会话（`3c91429`）；失败回执 + 重投去重 + 异常兜底（`997bc6d`）。
+- **富文本 post 入站**（`88c8ac4`）：飞书"自动编号"会发成 `post`，此前被当空消息静默丢；现解析 post/内嵌图，不支持类型（语音/视频/表情包/合并转发…）回执提示。
+- **入站必有回执**（`88c8ac4`）：`ack: always|delayed|off`（per-bot，默认 always）；直发/排队各一句，投递失败与空回复也补信号。
 - `/new`、`/pin` 切换后重 arm autoWatch（`70b5290`）；忙碌保护：正忙拒绝切换 + `switchSession` 防御 warn（`7bfcd0a`），在途回复不再静默丢。
 - task-7 代结论仍成立：**窗口必须 attach 到常驻 server(4097)**，独立 TUI 唤醒打不通；terminal/timer 唤醒通道已实测。
-- 验证入口：`npm run typecheck`、`npm run test:switch-busy-guard`、`npm run test:inbound-attachment`。
+- 验证入口：`npm run typecheck`、`npm run test:switch-busy-guard`、`npm run test:inbound-attachment`、`npm run test:inbound-post`、`npm run test:inbound-ack`。
 
 ## 运维红线
 
@@ -24,6 +26,7 @@ Kilo 常驻 + 飞书/窗口双通道桥接；源码工程在 `../kilo-resident`�
 
 ## 锚点
 
+- 富文本 post 丢失 + 入站回执（根因/why/被否）: `entries/2026-10-04-inbound-rich-text-and-ack.md`
 - 忙碌保护（根因/why/被否补发）: `entries/2026-09-30-switch-busy-guard.md`
 - task-7 细节: `entries/2026-09-12-task7-tui-wake.md` 等；旧交接/设计/报告在 `checkpoint/`（历史保留，不作活记忆）
 - spike: `../kilo-spike/`
