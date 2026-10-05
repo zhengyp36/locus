@@ -12,7 +12,7 @@
 
 ## 已封存（参考）：记忆模块 v0 形状 + 生念/自启（10-05 续，收口）
 
-> 收口件＝`entries/2026-10-05-cogos-memory-v0-bootstrap.md`；术语＝`glossary.md`（＋好奇·新奇取向／空闲事件·tick／浅浮现；补注 注入/种子）。承 10-05 定义层 · 10-03 memory v1.x。**纯讨论、未落码；下一步＝照 v0 形状动手（5 步、逐步验收，见 `scratch/2026-10-04-memory-module/handoff-v0-build.md`）**。
+> 收口件＝`entries/2026-10-05-cogos-memory-v0-bootstrap.md`；术语＝`glossary.md`（＋好奇·新奇取向／空闲事件·tick／浅浮现；补注 注入/种子）。承 10-05 定义层 · 10-03 memory v1.x。**纯讨论、未落码；原 5 步动手计划已随形态先行转向作废**。
 
 - **v0 形状（无索引）**：`记(经历)->id | 忆(线索)->内容|浅浮现(锚)|None | 整理()`；数据＝种子层＋段{id,t,内容,效价,结,来源,refs}；**单值、无候选、无采纳**；`忆` 必含**自我路（效价/未了/近因）＋语义路**，否则塌主题；v0 不建索引层（锚/维度留 v1+）。
 - **用法＝四位置**：M1 投影时读（给自我/定方向）· M2 穿插读（回边）· M3 停时写（沉淀）· M4 离线整理。记忆＝被机制层在四时点调用的独立源。
@@ -55,7 +55,7 @@
 
 ## 当前：过程 v2.2 + 第一/二刀（10-03）
 
-> 收口件＝`entries/2026-10-03-cogos-first-cut-flow-claim.md`（第一刀＋v2.2）· `entries/2026-10-03-cogos-experience-axis-readback.md`（第二刀：经历轴读侧＋回边）· `entries/2026-10-03-cogos-projection-experiment-e1.md`（投影实验）。主干＝`entries/2026-09-29-cogos-outer-loop-process.md`。讨论过程 scratch `2026-10-03-experience-axis/`（认可口径＋最小形状）。
+> 收口件＝`entries/2026-10-03-cogos-first-cut-flow-claim.md`（第一刀＋v2.2）· `entries/2026-10-03-cogos-experience-axis-readback.md`（第二刀：经历轴读侧＋回边）· `entries/2026-10-03-cogos-projection-experiment-e1.md`（投影实验）。主干＝`entries/2026-09-29-cogos-outer-loop-process.md`。讨论过程 scratch `2026-10-03-experience-axis/`（已随收口删除）。
 
 - **过程 v2.2（去投影·控制拍）**：环＝**事件→装载→生成⇄动手→判结→沉淀**；独立"控制拍"降可插拔占位、第一刀不实现，**投影只剩"自指＝认领"**。why：投影作为推理质量手段**必要性未证**。被否：控制拍必选、think 伪工具、彻底删投影。
 - **第一刀（G2 脊柱＋G1 退化解）**：cogos `91fd1de`（已 push）——一事件开一流，装载产「定性＋采纳(理｜搁置｜不理)」，`理`跑生成⇄动手、其余不推进，**每流恰落一段**（`memory/segments.jsonl`，只写不读）。目标重评：#1 否决、#3 消解、#2 存活；**新焦点 G1 认领/自指**＝"自驱 vs 反应式"分界。

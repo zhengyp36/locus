@@ -8,3 +8,4 @@
 - 生命周期：随 `scratch/`；收口时已解问题蒸馏进记忆层后删，**未解问题不应随之丢失**（转正/保留的细则见 `../../AGENTS.md` 记忆节）。
 - 当前条目：
   - `2026-10-02-summary-recoverability.md` — 总结/沉淀脱离上下文丢信息。
+  - `2026-10-05-repeat-dissolved-framing.md` — 无记忆的 kilo 反复重提已消解的框架（附自驱 agent 记忆真实案例）。

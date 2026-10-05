@@ -1,6 +1,6 @@
 # cogos：经历轴读侧落地（骨架 ＋ 回边）（10-03）
 
-> 性质：**第二刀收口件**——把经历轴从"只写"推到"能读回"。承第一刀 `entries/2026-10-03-cogos-first-cut-flow-claim.md`（段/流脊柱）＋ scratch `2026-10-03-experience-axis/`（YZ 认可口径 · 最小形状）。
+> 性质：**第二刀收口件**——把经历轴从"只写"推到"能读回"。承第一刀 `entries/2026-10-03-cogos-first-cut-flow-claim.md`（段/流脊柱）＋ scratch `2026-10-03-experience-axis/`（已随收口删除）。
 > 术语权威＝`glossary.md`。代码 cogos master **`7a67fc3`（已 push）**。写法：结论 + why + 被否。
 
 ## 1. 落地

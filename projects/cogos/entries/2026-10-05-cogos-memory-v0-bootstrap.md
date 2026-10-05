@@ -88,4 +88,4 @@
 - 定义层：`2026-10-05-cogos-motive-projection-roothood.md`
 - 前段 memory：`2026-10-03-cogos-memory-{model,projection-unity,index-consolidation}.md` · 调研 `2026-10-04-cogos-memory-external-survey.md`
 - 术语：`glossary.md`
-- 过程草稿：`scratch/2026-10-04-memory-module/{ENTRY,handoff,discussion-10-05}.md`
+- 过程草稿：已随收口删除

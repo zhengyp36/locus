@@ -1,6 +1,6 @@
 # cogos：P8 关联机械第一刀（10-03）
 
-> 性质：**P8 首刀收口件**——把段上的跨事件「关联」从全占位推到**只机械打**（不做模型抽取）。承第二刀 `entries/2026-10-03-cogos-experience-axis-readback.md`（读回）＋ scratch `2026-10-03-experience-axis/`。
+> 性质：**P8 首刀收口件**——把段上的跨事件「关联」从全占位推到**只机械打**（不做模型抽取）。承第二刀 `entries/2026-10-03-cogos-experience-axis-readback.md`（读回）＋ scratch `2026-10-03-experience-axis/`（已随收口删除）。
 > 术语权威＝`glossary.md`。代码 cogos master **`9775293`（已 push）**。写法：结论 + why + 被否。
 
 ## 1. 落地
