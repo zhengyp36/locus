@@ -1,7 +1,7 @@
 # 自驱 agent · 形态先行（2026-10-05 起）
 
 > 一句话：先定自驱 agent 的**外在形态（可观察行为规格）**，再从形态反推**最小机制**；形态是唯一验收基准，机制是候选假设。
-> 状态：形态规格草稿待 YZ 验收（`form-spec.md`）。
+> 状态：形态规格 v0.3（`form-spec.md`）＋最小机制草图 v0.2（`mechanism-sketch.md`）均已收敛，待 YZ 重看验收。
 > 上游理论已收口入记忆层（`entries/` + `glossary.md`，scratch 过程草稿已删）；锚在 `projects/cogos/current.md` / `glossary.md`。
 
 ## 锚（两类，性质不同）
@@ -15,6 +15,6 @@
 
 ## 下一步
 
-1. YZ 验收 `form-spec.md`（形态 5 要素 + 可观察判据）。
-2. 验收后：从形态反推最小机制（不预设之前的机制）。
-3. 实现 + 按形态判据验收。
+1. YZ 验收 `mechanism-sketch.md`（最小机制：持久状态＋环＋tick；含 bootstrap 分叉 A/B）。
+2. 验收后：定 bootstrap（A 种子 / B 随机先动）＋ 第 5 节取值项。
+3. 实现最小机制 + 按形态判据（实现后定）验收。
