@@ -2,7 +2,7 @@
 
 > 一句话：先定自驱 agent 的**外在形态（可观察行为规格）**，再从形态反推**最小机制**；形态是唯一验收基准，机制是候选假设。
 > 状态：形态规格草稿待 YZ 验收（`form-spec.md`）。
-> 上游理论已封存（`../2026-10-04-memory-module/frozen-theory/`）；锚在 `projects/cogos/current.md` / `glossary.md`。
+> 上游理论已收口入记忆层（`entries/` + `glossary.md`，scratch 过程草稿已删）；锚在 `projects/cogos/current.md` / `glossary.md`。
 
 ## 锚（两类，性质不同）
 
