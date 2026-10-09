@@ -4,6 +4,12 @@
 > **术语单一权威 → `glossary.md`**（09-30 立；新词/旧义/撞名当场钉，entry 与本表冲突以本表为准）。
 > `checkpoint/26-09-26-*` = 2026-09-26 归档线；`checkpoint/26-09-17-agent-theory/` = cogos 理论归档。
 
+## 调研 · system prompt 对照——Claude Code vs Kilo（10-09）
+
+- **控制配方三构件**：few-shot 锚格式 / 边界＋可判定例外 / 注入防护成段（不靠风格，命令式/陈述式皆可）→ `entries/2026-10-09-cogos-system-prompt-study.md`
+- 为**控制系统**"给模型的指令怎么写"提供配方（调研素材/参考锚）；证据 `checkpoint/26-10-09-system-prompt-study/`
+- 对 cogos：继承 Kilo 命令式＋few-shot（优点）；补＝边界＋例外结构、注入防护成段
+
 ## 最近收口 · 记忆动力学重建 ＋ 系统架构/人生初课（10-08）
 
 - **记忆＝思考的痕**（单位＝思考轨迹；存三类＝生成规则/动机目标/经历脉络）；过程＝一条线（维度边＋脉络边）；**取即写**；三动作＝融合/转变/新建；**活跃区**；脉络＝关键转变＋最新结论 → `entries/2026-10-08-cogos-memory-dynamics.md`
