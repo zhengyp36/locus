@@ -4,6 +4,14 @@
 > **术语单一权威 → `glossary.md`**（09-30 立；新词/旧义/撞名当场钉，entry 与本表冲突以本表为准）。
 > `checkpoint/26-09-26-*` = 2026-09-26 归档线；`checkpoint/26-09-17-agent-theory/` = cogos 理论归档。
 
+## 最近收口 · 主线循环＋出生事件＋动机/工具（10-15）
+
+- **主线＝六步循环 loop**（装配→推理→判走向→留痕→对齐），取代线性管道；**出生事件＝循环冷启动**（预备收口，下一步＝走查本体）；事件拆二、工作记忆组织、锚展开 → `entries/2026-10-15-cogos-main-loop-birth.md`
+- **动机＝活＋张力**、对齐两层、回音（自我证实唯一来源）、经验内化 → `entries/2026-10-15-cogos-motive-tension-echo.md`
+- **工具/记忆组织**：意识层工具＝intent/memory，fold/unfold 长概念树，记忆藏机制层；轻机制信任 LLM → `entries/2026-10-15-cogos-tool-memory-org.md`、`entries/2026-10-14-cogos-light-mechanism-principle.md`
+- **方法论**：总结可恢复性（递归蒸馏 A/B 两层）→ `entries/2026-10-02-cogos-summary-recoverability.md`；**方向锚**：自驱形态 5 要素 → `entries/2026-10-05-cogos-selfdrive-form.md`
+- **开放**：自我（YZ 自推）；事件源头链；拆/外包判据；intent 撞名；锚展开机制；出生措辞；P7/P8
+
 ## 调研 · system prompt 对照——Claude Code vs Kilo（10-09）
 
 - **控制配方三构件**：few-shot 锚格式 / 边界＋可判定例外 / 注入防护成段（不靠风格，命令式/陈述式皆可）→ `entries/2026-10-09-cogos-system-prompt-study.md`
