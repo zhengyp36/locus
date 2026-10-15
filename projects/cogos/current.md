@@ -3,6 +3,15 @@
 多 agent 运行时，飞书作通信总线。通信层已收口，底层三件（lm-service + cog-runtime）完成。主线 = **自驱回路** → **agent 本体 = 动机为根**。术语权威＝`glossary.md`。**本体 `../cogos/docs/design-selfdrive-agent.md` 已落后，不以其为准**。
 当前口径（10-15）：主线＝**机制驱动的六步循环 loop**（装配→推理一步→判走向→留痕→对齐→回装配，取代线性管道）；**出生事件＝循环冷启动**（预备讨论已收口，下一步＝走查本体）；**动机＝活＋张力**（对齐两层、回音）；**工具/记忆组织**＝intent/memory＋fold/unfold；**自我＝开放**（YZ 自推中）。承前（10-08）：记忆＝思考的痕（动力学重建）；系统结构＝控制系统＋全局工作空间＋记忆。过程 v2.2 落码部分有效（"沉淀"步待出生走查重审）。
 
+## 工作方法变更 · YZ 自推 + worklog（10-15）
+
+> 收口件＝`entries/2026-10-15-cogos-worklog-working-method.md`；目录＝`worklog/`（约定见其 `README.md`）。
+
+- **设计/开发由 YZ 自主推进**，kilo **退回编程手**，只在 YZ 主动找时介入（讨论模糊想法／审核方案／实施方案／解困难／其他）。
+- **worklog＝YZ 的一手工作日志**（`worklog/YYYY-MM-DD.md` 或 `worklog/YYYY-MM-DD/entry.md`）＝**过程真源**；记忆层（`current.md`／`entries/`）＝其蒸馏下游。
+- **蒸馏时机**：kilo 被叫进来时读近期 worklog 补上下文；**收口时**把结论蒸馏进 `entries/`＋`current.md`；日志本身不自我蒸馏。
+- **撞名提醒**：worklog 是 locus 工作方法概念，**非** glossary「外部日志／日志层」（机制→开发者的 debug/回放）。
+
 ## 最近收口 · 主线循环＋出生事件（10-15）
 
 > 收口件＝`entries/2026-10-15-cogos-main-loop-birth.md`；术语＝`glossary.md`（＋意识/工作记忆/主线循环/事件拆二/教育/锚展开）。承 `arch-first-lessons`。

@@ -6,6 +6,7 @@
 
 ## 最近收口 · 主线循环＋出生事件＋动机/工具（10-15）
 
+- **工作方法变更**：设计/开发由 YZ 自推、kilo 退回编程手（按需介入）；新增 `worklog/`（YZ 一手日志、按天，记忆层的蒸馏上游）→ `entries/2026-10-15-cogos-worklog-working-method.md`
 - **主线＝六步循环 loop**（装配→推理→判走向→留痕→对齐），取代线性管道；**出生事件＝循环冷启动**（预备收口，下一步＝走查本体）；事件拆二、工作记忆组织、锚展开 → `entries/2026-10-15-cogos-main-loop-birth.md`
 - **动机＝活＋张力**、对齐两层、回音（自我证实唯一来源）、经验内化 → `entries/2026-10-15-cogos-motive-tension-echo.md`
 - **工具/记忆组织**：意识层工具＝intent/memory，fold/unfold 长概念树，记忆藏机制层；轻机制信任 LLM → `entries/2026-10-15-cogos-tool-memory-org.md`、`entries/2026-10-14-cogos-light-mechanism-principle.md`

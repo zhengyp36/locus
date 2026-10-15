@@ -26,6 +26,9 @@
 - `index.md` — 索引，指向 entries/
 - `entries/` — 细节
 
+过程 / 日志（可选）：
+- `worklog/` — YZ 的一手工作日志（按天：`YYYY-MM-DD.md`，或需附材料时 `YYYY-MM-DD/entry.md`）；记忆层的蒸馏上游，约定见各项目 `worklog/README.md`
+
 命名约定（子工程内）：**大写 = 工程管理（确定，是锚——记忆乱了可从它拉回）；小写 = 记忆（模糊）**；顶层指针 / 草稿（`active.md`、`timeline.md`、`scratch/`）不套此约定。
 
 证据 / 历史（可选）：
