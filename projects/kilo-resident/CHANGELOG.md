@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 2026-10-04
+
+- 飞书富文本 post 入站（"自动编号"→`post`）此前被当空消息静默丢；解析 post/内嵌图、不支持类型回执提示；入站必有回执 `ack: always|delayed|off`（`88c8ac4`，review 修正 `fcb4bf8`，已 `bridge-restart` 部署）。
+- 模型标注（模型回复前缀 `▸ providerID/modelID`）+ `/models` 查看/白名单切换（一次性 `rt.pendingModel`，构建 prompt 时生效）+ per-chat 队列 linger 合并（`queue.coalesceMs`）+ 回执状态机 coalescing/queued/processing（`7f07fe6`）。
+- 检视修正：turn-boundary drain 永久短路（真 bug）→ 抽 `turnFree` 门；`/new` 补清 `pendingModel`；白名单非法项 warn（`13ed24a`）。`/new` 默认设白名单首模型（`9c174fe`）。
+
 ## 2026-09-30
 
 - feat/kilo-phone：飞书 image/file 入站下载并注入会话（`3c91429`），失败回执/重投去重/异常兜底（`997bc6d`），`/new` `/pin` 后重 arm autoWatch（`70b5290`）。
