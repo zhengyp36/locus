@@ -93,6 +93,7 @@ body.vision.coord(ref, anno)
 **已定（候选结论）**：body⊂toolbox；body 5 组不带设备身份；四操作正交（fold/unfold × keep/forget）；位置即强度；附件投影三档；句柄 FIG/WEB/TERM；工具 3 态 IO；对外工具 3 条思想（简单/全面/手艺）；catalog 改名派生；三动词判据（read/browse/observe）；异步作业闭环；see 归 vision、act 归 desktop；desktop 遗留不实现。
 
 **待定（悬置，步骤 3 裁）**：
+- `body` 是否含 `time`：10-18 已裁"time 不进 body"（now 机制注入 / wait 循环控制面 / remind 低频归 toolbox）；YZ 10-19 构想里 body＝chat/file/terminal/vision/web/**time**，冲突待裁。
 - `terminal.run` 的 `notify`：cogos 用 OSC token 编进命令实现完成通知，body 是否保留。
 - `web.fetch` 的 `format`：倾向去掉（默认 markdown，html 原始结构走 toolbox）。
 - toolbox 完整组织（分组/命名/与机制层 catalog 关系）。
