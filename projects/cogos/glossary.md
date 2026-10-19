@@ -82,10 +82,15 @@
 | 对齐（两层） | 对齐目标＝用方向量目标（还在不在路上）；对齐动机＝目标本身对不对（用价值/慢张力量）；**意义＝对齐成功时的"松"**（效价反馈，非找出来）；对他人**无对齐、只有机制层推测**（可能性分布＝预测，非结论；在机制层作背景间接影响意识，非显式追问）；"回溯目的"拆两个动作＝追问为什么（必死循环）vs 对齐（真正发生的事） | tension-echo · 出生教育 判断4 | "回溯目的"单动作；"对齐＝整理上下文"（memory-dynamics 已重新定位） | 回到目标/扶正 |
 | 回音 | 物理层闭环＝**自我证实的唯一来源**（突显"我↔环境"边界，证实关系/真实性、非身份命题）；更大价值＝**检视修正**（意图对照回音：预期 vs 实际→偏差即纠偏）；落点＝意图执行三步环（预判影响→执行→审视），填实 10-01"动手控制＝前置＋对账" | tension-echo | — | 动手控制（前置＋对账） |
 | 经验内化（熟练） | LLM 无记忆，"熟练"两条路：**隐藏过程**（方法论沉淀到机制层、仍在起作用、不再显式占推理）／**发现捷径**（多次经验找到更快方法）；**非"省略"**（省略＝不做＝没效果） | tension-echo | "熟练＝内部简化"（否） | — |
-| 折叠 / 展开（fold/unfold） | 记忆两个原子操作：**fold**＝把一段思考整理成一个概念（name＋description）；**unfold**＝把概念展开成详情；**折叠＝意识命名＋机制收拢两面**（意识贴名不收起内容；机制装载时只留锚）；展开↔折叠互逆、多次折叠长成**概念树**（树生长式） | 工具组织 §二 | — | 蒸馏 · 索引/入口（name＋description 同源） |
+| 折叠 / 展开（fold/unfold） | 记忆**组织轴**两个原子操作：**fold**＝把一段思考整理成一个概念（name＋description）；**unfold**＝把概念展开成详情；**折叠＝意识命名＋机制收拢两面**（意识贴名不收起内容；机制装载时只留锚）；展开↔折叠互逆、多次折叠长成**概念树**（树生长式）；与**记忆轴** keep/forget **正交**（fold≠keep，见「keep / forget」） | 工具组织 §二 · tool-design §memory | "fold/unfold 是记忆仅有的两个操作"（10-18 扩为四操作＝两组正交） | 蒸馏 · 索引/入口（name＋description 同源）· keep/forget |
 | 锚展开 | 记忆浮现/展开的**共用机制**：内容多先浮锚、需时展开；服务三处＝能力清单展开／浅浮现→主动回忆／持久化记忆逐级展开（**非三套**）；"一想能力就出现"＝展开能力锚 | 出生教育 判断5 | 三处各一套（否） | 浅浮现 |
-| 意识层工具视图 | 意识层只两个工具：**intent**（对外表达意图，能力分类 computer/communication/vision 藏背后、意识不可见）＋**memory**（对内整理上下文、组织记忆）；记忆藏 agent 不可见目录、只能经 memory 间接访问；链/索引只在记忆内部、不外溢 | 工具组织 §一/§三 | — | 意图（无声动作指令）· 取用 |
-| 轻机制 / 信任 LLM | 机制可以**留白**，前提＝最自然的填法恰是设计者要的填法（LLM 语义理解填空白）；反例＝对象指称本是 fold 应用却做成兜底命名/触发/代词切换规则（替 LLM 操心它本来就会的） | 轻机制原则 | — | 机制含 LLM |
+| 意识层工具视图 | 意识层只两个工具：**body**（对外，精简＋熟练版工具＝5 组 file/vision/chat/terminal/web，desktop 遗留；能力分类藏背后、意识不可见）＋**memory**（对内整理上下文、组织记忆）；body ⊂ toolbox（全集），body 不带设备身份参数（走默认）、toolbox 才有指定设备/管理操作；记忆藏 agent 不可见目录、只能经 memory 间接访问；链/索引只在记忆内部、不外溢 | 工具组织 §一/§三 · tool-design §body | 旧＝intent（对外，10-15 意识层工具名，10-19 改 body）；**「意图＝无声动作指令」概念仍活**（见「意图」行，非工具） | 意图（无声动作指令）· 取用 |
+| body | 意识层对外工具（**精简＋熟练**版）：toolbox 的子集＋默认绑定（`body.chat.speak` ≡ `toolbox.communication.message.send(默认号码)`）；**不带设备身份参数**（全走默认号码/默认电脑）；5 组＝file/vision/chat/terminal/web（desktop.act 遗留、暂不实现）；分组＝大类（对象优先）；能力总览(what)在 body schema description、用法(how)走 help＋最近用法缓存(LRU) | tool-design §body | — | toolbox · 意识层工具视图 |
+| toolbox | 自驱 agent 对外工具的**全集**：body 的每个功能都能在 toolbox 找到（全集＋默认视角）；低频全沉 toolbox（phone.*、vision 的 adjust/save、desktop.save、reminder、listen_config、多会话 terminal.open/list/close 等）；访问＝自己的 help 探索＋call 调用（内部走 toolbox_catalog），不在 schema 平铺；MVP 可整层延后（body 5 组＋memory 已覆盖核心闭环） | tool-design §toolbox | 09-28「工具箱呈现」的单工具箱（模型只见 3 组总览＋单一 toolbox 元工具；10-17~19 重构为全集定位） | body · toolbox_catalog |
+| body_catalog / toolbox_catalog | catalog 改名：catalog＝工具集的**分类与用法**（非全集本身）；toolbox 的目录＝**toolbox_catalog**、body 的目录＝**body_catalog**；body_catalog 由 toolbox_catalog **投影派生**（取子集＋绑定默认对象＋简化用法），落到同一 impl 层、避免同名工具两处定义 | tool-design §判定 | catalog（旧名，10-17 更名） | — |
+| keep / forget | 记忆**记忆轴**两操作（与组织轴 fold/unfold **正交**）：**keep**＝记（入长期）、**forget**＝忘；**位置即强度**＝索引有序，keep 推到最前、forget 推到最后（简化强化/淡忘）；浮现集取前 N、容量满尾部淘汰＝遗忘；forget＝淡出非删除（可翻回）；**不模拟生物局限**（keep 一次即持久、不需反复；forget 是超越——人想忘忘不了） | tool-design §memory | fold/unfold（旧口径只有组织轴两操作） | 折叠/展开 · 位置即强度 |
+| 附件投影 | 内容呈现三档：**内联**（小内容进文本，持久）／**附件**（当轮可见可浏览，跨轮消失）／**指针**（只给句柄，内容在外部）；主动拉取（read/see/help）→附件投影进当轮；被动推送（消息/job done/提醒）→短通知＋指针、按需拉取（拉取即附件）；持久化只有句柄＋assistant 自己的加工；记大段原文→记索引（在哪、可重读）不抄原文 | tool-design §判定 | — | 句柄 |
+| 句柄（FIG/WEB/TERM） | 临时对象的模型可见引用：`FIG:<id>`（图像空间，vision 的 see/mark/coord 中心）／`WEB:<id>`（web 作业，search/fetch 发起即返回）／`TERM:<id>`（terminal 多会话 A2）；＝临时对象（作业/图像）的引用，**非设备身份**（设备＝computer 稳定可寻址、直寻址 host） | tool-design §判定 · body-params | job_id（旧数字 id，随 web 作业改 WEB:<id>） | 附件投影 |
 | 教育 | **不引入新机制**：＝能交流＋把互动沉淀成记忆经历 两基础的持续运行；验收并回出生闭环（出生要证明已具备教育前提） | 出生教育 判断6 | "教育＝预想内容的课程/独立设计对象"（10-12 否） | 人生初课 |
 
 ## 锚例（本表引用的 entry）
@@ -109,5 +114,6 @@
 - `tension-echo` ＝ `entries/2026-10-15-cogos-motive-tension-echo.md`（动机＝活＋张力／对齐两层／回音／经验内化；＝出生走查 C3/C8 拆出）
 - `工具组织` ＝ `entries/2026-10-15-cogos-tool-memory-org.md`（意识层工具视图＋fold/unfold＋记忆藏机制层）
 - `轻机制原则` ＝ `entries/2026-10-14-cogos-light-mechanism-principle.md`（轻机制、信任 LLM，Claude Code 记忆机制案例）
+- `tool-design` ＝ `entries/2026-10-19-cogos-tool-design.md`（工具设计线：body/toolbox/memory、四操作正交、附件投影、句柄；**进行中、未落码**）
 - `recoverability` ＝ `entries/2026-10-02-cogos-summary-recoverability.md`（总结/沉淀可恢复性：递归蒸馏 A/B 两层）
 - `selfdrive-form` ＝ `entries/2026-10-05-cogos-selfdrive-form.md`（自驱 agent 外在形态 5 要素＋built/learned 边界＋规则三分类）

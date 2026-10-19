@@ -4,12 +4,17 @@
 > **术语单一权威 → `glossary.md`**（09-30 立；新词/旧义/撞名当场钉，entry 与本表冲突以本表为准）。
 > `checkpoint/26-09-26-*` = 2026-09-26 归档线；`checkpoint/26-09-17-agent-theory/` = cogos 理论归档。
 
-## 最近收口 · 主线循环＋出生事件＋动机/工具（10-15）
+## 进行中 · 工具设计线 body/toolbox/memory（10-17~19）
 
-- **工作方法变更**：设计/开发由 YZ 自推、kilo 退回编程手（按需介入）；新增 `worklog/`（YZ 一手日志、按天，记忆层的蒸馏上游）→ `entries/2026-10-15-cogos-worklog-working-method.md`
+- **意识层工具＝body＋memory**（10-15 的 intent 对外改名 body）；body ⊂ toolbox（全集）、body 5 组不带设备身份；四操作正交（fold/unfold × keep/forget）；附件投影三档；句柄 FIG/WEB/TERM；工具 3 态 IO；对外工具 3 条思想（简单/全面/手艺）→ `entries/2026-10-19-cogos-tool-design.md`（**未落码，已定 vs 待定见件内**）
+- 术语已钉 glossary：`body`/`toolbox`/`body_catalog`/`toolbox_catalog`/`keep`/`forget`/`附件投影`/`句柄`
+
+## 最近收口 · 主线循环＋出生事件＋动机（10-15）
+
+- **工作方法变更（已废弃 10-19）**：YZ 自推、kilo 退回编程手 → 废止，回到一起推进，见 `worklog/README.md`；原 `entries/2026-10-15-cogos-worklog-working-method.md`
 - **主线＝六步循环 loop**（装配→推理→判走向→留痕→对齐），取代线性管道；**出生事件＝循环冷启动**（预备收口，下一步＝走查本体）；事件拆二、工作记忆组织、锚展开 → `entries/2026-10-15-cogos-main-loop-birth.md`
 - **动机＝活＋张力**、对齐两层、回音（自我证实唯一来源）、经验内化 → `entries/2026-10-15-cogos-motive-tension-echo.md`
-- **工具/记忆组织**：意识层工具＝intent/memory，fold/unfold 长概念树，记忆藏机制层；轻机制信任 LLM → `entries/2026-10-15-cogos-tool-memory-org.md`、`entries/2026-10-14-cogos-light-mechanism-principle.md`
+- **工具/记忆组织（10-15 口径，意识层工具名已改 body）**：fold/unfold 长概念树，记忆藏机制层；轻机制信任 LLM → `entries/2026-10-15-cogos-tool-memory-org.md`、`entries/2026-10-14-cogos-light-mechanism-principle.md`
 - **方法论**：总结可恢复性（递归蒸馏 A/B 两层）→ `entries/2026-10-02-cogos-summary-recoverability.md`；**方向锚**：自驱形态 5 要素 → `entries/2026-10-05-cogos-selfdrive-form.md`
 - **开放**：自我（YZ 自推）；事件源头链；拆/外包判据；intent 撞名；锚展开机制；出生措辞；P7/P8
 
