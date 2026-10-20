@@ -26,6 +26,8 @@
 
 3. 元层工具file开发
 
+4. body.time.{now/remind/wait}的讨论与编码
+
 ## 2026-10-19
 
 1. 对齐协作方法（`README.md`）

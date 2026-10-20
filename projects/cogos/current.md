@@ -18,11 +18,11 @@
 
 ### 意识层工具 = body＋memory；元层工具 = file（10-21 更新）
 
-对外 **body**（5 组 17 能力 file/vision/chat/terminal/web）＋对内 **memory**（fold/unfold/mark 三操作 + overwrite 布尔），**均已落码**（body 10-20、memory 10-21 `d062f2e`）。**元层 file**（read/write/edit，root=agent_root 硬约束、根内路径转换）**已落码**（10-21 `bf216c0`：FsChannel 加 `root` 参数 + `make_meta_fs_specs`；装配未接，元层 LLM 未实现）。10-15 的「intent（对外）」改名为 body；「意图＝无声动作指令」概念仍活。→ `entries/2026-10-19-cogos-tool-design.md`、`entries/2026-10-20-cogos-memory-tool.md`、`entries/2026-10-21-cogos-memory-tool-impl.md`、`entries/2026-10-21-cogos-meta-file-tool.md`
+对外 **body**（**6 组 20 能力** file/vision/chat/terminal/web/**time**）＋对内 **memory**（fold/unfold/mark 三操作 + overwrite 布尔），**均已落码**（body 10-20、memory 10-21 `d062f2e`、time 组 10-21 `e44fd0c`）。time 组＝now（补暴露已有 time_now）/ wait（新增阻塞 sleep，cap 60s）/ remind（镜像 set_timer）；**wait＝同轮阻塞暂停、remind＝跨轮唤醒**，定位分道。**元层 file**（read/write/edit，root=agent_root 硬约束、根内路径转换）**已落码**（10-21 `bf216c0`：FsChannel 加 `root` 参数 + `make_meta_fs_specs`；装配未接，元层 LLM 未实现）。10-15 的「intent（对外）」改名为 body；「意图＝无声动作指令」概念仍活。→ `entries/2026-10-19-cogos-tool-design.md`、`entries/2026-10-20-cogos-memory-tool.md`、`entries/2026-10-21-cogos-memory-tool-impl.md`、`entries/2026-10-21-cogos-meta-file-tool.md`、`entries/2026-10-21-cogos-body-time-tool.md`
 
 ## 下一步（10-21 定）
 
-**工具先行完成**：body 5 组 17 能力 + memory 三操作（fold/unfold/mark）+ 元层 file 三操作（read/write/edit）都已落码（memory `d062f2e`、meta-file `bf216c0`）。元层 file 是**下一步「上下文管理 / 实现元层 LLM」的前置**（YZ 10-21 明确）。方向候选（先走哪个回讨论）：① 出生走查（10-15 顺延到「工具落码后」）；② 「意识过程→记忆沉淀构想」收口（10-19「待工具落码后正式收口」）；③ 元层 LLM 上下文管理（file 已就位）。走查前要接的一环：**索引进上下文＝装配层职责**（memory 落码时裁定、未做）。
+**工具先行完成**：body 6 组 20 能力（含 time 组 now/wait/remind）+ memory 三操作（fold/unfold/mark）+ 元层 file 三操作（read/write/edit）都已落码（memory `d062f2e`、meta-file `bf216c0`、time `e44fd0c`）。元层 file 是**下一步「上下文管理 / 实现元层 LLM」的前置**（YZ 10-21 明确）。方向候选（先走哪个回讨论）：① 出生走查（10-15 顺延到「工具落码后」）；② 「意识过程→记忆沉淀构想」收口（10-19「待工具落码后正式收口」）；③ 元层 LLM 上下文管理（file 已就位）。走查前要接的环（均属**装配层职责**）：**索引进上下文**（memory 落码时裁定、未做）；**body/memory 接进 consciousness 工具集**（`toolset_names=["toolbox"]` 硬编码，模型当前只见 toolbox，body/memory catalog 能力落码但不可见）。
 
 ## 开放问题（悬置，待讨论）
 
@@ -53,6 +53,7 @@
 - **线性管道**「事件→装载→思考⇄动手→留痕」→ 被六步循环取代。
 - **意识层工具名 intent（对外）** → body（10-19）。
 - **用法缓存「条数上限，LRU」** → 当轮内修剪（tool-body-impl §4）。
+- **time/now/wait/remind 不进 body**（10-18 裁）→ 10-21 推翻，time 组进 body（now/wait/remind）。
 
 ## 锚点
 
