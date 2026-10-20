@@ -10,7 +10,7 @@
 
 ### 出生事件 = 循环冷启动（10-15）
 
-初始配置→装配进工作记忆→循环跑→第一份记忆在留痕步落成→七维度被踩出。出生＝**事件＋任务**（任务＝系统下达、持续张力：认识自己→试工具→与环境互动→形成初始记忆）；身份「给/踩」边界（给＝是什么、踩＝怎么用）；教育不引入新机制。原下一步＝走查本体（验七维度挂不挂得住）；**10-19 起工具先行，出生走查顺延到工具落码后**（出生要"试工具"）。→ 同 entry
+初始配置→装配进工作记忆→循环跑→第一份记忆在留痕步落成→七维度被踩出。出生＝**事件＋任务**（任务＝系统下达、持续张力：认识自己→试工具→与环境互动→形成初始记忆）；身份「给/踩」边界（给＝是什么、踩＝怎么用）；教育不引入新机制。**10-19 起工具先行，出生走查顺延到工具落码后**（出生要"试工具"）。→ 同 entry
 
 ### 动机 = 活＋张力（10-15）
 
@@ -22,11 +22,7 @@
 
 ## 下一步（10-20 定）
 
-**工具落码进行中**：body 已落 16 能力（file/vision/chat/terminal/web 五组，已 commit）+ 内容访问统一已落码（`ee9f0ba`）。prune 线已收口（`e5dbcda`，tag `pre-prune-draft-transfer`）：web 重实现为 `WEB:<id>` 句柄 + `work_dir/web` 缓存目录（无 registry、文件存在性兜底），删 draft/transfer。目录根收敛为**两根**（`agent_root`/`machine_root`）+ **三层访问归属**（意识层 LLM / 元层 LLM / 程序）；spool_root 已删（`e003135`）。**spool 已删**：download/send_file 走 agent_root（`work_dir`），downloads 缺省 `downloads/`，删 `phone_spool_list`/`phone_spool_delete`、`config.spool_dir`。**chat.browse 已落（`dfd07a5`）**：复用 Phone store 双向历史 + 48h 读时窗口，不新建缓存。**vision 像素回灌已落（`62d9620`+`3409821`，真机 TIGER7）**：两层架构（内部 material 带 image data URL 提前编 + 序列化拆「tool 文字+user 图」）；ToolDef 接口预埋（transform_call/transform_result/pair/config）。**下一步 = memory 工具**。→ `entries/2026-10-20-cogos-chat-browse.md`、`entries/2026-10-20-cogos-vision-image-feedback.md`
-
-## 进行中 · 工具落码线（10-17~20）
-
-body/toolbox/memory 设计已收口（`entries/2026-10-19-cogos-tool-design.md`）。落码进度：catalog/meta-tool 抽取、body 五组共 17 能力（含 chat.browse，`dfd07a5`）、内容访问统一（`ee9f0ba`）、web 重实现 + 删 draft/transfer（`e5dbcda`）、spool 删除 + phone 文件面走 agent_root（`e003135`）。目录根两根收敛（`scratch/2026-10-20-directory-roots.md`）。vision 像素回灌 + ToolDef 接口预埋已落（`62d9620`+`3409821`，两层架构 + 路由识别内部 image）。待落：memory 工具。→ `entries/2026-10-20-cogos-vision-image-feedback.md`
+**工具落码近尾声，只剩 memory 工具待落**。已落：body 五组 **17 能力**（file/vision/chat/terminal/web）、内容访问统一（`ee9f0ba`）、web 重实现 + 删 draft/transfer（`e5dbcda`，tag `pre-prune-draft-transfer`）、spool 删除 + phone 文件面走 agent_root（`e003135`）、chat.browse（`dfd07a5`）、vision 像素回灌 + ToolDef 接口预埋（`62d9620`+`3409821`，真机 TIGER7）。目录根收敛**两根**（agent_root/machine_root）+ **三层访问归属**（意识层 LLM / 元层 LLM / 程序）。→ `entries/2026-10-20-cogos-{tool-body-impl,content-access,directory-roots,chat-browse,vision-image-feedback}.md`
 
 ## 开放问题（悬置，待讨论）
 
@@ -35,7 +31,7 @@ body/toolbox/memory 设计已收口（`entries/2026-10-19-cogos-tool-design.md`�
 - **锚展开共用机制**未设计（出生走查第一个硬实现点）
 - 出生事件**措辞/第一份记忆形状**
 - **P7 判"结"主体**、**P8 锚分类学**（承前承重缺口）
-- 工具设计**待定项**（terminal.notify、web.format、toolbox 全集团组织、缓存参数、phone 异步作业、limit 去留、body 是否含 time）
+- 工具**待定项**：terminal.notify、web.format、toolbox 全集团组织、phone 异步作业、limit 去留、body/toolbox 暴露关系、render_overview 中文、记号表不统一
 - **意识过程→记忆沉淀构想**（YZ 10-19 给出：助推/弧/流/SEQ/元层工具 file；非结论、待工具落码后正式收口；「弧」撞退役旧义需重钉）→ `scratch/2026-10-19-conception.md`
 
 ## 参考 · 历史结论（细节进 entries/，正文不铺）
@@ -56,6 +52,7 @@ body/toolbox/memory 设计已收口（`entries/2026-10-19-cogos-tool-design.md`�
 - **工作方法：YZ 自推、kilo 退回编程手（10-15）** → 10-19 废止，回到一起推进（见 `worklog/README.md`）。
 - **线性管道**「事件→装载→思考⇄动手→留痕」→ 被六步循环取代。
 - **意识层工具名 intent（对外）** → body（10-19）。
+- **用法缓存「条数上限，LRU」** → 当轮内修剪（tool-body-impl §4）。
 
 ## 锚点
 

@@ -91,6 +91,9 @@
 | keep / forget | 记忆**记忆轴**两操作（与组织轴 fold/unfold **正交**）：**keep**＝记（入长期）、**forget**＝忘；**位置即强度**＝索引有序，keep 推到最前、forget 推到最后（简化强化/淡忘）；浮现集取前 N、容量满尾部淘汰＝遗忘；forget＝淡出非删除（可翻回）；**不模拟生物局限**（keep 一次即持久、不需反复；forget 是超越——人想忘忘不了） | tool-design §memory | fold/unfold（旧口径只有组织轴两操作） | 折叠/展开 · 位置即强度 |
 | 附件投影 | 内容呈现三档：**内联**（小内容进文本，持久）／**附件**（当轮可见可浏览，跨轮消失）／**指针**（只给句柄，内容在外部）；主动拉取（read/see/help）→附件投影进当轮；被动推送（消息/job done/提醒）→短通知＋指针、按需拉取（拉取即附件）；持久化只有句柄＋assistant 自己的加工；记大段原文→记索引（在哪、可重读）不抄原文 | tool-design §判定 | — | 句柄 |
 | 句柄（FIG/WEB/TERM） | 临时对象的模型可见引用：`FIG:<id>`（图像空间，vision 的 see/mark/coord 中心）／`WEB:<id>`（web 作业，search/fetch 发起即返回）／`TERM:<id>`（terminal 多会话 A2）；＝临时对象（作业/图像）的引用，**非设备身份**（设备＝computer 稳定可寻址、直寻址 host） | tool-design §判定 · body-params | job_id（旧数字 id，随 web 作业改 WEB:<id>） | 附件投影 |
+| agent_root / machine_root | 目录两个物理根：**agent_root**＝本地（agent 的家），内分 `memory/`→元层 LLM、其余（cache/downloads/state）→程序，**意识层不可见**；**machine_root**＝机器内容根（`config.work_dir`，可 sftp 远程），意识层经工具访问（body.file/terminal/vision PATH）。**spool_root**（不可见中转）**已删（10-20 `e003135`）**，phone 文件面并入 agent_root。**可见性 ≠ 主轴，访问层归属才是** | directory-roots §1/§2 | "三根"（10-20 减为两根，spool_root 删） | content root |
+| content root / state root | **content root**＝能力访问「文件对象」的 base（machine/memory）；**state root**＝工具自己持久化在哪（image_ctx `Domain.root`/DraftStore/Spool），impl 装配注入、不进 content root 语义。混两者＝「工具路径可配」被否 | content-access §2 | — | agent_root / machine_root |
+| 意识层 LLM / 元层 LLM | 访问层三角色之二：**意识层 LLM**（六步循环本体）＝只走工具、给相对路径/句柄收内容、看不到物理路径；**元层 LLM**（记忆装配/整理）＝只读 agent_root 下记忆根目录。第三角色＝**程序**（代码），直接读写 cache/downloads/state、LLM 无感知。访问权限固定，非"可见性" | directory-roots §1 | — | 机制含 LLM（机制层调 LLM 常态） |
 | 教育 | **不引入新机制**：＝能交流＋把互动沉淀成记忆经历 两基础的持续运行；验收并回出生闭环（出生要证明已具备教育前提） | 出生教育 判断6 | "教育＝预想内容的课程/独立设计对象"（10-12 否） | 人生初课 |
 
 ## 锚例（本表引用的 entry）
@@ -117,3 +120,6 @@
 - `tool-design` ＝ `entries/2026-10-19-cogos-tool-design.md`（工具设计线：body/toolbox/memory、四操作正交、附件投影、句柄；**进行中、未落码**）
 - `recoverability` ＝ `entries/2026-10-02-cogos-summary-recoverability.md`（总结/沉淀可恢复性：递归蒸馏 A/B 两层）
 - `selfdrive-form` ＝ `entries/2026-10-05-cogos-selfdrive-form.md`（自驱 agent 外在形态 5 要素＋built/learned 边界＋规则三分类）
+- `tool-body-impl` ＝ `entries/2026-10-20-cogos-tool-body-impl.md`（body 落码期代码组织与机制抽象：三层/机制vs数据/meta-tool/形状自证）
+- `content-access` ＝ `entries/2026-10-20-cogos-content-access.md`（内容访问统一：get_bytes 复用/content root vs state root/FIG 缓存句柄）
+- `directory-roots` ＝ `entries/2026-10-20-cogos-directory-roots.md`（目录根收敛：agent_root/machine_root＋三层访问归属）

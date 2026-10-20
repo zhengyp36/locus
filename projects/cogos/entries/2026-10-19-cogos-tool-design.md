@@ -15,7 +15,7 @@
 - **body ⊂ toolbox**：body 是 toolbox 的子集＋默认绑定（`body.chat.speak` ≡ `toolbox.communication.message.send(默认号码)`）。
 - **不带设备身份参数**：全走默认（默认号码/默认电脑）；toolbox 才有指定设备/管理操作。
 - 分组＝大类（对象优先），非平铺；精简的是每组内容，不动分组骨架。
-- 能力总览（what）在 body schema description；用法（how）走 help＋最近用法缓存（条数上限，LRU）。
+- 能力总览（what）在 body schema description；用法（how）走 help＋用法缓存（**当轮内修剪**，非跨轮 LRU——见 tool-body-impl §4）。
 - 5 组：`file`（read/write/edit，命名对齐 kilo）· `vision`（see/mark/coord，FIG 为中心）· `chat`（speak/browse）· `terminal`（run/observe/send/interrupt）· `web`（search/fetch/browse/cancel/close）。`desktop.act` 遗留、暂不实现（底层 screen/1 已有，本轮不暴露）。
 
 ### body 参数（10-19 定稿）
@@ -97,7 +97,7 @@ body.vision.coord(ref, anno)
 - `terminal.run` 的 `notify`：cogos 用 OSC token 编进命令实现完成通知，body 是否保留。
 - `web.fetch` 的 `format`：倾向去掉（默认 markdown，html 原始结构走 toolbox）。
 - toolbox 完整组织（分组/命名/与机制层 catalog 关系）。
-- 缓存参数（条数上限具体值）。
+- ~~缓存参数（条数上限具体值）~~ → 已消解：用法缓存退化为当轮内修剪（tool-body-impl §4）。
 - 内容分流装配细节（phone 消息落 inbox、search/fetch done 事件带指针、大文件只回 id）——统一成"拉取即附件投影"。
 - phone 异步作业（file.send/receive + cancel）是否补 observe、是否同 web 模式。
 - 拉取类（read/observe/browse）的 `limit` 参数去留（10-18 曾倾向一并去掉，只留 offset 游标）。
