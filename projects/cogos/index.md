@@ -7,6 +7,8 @@
 ## 进行中 · 工具设计线 body/toolbox/memory（10-17~19）
 
 - **意识层工具＝body＋memory**（10-15 的 intent 对外改名 body）；body ⊂ toolbox（全集）、body 5 组不带设备身份；四操作正交（fold/unfold × keep/forget）；附件投影三档；句柄 FIG/WEB/TERM；工具 3 态 IO；对外工具 3 条思想（简单/全面/手艺）→ `entries/2026-10-19-cogos-tool-design.md`（**未落码，已定 vs 待定见件内**）
+- **chat.browse 已落码（10-20 `dfd07a5`）**：复用 Phone store 双向历史 + 48h 读时窗口；chat＝会话（id/title 匹配）；关键发现＝Phone 层早有双向消息历史（`_append_msg` in/out），无需新建缓存、群消息天然支持 → `entries/2026-10-20-cogos-chat-browse.md`
+- **vision 像素回灌已落（10-20 `62d9620`+`3409821`）**：两层架构——内部 material 的 tool 消息带 image data URL（落 material 提前编）+ 序列化拆「tool 文字+user 图」（图像只能进 user 消息，图放 tool 之后）；路由 `infer_modalities` 补识别内部 image（`select_model` 在序列化前跑）；ToolDef 接口预埋（transform_*/pair/config，None=恒等）→ `entries/2026-10-20-cogos-vision-image-feedback.md`
 - 术语已钉 glossary：`body`/`toolbox`/`body_catalog`/`toolbox_catalog`/`keep`/`forget`/`附件投影`/`句柄`
 
 ## 最近收口 · 主线循环＋出生事件＋动机（10-15）
