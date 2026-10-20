@@ -16,13 +16,13 @@
 
 活＝运行基底（只给"能动的能力"）；**张力＝带方向的拉力＝倾向本身**；选择＝张力竞争；效价＝张力与结果的反馈；好奇＝动机的一种。对齐两层（对齐目标用方向量 / 对齐动机用价值）；回音＝自我证实的唯一来源＋检视修正。→ `entries/2026-10-15-cogos-motive-tension-echo.md`
 
-### 意识层工具 = body＋memory（10-21 更新）
+### 意识层工具 = body＋memory；元层工具 = file（10-21 更新）
 
-对外 **body**（5 组 17 能力 file/vision/chat/terminal/web）＋对内 **memory**（fold/unfold/mark 三操作 + overwrite 布尔）。**两者均已落码**（body 10-20、memory 10-21 `d062f2e`）。10-15 的「intent（对外）」改名为 body；「意图＝无声动作指令」概念仍活。→ `entries/2026-10-19-cogos-tool-design.md`、`entries/2026-10-20-cogos-memory-tool.md`、`entries/2026-10-21-cogos-memory-tool-impl.md`
+对外 **body**（5 组 17 能力 file/vision/chat/terminal/web）＋对内 **memory**（fold/unfold/mark 三操作 + overwrite 布尔），**均已落码**（body 10-20、memory 10-21 `d062f2e`）。**元层 file**（read/write/edit，root=agent_root 硬约束、根内路径转换）**已落码**（10-21 `bf216c0`：FsChannel 加 `root` 参数 + `make_meta_fs_specs`；装配未接，元层 LLM 未实现）。10-15 的「intent（对外）」改名为 body；「意图＝无声动作指令」概念仍活。→ `entries/2026-10-19-cogos-tool-design.md`、`entries/2026-10-20-cogos-memory-tool.md`、`entries/2026-10-21-cogos-memory-tool-impl.md`、`entries/2026-10-21-cogos-meta-file-tool.md`
 
 ## 下一步（10-21 定）
 
-**工具先行完成**：body 5 组 17 能力 + memory 三操作（fold/unfold/mark）都已落码（memory `d062f2e`，含状态文件下沉 `memory/state/` → `AgentConfig.state_dir`）。→ **回到出生事件走查**（10-15 顺延到「工具落码后」，现「试工具」前置已就绪）。走查前要接的一环：**索引进上下文＝装配层职责**（memory 落码时裁定、未做）。方向候选两个（先走哪个回讨论）：① 出生走查；② 「意识过程→记忆沉淀构想」收口（10-19 说「待工具落码后正式收口」，现条件已到）。
+**工具先行完成**：body 5 组 17 能力 + memory 三操作（fold/unfold/mark）+ 元层 file 三操作（read/write/edit）都已落码（memory `d062f2e`、meta-file `bf216c0`）。元层 file 是**下一步「上下文管理 / 实现元层 LLM」的前置**（YZ 10-21 明确）。方向候选（先走哪个回讨论）：① 出生走查（10-15 顺延到「工具落码后」）；② 「意识过程→记忆沉淀构想」收口（10-19「待工具落码后正式收口」）；③ 元层 LLM 上下文管理（file 已就位）。走查前要接的一环：**索引进上下文＝装配层职责**（memory 落码时裁定、未做）。
 
 ## 开放问题（悬置，待讨论）
 
@@ -32,7 +32,7 @@
 - 出生事件**措辞/第一份记忆形状**
 - **P7 判"结"主体**、**P8 锚分类学**（承前承重缺口）
 - 工具**待定项**：terminal.notify、web.format、toolbox 全集团组织、phone 异步作业、limit 去留、body/toolbox 暴露关系、render_overview 中文、记号表不统一
-- **意识过程→记忆沉淀构想**（YZ 10-19 给出：助推/弧/流/SEQ/元层工具 file；非结论、待工具落码后正式收口；「弧」撞退役旧义需重钉；原 scratch 已删、摘要留存于此）
+- **意识过程→记忆沉淀构想**（YZ 10-19 给出：助推/弧/流/SEQ/元层工具 file；非结论、待正式收口；「弧」撞退役旧义需重钉；原 scratch 已删、摘要留存于此）。**元层工具 file 已落码**（`bf216c0`），其余（助推/弧/流/SEQ）待收口。
 
 ## 参考 · 历史结论（细节进 entries/，正文不铺）
 

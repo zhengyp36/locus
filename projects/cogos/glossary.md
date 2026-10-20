@@ -97,7 +97,8 @@
 | 句柄（FIG/WEB/TERM） | 临时对象的模型可见引用：`FIG:<id>`（图像空间，vision 的 see/mark/coord 中心）／`WEB:<id>`（web 作业，search/fetch 发起即返回）／`TERM:<id>`（terminal 多会话 A2）；＝临时对象（作业/图像）的引用，**非设备身份**（设备＝computer 稳定可寻址、直寻址 host） | tool-design §判定 · body-params | job_id（旧数字 id，随 web 作业改 WEB:<id>） | 附件投影 |
 | agent_root / machine_root | 目录两个物理根：**agent_root**＝本地（agent 的家），内分 `memory/`→元层 LLM、其余（cache/downloads/state）→程序，**意识层不可见**；**machine_root**＝机器内容根（`config.work_dir`，可 sftp 远程），意识层经工具访问（body.file/terminal/vision PATH）。**spool_root**（不可见中转）**已删（10-20 `e003135`）**，phone 文件面并入 agent_root。**可见性 ≠ 主轴，访问层归属才是** | directory-roots §1/§2 | "三根"（10-20 减为两根，spool_root 删） | content root |
 | content root / state root | **content root**＝能力访问「文件对象」的 base（machine/memory）；**state root**＝工具自己持久化在哪（image_ctx `Domain.root`/DraftStore/Spool），impl 装配注入、不进 content root 语义。混两者＝「工具路径可配」被否 | content-access §2 | — | agent_root / machine_root |
-| 意识层 LLM / 元层 LLM | 访问层三角色之二：**意识层 LLM**（六步循环本体）＝只走工具、给相对路径/句柄收内容、看不到物理路径；**元层 LLM**（记忆装配/整理）＝只读 agent_root 下记忆根目录。第三角色＝**程序**（代码），直接读写 cache/downloads/state、LLM 无感知。访问权限固定，非"可见性" | directory-roots §1 | — | 机制含 LLM（机制层调 LLM 常态） |
+| 意识层 LLM / 元层 LLM | 访问层三角色之二：**意识层 LLM**（六步循环本体）＝只走工具、给相对路径/句柄收内容、看不到物理路径；**元层 LLM**（记忆装配/整理）＝经元层 file 工具（read/write/edit、root=agent_root 硬约束）读写 agent_root。第三角色＝**程序**（代码），直接读写 cache/downloads/state、LLM 无感知。访问权限固定，非"可见性" | directory-roots §1 · meta-file-tool | — | 机制含 LLM（机制层调 LLM 常态） |
+| 元层 file / 根内路径转换 | 元层 LLM 的读写工具：**read/write/edit 三操作**，root = **agent_root** 硬约束；**根内路径转换**＝模型见 `/memory/a.md` → `agent_root/memory/a.md`（前导 `/`＝agent root 非文件系统根；`/etc/passwd` 天然映射进 root；越界只有 `..`，报 OutOfRoot）；**不调 chroot**（lstrip+join+normpath+is_under 纯路径转换）。复用 FsChannel 加 `root` 参数（与 `base` 正交）；装配未接（元层 LLM 未实现） | meta-file-tool §1/§2 | — | agent_root / machine_root · 意识层 LLM / 元层 LLM |
 | 教育 | **不引入新机制**：＝能交流＋把互动沉淀成记忆经历 两基础的持续运行；验收并回出生闭环（出生要证明已具备教育前提） | 出生教育 判断6 | "教育＝预想内容的课程/独立设计对象"（10-12 否） | 人生初课 |
 
 ## 锚例（本表引用的 entry）
@@ -127,3 +128,4 @@
 - `tool-body-impl` ＝ `entries/2026-10-20-cogos-tool-body-impl.md`（body 落码期代码组织与机制抽象：三层/机制vs数据/meta-tool/形状自证）
 - `content-access` ＝ `entries/2026-10-20-cogos-content-access.md`（内容访问统一：get_bytes 复用/content root vs state root/FIG 缓存句柄）
 - `directory-roots` ＝ `entries/2026-10-20-cogos-directory-roots.md`（目录根收敛：agent_root/machine_root＋三层访问归属）
+- `meta-file-tool` ＝ `entries/2026-10-21-cogos-meta-file-tool.md`（元层 file 工具：read/write/edit、root=agent_root 硬约束、根内路径转换）

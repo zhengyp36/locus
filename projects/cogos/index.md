@@ -4,7 +4,7 @@
 > **术语单一权威 → `glossary.md`**（09-30 立；新词/旧义/撞名当场钉，entry 与本表冲突以本表为准）。
 > `checkpoint/26-09-26-*` = 2026-09-26 归档线；`checkpoint/26-09-17-agent-theory/` = cogos 理论归档。
 
-## 进行中 · 工具落码线 body/toolbox/memory（10-17~20）
+## 进行中 · 工具落码线 body/toolbox/memory/元层 file（10-17~21）
 
 - **意识层工具＝body＋memory**（10-15 的 intent 对外改名 body）；body ⊂ toolbox（全集）、body 5 组不带设备身份；memory 三操作（fold/unfold/mark + overwrite）；附件投影三档；句柄 FIG/WEB/TERM；工具 3 态 IO → `entries/2026-10-19-cogos-tool-design.md`、`entries/2026-10-20-cogos-memory-tool.md`（**body、memory 均已落码**，memory `d062f2e`）
 - **body 落码期代码组织与机制抽象（10-20）**：三层组织（通用机制/每工具一文件/impl 复用）；catalog 拆机制 vs 数据；meta-tool 机制（help 藏工具、当轮有效）；用法缓存＝当轮内修剪（非 LRU）；形状自证 > 标签声明（`time_form` 去掉）→ `entries/2026-10-20-cogos-tool-body-impl.md`
@@ -13,7 +13,8 @@
 - **chat.browse 已落码（10-20 `dfd07a5`）**：复用 Phone store 双向历史 + 48h 读时窗口；chat＝会话（id/title 匹配）；关键发现＝Phone 层早有双向消息历史（`_append_msg` in/out），无需新建缓存、群消息天然支持 → `entries/2026-10-20-cogos-chat-browse.md`
 - **vision 像素回灌已落（10-20 `62d9620`+`3409821`）**：两层架构——内部 material 的 tool 消息带 image data URL（落 material 提前编）+ 序列化拆「tool 文字+user 图」（图像只能进 user 消息，图放 tool 之后）；路由 `infer_modalities` 补识别内部 image（`select_model` 在序列化前跑）；ToolDef 接口预埋（transform_*/pair/config，None=恒等）→ `entries/2026-10-20-cogos-vision-image-feedback.md`
 - **memory 已落码（10-21 `d062f2e`）**：`MemoryStore` 直写 agent_root/memory（不走 FsChannel）；记忆内容 = memory_dir、状态文件下沉 memory/state/（`state_dir`）；INDEX 平铺 + slug 反查；未进 toolset_names（不接 loop）→ `entries/2026-10-21-cogos-memory-tool-impl.md`
-- 术语已钉 glossary：`body`/`toolbox`/`body_catalog`/`toolbox_catalog`/`keep`/`forget`/`附件投影`/`句柄`/`agent_root`/`machine_root`/`content root`/`state root`/`意识层 LLM`/`元层 LLM`
+- **元层 file 已落码（10-21 `bf216c0`）**：`FsChannel` 加 `root` 参数（与 base 正交）+ `make_meta_fs_specs`（read/write/edit 无 id）；root=agent_root 硬约束、根内路径转换（前导 `/`=agent root、`..` 越界报、`/etc/passwd` 天然映射、不调 chroot）；装配未接（元层 LLM 未实现）→ `entries/2026-10-21-cogos-meta-file-tool.md`
+- 术语已钉 glossary：`body`/`toolbox`/`body_catalog`/`toolbox_catalog`/`keep`/`forget`/`附件投影`/`句柄`/`agent_root`/`machine_root`/`content root`/`state root`/`意识层 LLM`/`元层 LLM`/`元层 file`/`根内路径转换`
 
 ## 最近收口 · 主线循环＋出生事件＋动机（10-15）
 
