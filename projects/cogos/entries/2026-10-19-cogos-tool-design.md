@@ -25,7 +25,7 @@ body.chat.speak(to, text)
 body.chat.browse(chat, before?, limit?)
 body.file.read(path, offset?, limit?)
 body.file.write(path, content)
-body.file.edit(path, old_string, new_string, replace_all?)
+body.file.edit(path, old_string, new_string)
 body.terminal.run(command)
 body.terminal.observe(offset?, limit?)
 body.terminal.send(data)
@@ -41,7 +41,7 @@ body.vision.coord(ref, anno)
 ```
 
 - chat：`speak(to, text)`；`browse(chat, before?, limit?)`，`before` 缺省从最新往前读。
-- file：命名/参数对齐 kilo（path/old_string/new_string/replace_all）。
+- file：命名/参数对齐 kilo（path/old_string/new_string）；`replace_all` 去掉（impl `fs.edit` 无此参数，暴露即陷阱）。
 - terminal：`run(command)` 命令＝完整一行 shell 字符串，异步发起即返回；`observe` 读物理行（pyte 渲染），缺省看末尾；`send` 原样发字节不隐式回车；`interrupt` 发 `\x03`。
 - web：`search(query)`/`fetch(url)` 提交即返回 `WEB:<id>`；`browse(ref, offset?, limit?)` 唯一入口，返回 running/done＋内容（行号分页，缺省从头）；`cancel` 取消在途、`close` 释放完成（TTL 2h 兜底）。
 - vision：`see(ref, center?, size?, remark?)` PATH 开图 / FIG 调视野；`mark` cross/rect 标注返回 ANNO；`coord` 读回原图坐标（纯读无 remark）；坐标归一化，`see`/`mark` 的 center 相对当前视野，`coord` 换算回原图。

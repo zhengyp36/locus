@@ -20,13 +20,13 @@
 
 对外 **body**（精简＋熟练版，5 组 file/vision/chat/terminal/web）＋对内 **memory**（fold/unfold × keep/forget 四操作正交）。10-15 的「intent（对外）」改名为 body；「意图＝无声动作指令」概念仍活。→ `entries/2026-10-19-cogos-tool-design.md`
 
-## 下一步（10-19 定）
+## 下一步（10-20 定）
 
-**工具先行**：先落 body/toolbox/memory 工具，再谈意识过程→记忆沉淀、元层/意识配合。工具是出生"试工具"的前置，出生事件走查顺延到工具落码后。→ 工具设计线收口件 `entries/2026-10-19-cogos-tool-design.md`（新会话恢复记忆后讨论定稿、落码）
+**工具落码进行中**：body 已落 16 能力（file/vision/chat/terminal/web 五组，已 commit）+ 内容访问统一已落码（`ee9f0ba`）。prune 线已收口（`e5dbcda`，tag `pre-prune-draft-transfer`）：web 重实现为 `WEB:<id>` 句柄 + `work_dir/web` 缓存目录（无 registry、文件存在性兜底），删 draft/transfer。目录根收敛为**两根**（`agent_root`/`machine_root`）+ **三层访问归属**（意识层 LLM / 元层 LLM / 程序）；spool_root 已删（`e003135`）。**spool 已删**：download/send_file 走 agent_root（`work_dir`），downloads 缺省 `downloads/`，删 `phone_spool_list`/`phone_spool_delete`、`config.spool_dir`。**下一步 = memory 工具 + chat.browse**（归 phone 消息缓存落点轮）。→ `scratch/2026-10-20-directory-roots.md`
 
-## 进行中 · 工具设计线（10-17~19，未落码）
+## 进行中 · 工具落码线（10-17~20）
 
-body/toolbox/memory 设计：body ⊂ toolbox（全集）、body 5 组不带设备身份、四操作正交、附件投影三档、句柄 FIG/WEB/TERM、工具 3 态 IO、对外工具 3 条思想（简单/全面/手艺）。**已定 vs 待定**见收口件。→ `entries/2026-10-19-cogos-tool-design.md`
+body/toolbox/memory 设计已收口（`entries/2026-10-19-cogos-tool-design.md`）。落码进度：catalog/meta-tool 抽取、body 五组共 16 能力、内容访问统一（`ee9f0ba`）、web 重实现 + 删 draft/transfer（`e5dbcda`）、spool 删除 + phone 文件面走 agent_root（`e003135`）。目录根两根收敛（`scratch/2026-10-20-directory-roots.md`）。待落：memory 工具、chat.browse（归 phone 消息缓存落点轮）。→ `scratch/2026-10-19-selfdrive-body-discussion.md`、`scratch/2026-10-20-directory-roots.md`
 
 ## 开放问题（悬置，待讨论）
 
