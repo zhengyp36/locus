@@ -16,13 +16,13 @@
 
 活＝运行基底（只给"能动的能力"）；**张力＝带方向的拉力＝倾向本身**；选择＝张力竞争；效价＝张力与结果的反馈；好奇＝动机的一种。对齐两层（对齐目标用方向量 / 对齐动机用价值）；回音＝自我证实的唯一来源＋检视修正。→ `entries/2026-10-15-cogos-motive-tension-echo.md`
 
-### 意识层工具 = body＋memory（10-19 更新）
+### 意识层工具 = body＋memory（10-21 更新）
 
-对外 **body**（精简＋熟练版，5 组 file/vision/chat/terminal/web）＋对内 **memory**（fold/unfold × keep/forget 四操作正交）。10-15 的「intent（对外）」改名为 body；「意图＝无声动作指令」概念仍活。→ `entries/2026-10-19-cogos-tool-design.md`
+对外 **body**（5 组 17 能力 file/vision/chat/terminal/web）＋对内 **memory**（fold/unfold/mark 三操作 + overwrite 布尔）。**两者均已落码**（body 10-20、memory 10-21 `d062f2e`）。10-15 的「intent（对外）」改名为 body；「意图＝无声动作指令」概念仍活。→ `entries/2026-10-19-cogos-tool-design.md`、`entries/2026-10-20-cogos-memory-tool.md`、`entries/2026-10-21-cogos-memory-tool-impl.md`
 
-## 下一步（10-20 定）
+## 下一步（10-21 定）
 
-**工具落码近尾声，只剩 memory 工具待落**。已落：body 五组 **17 能力**（file/vision/chat/terminal/web）、内容访问统一（`ee9f0ba`）、web 重实现 + 删 draft/transfer（`e5dbcda`，tag `pre-prune-draft-transfer`）、spool 删除 + phone 文件面走 agent_root（`e003135`）、chat.browse（`dfd07a5`）、vision 像素回灌 + ToolDef 接口预埋（`62d9620`+`3409821`，真机 TIGER7）。目录根收敛**两根**（agent_root/machine_root）+ **三层访问归属**（意识层 LLM / 元层 LLM / 程序）。→ `entries/2026-10-20-cogos-{tool-body-impl,content-access,directory-roots,chat-browse,vision-image-feedback}.md`
+**工具先行完成**：body 5 组 17 能力 + memory 三操作（fold/unfold/mark）都已落码（memory `d062f2e`，含状态文件下沉 `memory/state/` → `AgentConfig.state_dir`）。→ **回到出生事件走查**（10-15 顺延到「工具落码后」，现「试工具」前置已就绪）。走查前要接的一环：**索引进上下文＝装配层职责**（memory 落码时裁定、未做）。方向候选两个（先走哪个回讨论）：① 出生走查；② 「意识过程→记忆沉淀构想」收口（10-19 说「待工具落码后正式收口」，现条件已到）。
 
 ## 开放问题（悬置，待讨论）
 
@@ -32,7 +32,7 @@
 - 出生事件**措辞/第一份记忆形状**
 - **P7 判"结"主体**、**P8 锚分类学**（承前承重缺口）
 - 工具**待定项**：terminal.notify、web.format、toolbox 全集团组织、phone 异步作业、limit 去留、body/toolbox 暴露关系、render_overview 中文、记号表不统一
-- **意识过程→记忆沉淀构想**（YZ 10-19 给出：助推/弧/流/SEQ/元层工具 file；非结论、待工具落码后正式收口；「弧」撞退役旧义需重钉）→ `scratch/2026-10-19-conception.md`
+- **意识过程→记忆沉淀构想**（YZ 10-19 给出：助推/弧/流/SEQ/元层工具 file；非结论、待工具落码后正式收口；「弧」撞退役旧义需重钉；原 scratch 已删、摘要留存于此）
 
 ## 参考 · 历史结论（细节进 entries/，正文不铺）
 
