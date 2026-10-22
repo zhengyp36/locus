@@ -4,7 +4,7 @@
 > **术语单一权威 → `glossary.md`**（09-30 立；新词/旧义/撞名当场钉，entry 与本表冲突以本表为准）。
 > `checkpoint/26-09-26-*` = 2026-09-26 归档线；`checkpoint/26-09-17-agent-theory/` = cogos 理论归档。
 
-## 进行中 · 工具落码线 body/toolbox/memory/元层 file（10-17~21）
+## 最近收口 · 工具落码线 + runtime 骨架第一步（10-17~22）
 
 - **意识层工具＝body＋memory**（10-15 的 intent 对外改名 body）；body ⊂ toolbox（全集）、body **6 组**（file/vision/chat/terminal/web/time）不带设备身份；memory 三操作（fold/unfold/mark + overwrite）；附件投影三档；句柄 FIG/WEB/TERM；工具 3 态 IO → `entries/2026-10-19-cogos-tool-design.md`、`entries/2026-10-20-cogos-memory-tool.md`（**body、memory 均已落码**，memory `d062f2e`）
 - **body 落码期代码组织与机制抽象（10-20）**：三层组织（通用机制/每工具一文件/impl 复用）；catalog 拆机制 vs 数据；meta-tool 机制（help 藏工具、当轮有效）；用法缓存＝当轮内修剪（非 LRU）；形状自证 > 标签声明（`time_form` 去掉）→ `entries/2026-10-20-cogos-tool-body-impl.md`
@@ -16,6 +16,8 @@
 - **元层 file 已落码（10-21 `bf216c0`）**：`FsChannel` 加 `root` 参数（与 base 正交）+ `make_meta_fs_specs`（read/write/edit 无 id）；root=agent_root 硬约束、根内路径转换（前导 `/`=agent root、`..` 越界报、`/etc/passwd` 天然映射、不调 chroot）；装配未接（元层 LLM 未实现）→ `entries/2026-10-21-cogos-meta-file-tool.md`
 - **body time 组已落码（10-21 `e44fd0c`）**：now（补暴露已有 time_now）/ wait（新增阻塞 sleep、cap 60s）/ remind（镜像 set_timer）；**wait＝同轮阻塞暂停、remind＝跨轮唤醒**；推翻 10-18「time 不进 body」；body/memory 仍未接进 toolset（模型只见 toolbox）→ `entries/2026-10-21-cogos-body-time-tool.md`
 - 术语已钉 glossary：`body`/`toolbox`/`body_catalog`/`toolbox_catalog`/`keep`/`forget`/`附件投影`/`句柄`/`agent_root`/`machine_root`/`content root`/`state root`/`意识层 LLM`/`元层 LLM`/`元层 file`/`根内路径转换`/`wait/remind（时间工具）`
+- **agent runtime 骨架第一步已落码（10-22 `6563b28`）**：`runtime/` 七模块（state/agent/heartbeat/events/context/stream/stub），一条 stub 事件走通 `ASLEEP→WAKING_UP→AWAKE→FALLING_ASLEEP→ASLEEP`；验收五条全过（四态走通/触发者可断言/两态两法/启动归一/无忙等）；两钩子契约 `Context.append/entries`＋`Distiller.distill` 定形；复用现有 CogRuntime＋`cu.no_wait()`＋on_done（stub 只换 lm_client）→ `entries/2026-10-22-cogos-runtime-skeleton.md`、`entries/2026-10-22-cogos-agent-lifecycle.md`
+- 术语已钉 glossary：`助推`/`醒/睡状态机`/`心跳`/`介入（两层判断）`/`信号队列·介入点`/`SEQ`/`醒因`/`装载·卸载（对称）`（事件/tick 收窄）
 
 ## 最近收口 · 主线循环＋出生事件＋动机（10-15）
 

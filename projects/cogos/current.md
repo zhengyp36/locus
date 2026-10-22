@@ -20,9 +20,13 @@
 
 对外 **body**（**6 组 20 能力** file/vision/chat/terminal/web/**time**）＋对内 **memory**（fold/unfold/mark 三操作 + overwrite 布尔），**均已落码**（body 10-20、memory 10-21 `d062f2e`、time 组 10-21 `e44fd0c`）。time 组＝now（补暴露已有 time_now）/ wait（新增阻塞 sleep，cap 60s）/ remind（镜像 set_timer）；**wait＝同轮阻塞暂停、remind＝跨轮唤醒**，定位分道。**元层 file**（read/write/edit，root=agent_root 硬约束、根内路径转换）**已落码**（10-21 `bf216c0`：FsChannel 加 `root` 参数 + `make_meta_fs_specs`；装配未接，元层 LLM 未实现）。10-15 的「intent（对外）」改名为 body；「意图＝无声动作指令」概念仍活。→ `entries/2026-10-19-cogos-tool-design.md`、`entries/2026-10-20-cogos-memory-tool.md`、`entries/2026-10-21-cogos-memory-tool-impl.md`、`entries/2026-10-21-cogos-meta-file-tool.md`、`entries/2026-10-21-cogos-body-time-tool.md`
 
-## 下一步（10-21 定）
+### 主线 = 自驱 agent；runtime 骨架第一步已落码（10-22）
 
-**工具先行完成**：body 6 组 20 能力（含 time 组 now/wait/remind）+ memory 三操作（fold/unfold/mark）+ 元层 file 三操作（read/write/edit）都已落码（memory `d062f2e`、meta-file `bf216c0`、time `e44fd0c`）。元层 file 是**下一步「上下文管理 / 实现元层 LLM」的前置**（YZ 10-21 明确）。方向候选（先走哪个回讨论）：① 出生走查（10-15 顺延到「工具落码后」）；② 「意识过程→记忆沉淀构想」收口（10-19「待工具落码后正式收口」）；③ 元层 LLM 上下文管理（file 已就位）。走查前要接的环（均属**装配层职责**）：**索引进上下文**（memory 落码时裁定、未做）；**body/memory 接进 consciousness 工具集**（`toolset_names=["toolbox"]` 硬编码，模型当前只见 toolbox，body/memory catalog 能力落码但不可见）。
+自驱 agent 大量停留概念，先搭**能跑的框架**，三步走：① 搭架子（机制层、内容 stub）→ ② append＋真 LLM＋工具接线验证 → ③ SEQ/蒸馏/对齐动机（前奏＝出生事件）。**第一步已落码**（`6563b28`）：`cogos/agent/runtime/` 七模块（state/agent/heartbeat/events/context/stream/stub），一条 stub 事件走通 `ASLEEP→WAKING_UP→AWAKE→FALLING_ASLEEP→ASLEEP`，验收五条全过（四态走通/触发者可断言/两态两法/启动归一/无忙等）。**架子的唯一验收意义＝两钩子接口形状定对**：`Context.append/entries`＋`Distiller.distill`。→ `entries/2026-10-22-cogos-runtime-skeleton.md`、`entries/2026-10-22-cogos-agent-lifecycle.md`
+
+## 下一步（10-22 定）
+
+**工具先行＋第一步骨架完成**。**下一步 = 第二步 append 式＋真 LLM＋工具接线验证**：stub lm_client 换真 LLM、append 上下文入口灌真 messages、**body/memory 接进 consciousness 工具集**（`toolset_names=["toolbox"]` 硬编码要改）。三步路线：① 搭架子（已完成）→ ② append＋真 LLM＋工具接线 → ③ SEQ/蒸馏/对齐动机（前奏＝出生事件）。留第二步的环：`on_tool_call` 介入点、runtime on_except 改造、两套状态分层（意识标签落盘）。
 
 ## 开放问题（悬置，待讨论）
 
@@ -32,7 +36,8 @@
 - 出生事件**措辞/第一份记忆形状**
 - **P7 判"结"主体**、**P8 锚分类学**（承前承重缺口）
 - 工具**待定项**：terminal.notify、web.format、toolbox 全集团组织、phone 异步作业、limit 去留、body/toolbox 暴露关系、render_overview 中文、记号表不统一
-- **意识过程→记忆沉淀构想**（YZ 10-19 给出：助推/弧/流/SEQ/元层工具 file；非结论、待正式收口；「弧」撞退役旧义需重钉；原 scratch 已删、摘要留存于此）。**元层工具 file 已落码**（`bf216c0`），其余（助推/弧/流/SEQ）待收口。
+- **意识过程→记忆沉淀构想**（YZ 10-19）→ 已部分收口：**助推/SEQ** 已进 lifecycle 设计并钉 glossary；**元层 file 已落码**（`bf216c0`）；**「弧」未采用**（维持退役，收口时未重新定义）。→ `entries/2026-10-22-cogos-agent-lifecycle.md`
+- **生命周期机制层**（10-21 设计，第一步骨架已落码、其余待实现）：事件来源收窄**永久性**（当前阶段只有 body 工具产生事件、无内部事件/生念，永久还是暂定）；介入**具体形态**（审视措辞/清理时机/留痕形式，待实验）；强制 sleep「极限」定义；SEQ 时间脉络缺口；idle＋halt 张力机制（`stand_down` 候选，后置）
 
 ## 参考 · 历史结论（细节进 entries/，正文不铺）
 
