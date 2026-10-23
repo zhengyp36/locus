@@ -15,7 +15,7 @@
 | 域 | 状态集 | 说明 |
 |---|---|---|
 | 内存 | `empty` / `loading` / `loaded` / `unloading` | 意识当下所处的**过程阶段**（无 unloaded/continuing/continued） |
-| 盘上（文件） | `loading` / `loaded` / `continuing` / `continued` / `unloading` / `unloaded` | 一份上下文的**生命周期**（打开/关闭方式） |
+| 盘上（文件） | `loading` / `loaded` / `continuing` / `continued` / `unloading` / `unloaded` / `idle` | 一份上下文的**生命周期**（打开/关闭方式）；`idle`＝醒着无 cu（瞬态，后必接 `continuing`/`unloading`） |
 
 - **两套状态独立**：内存描述"意识当下过程阶段"，文件描述"这份上下文的生命周期"；不互相映射，也不合并。
 - 文件态多于内存态，是**分工**不是巧合：
@@ -93,7 +93,7 @@ cu.material                    # 引用（不单独存），当前上下文的�
 ```
 
 - **`type=message`**：一条 `Message`（`role`/`content`/`tool_calls`/`tool_call_id`/`reasoning`），`meta.ts` 平铺为顶层 `ts`。
-- **`type=state`**：状态转移标记，`state` ∈ `{loading, loaded, continuing, continued, unloading, unloaded}`。状态转移与内容追加共享同一条时间线，是唯一能保证二者顺序一致的存法（也因此否掉"文件名后缀 / 单独 manifest"两个备选）。
+- **`type=state`**：状态转移标记，`state` ∈ `{loading, loaded, continuing, continued, unloading, unloaded, idle}`。状态转移与内容追加共享同一条时间线，是唯一能保证二者顺序一致的存法（也因此否掉"文件名后缀 / 单独 manifest"两个备选）。
 - **顺序语义**：
   - **醒时装载**：`loading` 行 → 起点消息（`system`,`user`）→ `loaded` 行；`loaded` 是装载结束标记，起点消息是装载的产出，排在它前面。
   - **换 cu（承接）**：新文件首行 `continued`（= 承接前版本、直接就绪，无 `loading`/`loaded`），后跟起点消息。旧文件尾追加 `continuing`（= 本版本正常关闭、同 wake 有后继）。
@@ -164,8 +164,8 @@ agent_root/
 ## 11. 活跃判定
 
 - **活跃文件不在 `archive/` 下**：在 `archive/` = 已不活跃（历史）。
-- 当前活跃文件 = **正常目录（非 archive）下**、文件内**最后一条 `type=state` 行的 `state`** ∈ `{loading, loaded, continued}` 的那一个（正常时唯一）。
-- 存在活跃文件 → 意识在跑；**正常目录无活跃文件** → 意识停（睡/空），须从记忆装载新上下文。
+- 当前活跃文件 = **正常目录（非 archive）下**、文件内**最后一条 `type=state` 行的 `state`** ∈ `{loading, loaded, continued, idle}` 的那一个（正常时唯一）。
+- 存在活跃文件 → **意识在跑**（最后 state 行 ∈ `{loading, loaded, continued}`）；最后 state 行 = `idle` → **醒着但无 cu**（意识活动停，非睡，后必接 `continuing` 或 `unloading`）；**正常目录无活跃文件** → 意识停（睡/空），须从记忆装载新上下文。
 - `empty`（内存）= 正常目录无活跃文件（出生前 / 入睡后未再醒），历史都在 `archive/`；此时正常目录有 `meta.json` 作版本号权威。
 - 异常时正常目录可能有两个文件：① 旧 `continuing` + 新 `continued`（旧已关、活跃唯一=新）；② 旧 `loaded` + 新 `continued`（写新后关旧前掉电，两个都"活跃"，恢复靠比较版本号取大）。
 

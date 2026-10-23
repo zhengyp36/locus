@@ -22,11 +22,15 @@
 
 ### 主线 = 自驱 agent；runtime 骨架第一步已落码（10-22）
 
-自驱 agent 大量停留概念，先搭**能跑的框架**，三步走：① 搭架子（机制层、内容 stub）→ ② append＋真 LLM＋工具接线验证 → ③ SEQ/蒸馏/对齐动机（前奏＝出生事件）。**第一步已落码**（`6563b28`）：`cogos/agent/runtime/` 七模块（state/agent/heartbeat/events/context/stream/stub），一条 stub 事件走通 `ASLEEP→WAKING_UP→AWAKE→FALLING_ASLEEP→ASLEEP`，验收五条全过（四态走通/触发者可断言/两态两法/启动归一/无忙等）。**架子的唯一验收意义＝两钩子接口形状定对**：`Context.append/entries`＋`Distiller.distill`。→ `entries/2026-10-22-cogos-runtime-skeleton.md`、`entries/2026-10-22-cogos-agent-lifecycle.md`
+自驱 agent 大量停留概念，先搭**能跑的框架**，三步走：① 搭架子（机制层、内容 stub）→ ② append＋真 LLM＋工具接线验证 → ③ SEQ/蒸馏/对齐动机（前奏＝出生事件）。**第一步已落码**（`6563b28`）：`cogos/agent/runtime/` 七模块（state/agent/heartbeat/events/context/stream/stub），一条 stub 事件走通 `ASLEEP→WAKING_UP→AWAKE→FALLING_ASLEEP→ASLEEP`。**该骨架已 freeze 删除**（`23bff9f`，tag `runtime-skeleton-freeze`），仅作历史参考；架子的验收意义＝两钩子接口形状（`Context.append/entries`＋`Distiller.distill`）已吸收进后续设计。→ `entries/2026-10-22-cogos-runtime-skeleton.md`、`entries/2026-10-22-cogos-agent-lifecycle.md`
 
-## 下一步（10-22 定）
+### 意识上下文（数据层 + 接口层）已落码（10-24）
 
-**工具先行＋第一步骨架完成**。**下一步 = 第二步 append 式＋真 LLM＋工具接线验证**：stub lm_client 换真 LLM、append 上下文入口灌真 messages、**body/memory 接进 consciousness 工具集**（`toolset_names=["toolbox"]` 硬编码要改）。三步路线：① 搭架子（已完成）→ ② append＋真 LLM＋工具接线 → ③ SEQ/蒸馏/对齐动机（前奏＝出生事件）。留第二步的环：`on_tool_call` 介入点、runtime on_except 改造、两套状态分层（意识标签落盘）。
+意识上下文 = **被动持久化服务（积木）**，与 event store 同级，已落码 **② 数据层 + ③ 接口层**，**不含上层编排**。三 commit：退役 v2.2 flow 子系统（`2f0c34c`）→ 数据层（`3d20dce`）→ 接口层（`f76da56`）。载体 `cogos/agent/consciousness.py`：`FileState`（盘上七态含 idle）+ `State`（对外五态含 IDLE）+ `ConsciousnessStore`（数据层）+ `Consciousness`（接口层）。全量 1350 passed。**遗留自决**（构造补 `make_cu`、`continued`→AWAKE、interrupt 顺序、介入点重入 guard、is_first_wake=wake==1）见 entry。→ `entries/2026-10-24-cogos-consciousness-context.md`
+
+## 下一步（10-24 定）
+
+**意识上下文积木已落码（数据层 + 接口层）**。**下一步 = 上层编排（属更上层系统，另行设计讨论）**：① 归一化（启动读盘 → 收敛 ASLEEP）② 醒触发/装载（记忆 → 2 条 `(system,user)` 起点）③ 睡眠三段式（`request_sleep`→介入点判睡→`start_unload`→元层整理记忆→`unload_done`）④ IDLE 唤醒（事件 + `revoke`）。另留：**装载机制**（记忆→起点接口）、**整理/重定向执行机制**（cu done 蒸馏+重定向由谁执行，元层 LLM 还是意识层判走向）。介入「具体形态」（审视措辞/清理时机/留痕形式）仍待实验。
 
 ## 开放问题（悬置，待讨论）
 
@@ -54,6 +58,8 @@
 
 ## 废弃
 
+- **v2.2 flow 子系统**（`consciousness.py`/`flow.py`/`experience.py` + `scripts/exp_*.py` + 3 测试）→ 已退役（10-24 `2f0c34c`）；agent 暂时 inert（收事件不推理），待上层编排/六步循环落地后重新接线。
+- **runtime 骨架七模块**（`6563b28`）→ freeze 删除（`23bff9f`）。
 - **工作方法：YZ 自推、kilo 退回编程手（10-15）** → 10-19 废止，回到一起推进（见 `worklog/README.md`）。
 - **线性管道**「事件→装载→思考⇄动手→留痕」→ 被六步循环取代。
 - **意识层工具名 intent（对外）** → body（10-19）。
