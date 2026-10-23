@@ -38,7 +38,9 @@ cu.material                    # 引用（不单独存），当前上下文的�
 ```
 
 - `messages` 与 `cu.material` 是**同一份数据**的两个视图：`cu.material` 实时变化（推理中 append），`messages` 在检查点同步。二者保持「material 是 messages 的前缀超集」，新增 = `material[len(messages):]`。
+- `cu.material` 是**完整真相**（含最终 assistant 回复）：无 tool_calls 的最终消息也要 append 进 material（现状 runtime 放 `CuResultOk`、不 append，落码时改，方案 A）。
 - `messages` **不是历史全集**：它只反映当前活跃上下文；历史全集不存在内存，就在盘上所有版本文件里。
+- 对外只读视图统一叫 **`context`**（接口层 §2.4）：= 介入点检查点后的当前上下文，与盘上一致；`messages` 是内部落盘游标（已落盘前缀），不对外。
 - 落盘两个触发源：
   - **状态行即时**：`state` 改变 → 当下写 `type=state` 行（ts=state_ts），不攒。
   - **消息行攒批**：检查点（`on_tool_done` / `on_done`）→ 取 `material[len(messages):]` 补入 `messages` 并写 `type=message` 行。
@@ -129,7 +131,7 @@ agent_root/
   - **生成**：意识空 + 醒 → 生成 cu，cu 与意识上下文一致（material = messages 起点）。
   - **保持（不换）**：正常推理自行推进；介入不干预；介入只插一句。
   - **换 cu**：**cu done**（一次自然推理结束）或 **cu 中部整理**。
-- **cu 销毁权在意识上下文**：现有 runtime `_finish` 是 done 即 pop，要落实「只在整理时销毁」，需把销毁权从 runtime 收到意识上下文（落码时改）。
+- **cu 销毁是自动的**：done → runtime `_finish` pop；未 done 要停 → `cu.interrupt()` 设 flag，`_advance` 循环顶部走 `_finish(Interrupted)` → pop。无需显式销毁（旧注记「销毁权上收 / 只在整理时销毁」作废）。
 
 ## 9. cu done = 整理 = 版本切换
 
