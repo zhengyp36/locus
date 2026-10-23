@@ -1,6 +1,6 @@
 # ENTRY — runtime 架子重设计 + 意识上下文（数据层 + 接口层）
 
-一句话：重设计 agent runtime 架构，**逐个模块**实现；事件模块、cu material 改造已收口；**意识上下文（数据层 + 接口层）讨论已收口（待议全过，commit `0da0243`）——下一步 = 编码：依赖改造 → 数据层 → 接口层（积木，不含上层编排）**。
+一句话：重设计 agent runtime 架构，**逐个模块**实现；事件模块、cu material 改造、**① 依赖改造**均已收口；**意识上下文（数据层 + 接口层）讨论已收口（待议全过，commit `0da0243`）——下一步 = 编码：**② 数据层 → ③ 接口层**（积木，不含上层编排）**。
 
 读什么：
 1. `2026-10-22-runtime-redesign.md` — 讨论草稿（准则 + 事件模块方案 + 意识上下文/on_tool_done 讨论）。
@@ -11,8 +11,9 @@
 
 状态：
 - 事件模块已编码完成并推送（commit `edcfdab` + `d686683`）。
-- **cu material 改造**（`list[dict]` → `list[Message]` + `Message`/`Meta` 类型）已完成（commit `2fcac25`，未 push）。
+- **cu material 改造**（`list[dict]` → `list[Message]` + `Message`/`Meta` 类型）已完成（commit `2fcac25`）。
 - **意识上下文接口+生命周期讨论已收口**（待议全过，commit `0da0243`）。
+- **① 依赖改造已完成并推送**（commit `d6de28f`）：`cu.on_tool_done(ok)` 回调（成败两路：成功在 append 后·pending 前，失败在 on_tool_call 缺失/抛异常）；`cu.rounds` 每 chat +1、`cu.tokens` 累计 `completion_tokens`；最终 assistant 消息 append 进 material（方案 A，material=完整真相）；consciousness._handle_done / loop._run_one_round 的重复 append 已移除。全量 1359 passed 无回归。**决策：tokens 取 completion_tokens（= 纯 LLM 输出，天然不含工具结果）**。
 
 已定（意识上下文）：
 - 介入回调**返回决策** `Resume/Switch/Sleep` + 参数打包 `InterveneContext` + 介入决策同步·入睡记忆异步。
@@ -24,7 +25,7 @@
 下一步 = 编码（意识上下文积木，不含上层编排）：
 
 - **积木定位**：意识上下文 = 和 event store 同级的积木（被动持久化服务 + 介入点机械维护）；上层编排（归一化/醒/睡/IDLE 唤醒）属更上层系统、另行设计讨论，不在本模块范围。
-- **编码顺序**：① 依赖改造（`on_tool_done` 回调 / `rounds` 字段 / `tokens`(lm_client usage) / 最终 assistant 消息 append 进 material）→ ② 数据层（文件格式 + 七态枚举含 idle + 版本号 + 归档；动手前先补 persistence 草稿"待同步"：§2/§6.1 加 idle、§11 活跃判定）→ ③ 接口层（原语 + 介入点包装 `_on_intervening` 判成败 + `_intervening_on_tool/_finish`）。
+- **编码顺序**：~~① 依赖改造~~（已完成）→ ② 数据层（文件格式 + 七态枚举含 idle + 版本号 + 归档；动手前先补 persistence 草稿"待同步"：§2/§6.1 加 idle、§11 活跃判定）→ ③ 接口层（原语 + 介入点包装 `_on_intervening` 判成败 + `_intervening_on_tool/_finish`）。
 - **对齐设计文档（非结果验收）**：分层落地、逐层核对设计文档每条规格与**已指出的漏洞**是否在代码中执行（idle 态、成败语义、material 真相、cu 销毁自动、介入点两层流程、两件事分离）；不做"跑通"式验收（易把验收当目标、偏离忠实实现）。守边界不碰编排。
 - **已定结论全集**：见 `2026-10-23-cu-interface.md` §9（已定 + 待议已全勾）。
 
