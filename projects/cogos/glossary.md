@@ -107,9 +107,10 @@
 | 介入 / 两层判断 | 控制的一种手段＝意识内控制；两调用点 = 介入点 **`on_tool_done`（工具后）/`on_done`（cu 结束）**；介入回调**返回决策** `Resume`/`Switch`/`Sleep`；**两层流程**＝意识上下文通用流程（打包 ctx + 按决策做 cu/state 机械维护）＋元层流程（准入/LLM 判/算起点/定决策 + 介入点后编排睡眠三段式）；「介入＝注入＋清理」具体形态（审视措辞/清理时机/留痕形式）待实验 | cu-interface §2/§6/§9 | 「介入=on_done 专属」（否，统一入口）· 旧调用点 `on_tool_call` | 助推 · 元层 LLM · 意识上下文 |
 | 信号队列 / 介入点 | **信号＝无内容通知**（只说"有 X 发生"、不含内容），天然幂等（消费时清空）；**介入点＝LLM 返回后的安全位置**（若调工具则等工具完成再注入）；事件只投信号、不直接开 cu——开 cu 唯一入口在介入点，串行性由此成立 | lifecycle §2 | 事件直接开 cu（否） | 介入 |
 | SEQ / SEQ 链 | **SEQ＝上下文整理的产物（蒸馏）**，非日志、非每次推理的精确保留；**顺序 append 不产生 SEQ**，只有"需要整理"（主题变化退场/过长折叠进记忆）时才切新 SEQ；**SEQ 链**＝连续 SEQ 沿时间脉络串成，近期详细/远期概略、不断压缩 | lifecycle §2 | "SEQ＝日志"（否） | 脉络 · 蒸馏 |
-| 醒因 wake_reason | 唤醒的原因，决定装载方向：**节律**（白天到）/ **闹钟**（自己设的 reminder 到期）/ **事件**（有外部事件待处理） | lifecycle §2 | — | 心跳 |
+| 醒因 wake_reason | 唤醒的原因，决定装载方向；**两分**＝**节律**（白天到，元层非事件）/ **事件**（外部事件待处理；**闹钟 remind 到期并入事件**——工具产生事件） | lifecycle §2 · 2026-10-24-cogos-meta-layer-scaffold.md | 三分 节律/闹钟/事件（10-24 收为两分，闹钟并入事件） | 心跳 |
 | 装载 / 卸载（对称） | **装载**＝意识上下文从无到有（从记忆准备好第一份上下文）；**卸载**＝从有到无（蒸馏回记忆）；**对称＝装载取决于卸载**（醒来装什么取决于上次入睡蒸馏留下什么）；**出生＝退化特例**（记忆空白、统一装载） | lifecycle §2 | 装载与卸载独立设计（否） | 活跃区 · 意识上下文 |
 | 意识上下文 | **被动持久化服务（积木，与 event store 同级）**：记忆的活跃区，同时存内存与盘上、二者同步；**对外五态** `State`＝ASLEEP/WAKING_UP/AWAKE/**IDLE**/FALLING_ASLEEP（IDLE 逻辑=AWAKE，差「有无活跃 cu」）；**盘上七态** `FileState`＝loading/loaded/continuing/continued/unloading/unloaded/**idle**（idle 瞬态）；文件 `<wake>.<context>.jsonl` JSON Lines（type=message/state 分派、行序权威）＋版本号＋`meta.json`＋`archive/`；**原语**＝start_load/append/load_done/request_sleep/start_unload/unload_done/revoke/reset；上层编排（归一化/醒/睡/IDLE 唤醒）不属本模块。已落码 `2f0c34c`+`3d20dce`+`f76da56` | 2026-10-24-cogos-consciousness-context.md | persistence §2 内存 4 态（被对外 5 态取代） | 活跃区 · 装载/卸载 · 介入 |
+| 元层 MetaLayer | 意识层之上的**上层编排**＝**Monitor（监控）＋ Control（控制）**两部件，Monitor 触发 Control；**不持有状态**（状态＝意识上下文五态，元层只读 `cons.state`）；三流程＝装载 `wake_up`/整理 `fall_asleep`/介入 `on_intervening`；**醒/睡对称＝入睡统一链**（触发点同步切态原语→独立 task 走流→完成原语；三睡触发点＝AWAKE 介入/IDLE 心跳/归一化）；**归一化**＝启动读盘 `state != ASLEEP → reset()`；内容 LLM 全留白 stub（StubCu 两剧本、不调 LLM）。已落码 `b739378` | 2026-10-24-cogos-meta-layer-scaffold.md | 心跳 heartbeat（＝状态机 Monitor，机制层同物）；「上层编排」＝意识上下文 entry 的遗留表述 | 意识上下文 · 介入 |
 
 ## 锚例（本表引用的 entry）
 

@@ -32,9 +32,13 @@
 
 意识上下文 = **被动持久化服务（积木）**，与 event store 同级，已落码 **② 数据层 + ③ 接口层**，**不含上层编排**。三 commit：退役 v2.2 flow 子系统（`2f0c34c`）→ 数据层（`3d20dce`）→ 接口层（`f76da56`）。载体 `cogos/agent/consciousness.py`：`FileState`（盘上七态含 idle）+ `State`（对外五态含 IDLE）+ `ConsciousnessStore`（数据层）+ `Consciousness`（接口层）。全量 1350 passed。**遗留自决**（构造补 `make_cu`、`continued`→AWAKE、interrupt 顺序、介入点重入 guard、is_first_wake=wake==1）见 entry。→ `entries/2026-10-24-cogos-consciousness-context.md`
 
+### 元层架子 MetaLayer 已落码（10-24）
+
+元层 = **Monitor（监控）+ Control（控制）**上层编排，内容 LLM 全留白 stub（不调 LLM）。载体 `cogos/agent/meta_layer.py`（Rhythm/WakeReason/Monitor/Control/MetaLayer/StubCu），改 `app.py` 4 处，`b739378`。机制：**醒/睡对称＝入睡统一链**（触发点同步切态原语→独立 task 走流→完成原语；三睡触发点＝AWAKE 介入/IDLE 心跳/归一化）、规则①监控分离、`on_intervening` 同步且返回 Sleep 前同步 `start_unload`、时钟双口径（`is_daytime` 吃 epoch、tick/entry_ts/now 用 monotonic）、醒因两分 RHYTHM/EVENT（闹钟并入事件）。全量 1364 passed（+5）。→ `entries/2026-10-24-cogos-meta-layer-scaffold.md`
+
 ## 下一步（10-24 定）
 
-**意识上下文积木已落码（数据层 + 接口层）**。**下一步 = 讨论心跳/元控制层**（＝意识上下文之后的**上层编排**，属更上层系统，另行设计讨论）：① 归一化（启动读盘 → 收敛 ASLEEP）② 醒触发/装载（记忆 → 2 条 `(system,user)` 起点）③ 睡眠三段式（`request_sleep`→介入点判睡→`start_unload`→元层整理记忆→`unload_done`）④ IDLE 唤醒（事件 + `revoke`）。另留：**装载机制**（记忆→起点接口）、**整理/重定向执行机制**（cu done 蒸馏+重定向由谁执行，元层 LLM 还是意识层判走向）。介入「具体形态」（审视措辞/清理时机/留痕形式）仍待实验。
+**元层架子已落码**（Monitor+Control+接线，LLM 留白 stub）。下一步 = **回讨论留白项**：① G2 装载内容（从 memory 目录加载记忆拼 2 条起点）② G3 整理内容（cu done 蒸馏+重定向由谁执行、SEQ 形态）③ G7 介入形态（审视措辞/清理时机/留痕形式）④ 工具执行层 `on_tool_call` 接线（接真 runtime + mock chat，`_DemoLmClient` 现成雏形）。另留：卡住后处理（空函数+TODO）、IDLE 重判。
 
 ## 开放问题（悬置，待讨论）
 
