@@ -24,6 +24,10 @@
 
 自驱 agent 大量停留概念，先搭**能跑的框架**，三步走：① 搭架子（机制层、内容 stub）→ ② append＋真 LLM＋工具接线验证 → ③ SEQ/蒸馏/对齐动机（前奏＝出生事件）。**第一步已落码**（`6563b28`）：`cogos/agent/runtime/` 七模块（state/agent/heartbeat/events/context/stream/stub），一条 stub 事件走通 `ASLEEP→WAKING_UP→AWAKE→FALLING_ASLEEP→ASLEEP`。**该骨架已 freeze 删除**（`23bff9f`，tag `runtime-skeleton-freeze`），仅作历史参考；架子的验收意义＝两钩子接口形状（`Context.append/entries`＋`Distiller.distill`）已吸收进后续设计。→ `entries/2026-10-22-cogos-runtime-skeleton.md`、`entries/2026-10-22-cogos-agent-lifecycle.md`
 
+### runtime 重设计前置（事件模块 + cu material 改造 + ① 依赖）已落码（10-22~23）
+
+事件模块 `EventStore`（`emit`/`take_all`/`has_events`，全同步 threading.Lock，append-only pending，渲染每 kind 一个转换函数，写好自验不接线）+ cu material 改造（`list[dict]`→`list[Message]`，`to_lm_dict` 等价不变量）+ ① 依赖（`on_tool_done` 回调 + `rounds`/`tokens` + 最终 assistant append）均已落码（`edcfdab`+`d686683`、`2fcac25`、`d6de28f`），为意识上下文落盘做前置。→ `entries/2026-10-22-cogos-event-store.md`、`entries/2026-10-23-cogos-cu-material-message.md`
+
 ### 意识上下文（数据层 + 接口层）已落码（10-24）
 
 意识上下文 = **被动持久化服务（积木）**，与 event store 同级，已落码 **② 数据层 + ③ 接口层**，**不含上层编排**。三 commit：退役 v2.2 flow 子系统（`2f0c34c`）→ 数据层（`3d20dce`）→ 接口层（`f76da56`）。载体 `cogos/agent/consciousness.py`：`FileState`（盘上七态含 idle）+ `State`（对外五态含 IDLE）+ `ConsciousnessStore`（数据层）+ `Consciousness`（接口层）。全量 1350 passed。**遗留自决**（构造补 `make_cu`、`continued`→AWAKE、interrupt 顺序、介入点重入 guard、is_first_wake=wake==1）见 entry。→ `entries/2026-10-24-cogos-consciousness-context.md`

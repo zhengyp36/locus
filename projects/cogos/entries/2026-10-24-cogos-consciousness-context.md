@@ -23,12 +23,12 @@
 - 决策 tagged union：`Resume`/`Switch(new_context)`/`Sleep`。
 - `do_switch` 换 cu 统一动作（Switch + revoke 共用）；`revoke` = 无 cu 的 Switch。
 
-## 自决（待 YZ 核对，动手时暴露的 spec 漏洞）
+## 自决（10-24 已核对：第 1~3、5~6 条通过，第 4 条经讨论修订）
 
 1. **构造补 `make_cu`**：原 spec `Consciousness(path, on_intervening)` 缺 cu 创建入口（起 cu 需 runtime/tools/registry，属上层）；`make_cu=None` = 纯持久化模式。
 2. **`continued` → AWAKE**：§1.2 未列 `continued`，但逻辑 = 承接就绪、cu 在跑，归 AWAKE。
 3. **interrupt 顺序**：按 §2.6 流程 + §9 已定-7「结束时 interrupt」（§2.7「在 do_switch 之前」判为措辞误差）。
-4. **介入点重入**：回调闭包捕获 cu，旧 cu 被 interrupt 后的 finish 介入点按 `cu is not self._cu` 跳过。
+4. **介入点重入（修订）**：`_do_interrupt(cu, reason)` 记录被中断 cu 的 `(id, 首次 reason)`（首次对齐 `interrupt()` first-wins），`_verify_interrupt(cu, result)` 校验——**tool 点重入恒 bug**；**finish 点 `cu is not self._cu` 或 `result is CuResultInterrupted` 均进 `_verify_interrupt`**（id 在记录 ＋ reason 匹配＝合法跳过、否则 bug，均 log+raise）。当前 cu 无记录却 settle Interrupted 也是 bug（堵 `CogRuntime.shutdown()` 绕开直调 `cu.interrupt` 的隐患）。记录保留最近 8 条不 pop（更稳、不依赖 settle 恰一次）、`start_load` 清空。
 5. **is_first_wake = (wake_version == 1)**：出生/首醒为 1，首睡后 +1。
 6. **meta.json keys**：`{"wake_version","context_version"}`。
 
@@ -37,6 +37,7 @@
 - 新模块名 `ConsciousnessContext`（避撞旧 flow 版 `consciousness.py`）→ **否**，先退役旧版、直接叫 `Consciousness`。
 - 数据层塞进 `Consciousness` 类、不拆 store → **否**，拆 `ConsciousnessStore`（数据层可独立测试）。
 - 内存态用 persistence §2 的 4 态（empty/loading/loaded/unloading）→ **否**，用 interface §1.2 对外 5 态（§2 的 4 态是旧模型，未在「待同步」清单里全改，遗留）。
+- 介入点重入按「`cu is not self._cu` 静默 return」→ **否**（10-24），改 `_do_interrupt`/`_verify_interrupt` 显式校验（静默 return 会漏掉真 bug）。
 
 ## 遗留
 
