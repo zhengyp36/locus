@@ -52,6 +52,7 @@
 - [x] 归一化语义收敛（第 5 条）：reset=忽略 / sleep·走完=认可；start() 归一化改走 sleep 收口 → `b716a06`
 - [x] start/stop 对称收敛（第 6 条）：stop 也走 sleep 收口 → `b716a06`
 - [x] 全量 1369 passed, 6 skipped（+2 新增：start 归一化 FALLING_ASLEEP、stop 收口）
+- [x] 对外属性 `cons` → `consciousness`（YZ 反馈，私有 `_cons`/参数 `cons` 保留）→ `54b9a7f`
 - [ ] LLM 接线（G2/G3/G7/on_tool_call）另起讨论
 - [ ] 删本草稿（LLM 接线讨论收口后）
 
