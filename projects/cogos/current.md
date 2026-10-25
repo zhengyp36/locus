@@ -4,75 +4,84 @@
 
 ## 活跃 · 当前口径
 
+### 元层 = 校准层；两层关系（10-25）
+
+元层与意识层＝**同一 LLM 推理的两种职责**：意识层**前向推理**（怎么达成）、元层**对齐/校准**（偏没偏）。LLM 语义方向非唯一、有概率随机性、单层长程会漂，两层在介入点交替校准实现稳定。两层围绕**同一核心＝动机/方向/目标**（元层拿它判偏、意识层拿它推进）。→ `entries/2026-10-25-cogos-meta-layer-direction-alignment.md`
+
+### 介入决策四元 Proceed/Relay/Switch/Stop（10-25）
+
+元层介入点控制策略统一为四元，本质＝**下一轮输入从哪来**：**Proceed**（无助推继续，仅工具点，靠程序回灌）/ **Relay**（有助推继续，追加消息）/ **Switch**（重构上下文继续，替换内容）/ **Stop**（停止，去 unload→ASLEEP 或 idle）。换/不换＝内容「替换/追加」、非 cu；Sleep 降为 Stop 的去向、不再是决策。取代旧 `Resume`/`Switch`/`Sleep`。→ 同 entry
+
+### 意识内容组织三动作（10-25）
+
+**组装（从无到有：醒＝出生模板 / 记忆＋事件）→ 接续（从有到有：Proceed/Relay/Switch）→ 卸载（从无到有：整合进记忆/经历）**。**未点明核心＝动机/方向/目标**（引力）：内容组织＝**管道**、动机/方向/目标＝**引力**，两维正交。→ 同 entry
+
+### 方向来源：持续存在（定）＋环境（长）（10-25）
+
+动机/方向/目标两来源：**持续存在＝基础条件（定）**＝本性/法则＋种子（每天醒睡、能想能动）；**所处环境＝决定形状（长）**＝人生初课＋根/倾向（人类社会、工具互动）。**方向定、内容长**：定**方向/张力**（持续存在、与人打交道、思考价值），不定**内容/结论**（价值是什么——必须自己长）；不让方向自己长出。→ 同 entry
+
+### 日界推进 = full 档整理专属（10-25）
+
+wake_version 改锚**节律周期号（day）**：**只在时间界点（24:00）的睡眠整理（full 档）时推进**，不靠时钟独立递增，进程重启/归一化不推进；"今天→昨天"＝full 档整理时的时间投射推进。is_first_wake＝day==1 且日内首醒。→ 同 entry
+
 ### 主线 = 六步循环 loop（10-15）
 
-机制驱动的**推理步循环**（取代线性管道）：**装配→推理一步→判走向→留痕(写回)→对齐→回装配**；事件（输入/动力）随时进循环（相关并入、无关转向/挂起）。旧"事件→装载→思考⇄动手→留痕"作废，三环节重定位（装载→装配、思考⇄动手→推理＋判走向、留痕→写回贯穿每步）。→ `entries/2026-10-15-cogos-main-loop-birth.md`
+机制驱动的**推理步循环**：**装配→推理一步→判走向→留痕(写回)→对齐→回装配**；事件（输入/动力）随时进循环。旧"事件→装载→思考⇄动手→留痕"线性管道作废。→ `entries/2026-10-15-cogos-main-loop-birth.md`
 
 ### 出生事件 = 循环冷启动（10-15）
 
-初始配置→装配进工作记忆→循环跑→第一份记忆在留痕步落成→七维度被踩出。出生＝**事件＋任务**（任务＝系统下达、持续张力：认识自己→试工具→与环境互动→形成初始记忆）；身份「给/踩」边界（给＝是什么、踩＝怎么用）；教育不引入新机制。**10-19 起工具先行，出生走查顺延到工具落码后**（出生要"试工具"）。→ 同 entry
+出生＝**事件＋任务**（任务＝系统下达、持续张力：认识自己→试工具→与环境互动→形成初始记忆）；出生＝空记忆退化特例（统一装载）。→ 同 entry
 
 ### 动机 = 活＋张力（10-15）
 
-活＝运行基底（只给"能动的能力"）；**张力＝带方向的拉力＝倾向本身**；选择＝张力竞争；效价＝张力与结果的反馈；好奇＝动机的一种。对齐两层（对齐目标用方向量 / 对齐动机用价值）；回音＝自我证实的唯一来源＋检视修正。→ `entries/2026-10-15-cogos-motive-tension-echo.md`
+活＝运行基底；张力＝带方向的拉力＝倾向本身；选择＝张力竞争；效价＝张力与结果的反馈。对齐两层（对齐目标用方向量 / 对齐动机用价值）；回音＝自我证实唯一来源＋检视修正。→ `entries/2026-10-15-cogos-motive-tension-echo.md`
 
-### 意识层工具 = body＋memory；元层工具 = file（10-21 更新）
+### 意识层工具 body＋memory；元层工具 file（10-21 更新）
 
-对外 **body**（**6 组 20 能力** file/vision/chat/terminal/web/**time**）＋对内 **memory**（fold/unfold/mark 三操作 + overwrite 布尔），**均已落码**（body 10-20、memory 10-21 `d062f2e`、time 组 10-21 `e44fd0c`）。time 组＝now（补暴露已有 time_now）/ wait（新增阻塞 sleep，cap 60s）/ remind（镜像 set_timer）；**wait＝同轮阻塞暂停、remind＝跨轮唤醒**，定位分道。**元层 file**（read/write/edit，root=agent_root 硬约束、根内路径转换）**已落码**（10-21 `bf216c0`：FsChannel 加 `root` 参数 + `make_meta_fs_specs`；装配未接，元层 LLM 未实现）。10-15 的「intent（对外）」改名为 body；「意图＝无声动作指令」概念仍活。→ `entries/2026-10-19-cogos-tool-design.md`、`entries/2026-10-20-cogos-memory-tool.md`、`entries/2026-10-21-cogos-memory-tool-impl.md`、`entries/2026-10-21-cogos-meta-file-tool.md`、`entries/2026-10-21-cogos-body-time-tool.md`
+body（6 组 20 能力 file/vision/chat/terminal/web/time）＋ memory（fold/unfold/mark）＋ 元层 file（read/write/edit，root=agent_root）**均已落码**。→ `entries/2026-10-19-cogos-tool-design.md`、`entries/2026-10-20-cogos-memory-tool.md`、`entries/2026-10-21-cogos-memory-tool-impl.md`、`entries/2026-10-21-cogos-meta-file-tool.md`、`entries/2026-10-21-cogos-body-time-tool.md`
 
-### 主线 = 自驱 agent；runtime 骨架第一步已落码（10-22）
+### 意识上下文 + 元层架子已落码（10-24，10-25 检视修复收口）
 
-自驱 agent 大量停留概念，先搭**能跑的框架**，三步走：① 搭架子（机制层、内容 stub）→ ② append＋真 LLM＋工具接线验证 → ③ SEQ/蒸馏/对齐动机（前奏＝出生事件）。**第一步已落码**（`6563b28`）：`cogos/agent/runtime/` 七模块（state/agent/heartbeat/events/context/stream/stub），一条 stub 事件走通 `ASLEEP→WAKING_UP→AWAKE→FALLING_ASLEEP→ASLEEP`。**该骨架已 freeze 删除**（`23bff9f`，tag `runtime-skeleton-freeze`），仅作历史参考；架子的验收意义＝两钩子接口形状（`Context.append/entries`＋`Distiller.distill`）已吸收进后续设计。→ `entries/2026-10-22-cogos-runtime-skeleton.md`、`entries/2026-10-22-cogos-agent-lifecycle.md`
+意识上下文（数据层+接口层，`consciousness.py`）＋ 元层架子 MetaLayer（Monitor+Control，`meta_layer.py`）已落码。**10-25 检视修复两轮已收口**（`b716a06`/`54b9a7f`，全量 1369 passed）：醒/睡 flow 内聚、`last_ts`、归一化=settle_to_asleep、start/stop 对称收口、`cons`→`consciousness`。→ `entries/2026-10-24-cogos-consciousness-context.md`、`entries/2026-10-24-cogos-meta-layer-scaffold.md`
 
-### runtime 重设计前置（事件模块 + cu material 改造 + ① 依赖）已落码（10-22~23）
+## 下一步（10-25 定）
 
-事件模块 `EventStore`（`emit`/`take_all`/`has_events`，全同步 threading.Lock，append-only pending，渲染每 kind 一个转换函数，写好自验不接线）+ cu material 改造（`list[dict]`→`list[Message]`，`to_lm_dict` 等价不变量）+ ① 依赖（`on_tool_done` 回调 + `rounds`/`tokens` + 最终 assistant append）均已落码（`edcfdab`+`d686683`、`2fcac25`、`d6de28f`），为意识上下文落盘做前置。→ `entries/2026-10-22-cogos-event-store.md`、`entries/2026-10-23-cogos-cu-material-message.md`
-
-### 意识上下文（数据层 + 接口层）已落码（10-24）
-
-意识上下文 = **被动持久化服务（积木）**，与 event store 同级，已落码 **② 数据层 + ③ 接口层**，**不含上层编排**。三 commit：退役 v2.2 flow 子系统（`2f0c34c`）→ 数据层（`3d20dce`）→ 接口层（`f76da56`）。载体 `cogos/agent/consciousness.py`：`FileState`（盘上七态含 idle）+ `State`（对外五态含 IDLE）+ `ConsciousnessStore`（数据层）+ `Consciousness`（接口层）。全量 1350 passed。**遗留自决**（构造补 `make_cu`、`continued`→AWAKE、interrupt 顺序、介入点重入 guard、is_first_wake=wake==1）见 entry。→ `entries/2026-10-24-cogos-consciousness-context.md`
-
-### 元层架子 MetaLayer 已落码（10-24，10-25 修正内聚）
-
-元层 = **Monitor（监控）+ Control（控制）**上层编排，内容 LLM 全留白 stub（不调 LLM）。载体 `cogos/agent/meta_layer.py`（Rhythm/WakeReason/Monitor/Control/MetaLayer/StubCu），改 `app.py` 4 处，`b739378`。机制：**醒/睡对称＝flow 方法内聚**（`wake_up`/`fall_asleep` 同步切态原语 + spawn 内部走流；触发口径＝醒 monitor/睡介入点/IDLE 转黑 monitor，各自触发完整动作，无「走流归 Monitor」；`fall_asleep` 幂等）、规则①监控分离、`on_intervening` 返回 Sleep 前同步 `fall_asleep`、时钟双口径（`is_daytime` 吃 epoch、tick/entry_ts/now 用 monotonic）+ `last_ts` 重算、醒因两分 RHYTHM/EVENT。全量 1366 passed（+7）。→ `entries/2026-10-24-cogos-meta-layer-scaffold.md`
-
-## 下一步（10-24 定）
-
-**元层架子已落码**（Monitor+Control+接线，LLM 留白 stub）。下一步 = **回讨论留白项**：① G2 装载内容（从 memory 目录加载记忆拼 2 条起点）② G3 整理内容（cu done 蒸馏+重定向由谁执行、SEQ 形态）③ G7 介入形态（审视措辞/清理时机/留痕形式）④ 工具执行层 `on_tool_call` 接线（接真 runtime + mock chat，`_DemoLmClient` 现成雏形）。另留：卡住后处理（空函数+TODO）、IDLE 重判。
+方向已对齐（介入决策四元＋内容组织三动作＋方向来源）。下一步 = **LLM 接线**：G2 装载（组装原语）、G3 整理（分级，先只 full 档）、G7 介入形态（四元决策落地）、工具执行层 `on_tool_call`。**IDLE 整理（medium 档）后置**。
 
 ## 开放问题（悬置，待讨论）
 
-- **自我**（YZ 自推中，未收口；回音＝自我证实唯一来源是最近线索）
+- **自我**（YZ 自推中，未收口；回音＝自我证实唯一来源）
 - 事件**源头链**记不记；**拆/外包判据**（什么算"不适合拆"）
 - **锚展开共用机制**未设计（出生走查第一个硬实现点）
 - 出生事件**措辞/第一份记忆形状**
-- **P7 判"结"主体**、**P8 锚分类学**（承前承重缺口）
+- **P7 判"结"主体**、**P8 锚分类学**
 - 工具**待定项**：terminal.notify、web.format、toolbox 全集团组织、phone 异步作业、limit 去留、body/toolbox 暴露关系、render_overview 中文、记号表不统一
-- **意识过程→记忆沉淀构想**（YZ 10-19）→ 已部分收口：**助推/SEQ** 已进 lifecycle 设计并钉 glossary；**元层 file 已落码**（`bf216c0`）；**「弧」未采用**（维持退役，收口时未重新定义）。→ `entries/2026-10-22-cogos-agent-lifecycle.md`
-- **生命周期机制层**（10-21 设计，第一步骨架已落码、其余待实现）：事件来源收窄**永久性**（当前阶段只有 body 工具产生事件、无内部事件/生念，永久还是暂定）；介入**具体形态**（审视措辞/清理时机/留痕形式，待实验）；强制 sleep「极限」定义；SEQ 时间脉络缺口；idle＋halt 张力机制（`stand_down` 候选，后置）
+- **生命周期机制层**：事件来源收窄**永久性**（暂定）；介入具体形态（审视措辞/清理时机/留痕形式，随 G7）；强制 sleep「极限」；SEQ 时间脉络；idle＋halt 张力机制
 
 ## 参考 · 历史结论（细节进 entries/，正文不铺）
 
 - **记忆动力学重建（10-08）**：记忆＝思考的痕；取即写；三动作＝融合/转变/新建；维度＝用进废退长出的边。→ `entries/2026-10-08-cogos-memory-dynamics.md`
-- **系统架构＋人生初课（10-08）**：事件→控制系统→全局工作空间（树生长式）＋记忆；七维度以"我"为中心；出生事件＝第一次认领。→ `entries/2026-10-08-cogos-arch-first-lessons.md`
-- **记忆模型 v1/v1.1/v1.2＋外部调研（10-03~04）**：索引＝投影；单值视图；转变物化；索引＝含义表达（句柄＋描述）；离线整理；注入校准；调研＝切分两侧有对应物、共同空白＝结构/维度自动长出。→ `entries/2026-10-03-cogos-memory-*.md`、`entries/2026-10-04-cogos-memory-external-survey.md`
-- **形态先行＋定义层（10-05）**：形态 5 要素＝唯一验收基准；投影＝自指（认领）；本性 vs 根；执著可长可消。→ `entries/2026-10-05-cogos-{selfdrive-form,motive-projection-roothood,memory-v0-bootstrap}.md`
-- **过程 v2.2＋第一/二刀＋P8（10-03）**：**落码部分有效**（`91fd1de`/`7a67fc3`/`9775293`）；环被六步循环取代。→ `entries/2026-10-03-cogos-{first-cut-flow-claim,experience-axis-readback,p8-association-mechanical}.md`
-- **外圈/内圈 × 工具面（09-29~10-01）**：被 v2.2/loop 覆盖；工具二分（外部不占住/自身有界）、槽＝分布式并集仍有效。→ `entries/2026-10-01-cogos-process-toolface-close.md`
+- **系统架构＋人生初课（10-08）**：事件→控制系统→全局工作空间＋记忆；七维度以"我"为中心；出生事件＝第一次认领。→ `entries/2026-10-08-cogos-arch-first-lessons.md`
+- **记忆模型 v1/v1.1/v1.2＋外部调研（10-03~04）**：索引＝投影；单值视图；转变物化；索引＝含义表达；离线整理；注入校准。→ `entries/2026-10-03-cogos-memory-*.md`、`entries/2026-10-04-cogos-memory-external-survey.md`
+- **形态先行＋定义层（10-05）**：形态 5 要素＝唯一验收基准；投影＝自指；本性 vs 根。→ `entries/2026-10-05-cogos-{selfdrive-form,motive-projection-roothood,memory-v0-bootstrap}.md`
+- **过程 v2.2＋第一/二刀＋P8（10-03）**：落码部分有效；环被六步循环取代。→ `entries/2026-10-03-cogos-{first-cut-flow-claim,experience-axis-readback,p8-association-mechanical}.md`
+- **外圈/内圈 × 工具面（09-29~10-01）**：被 v2.2/loop 覆盖；工具二分、槽＝分布式并集仍有效。→ `entries/2026-10-01-cogos-process-toolface-close.md`
 - **总结可恢复性（10-02 方法论）**：递归蒸馏 A/B 两层。→ `entries/2026-10-02-cogos-summary-recoverability.md`
-- **system prompt 调研（10-09）**：控制配方三构件（few-shot 锚/边界＋例外/注入防护）。→ `entries/2026-10-09-cogos-system-prompt-study.md`
-- **toolbox 呈现（09-28）**：落码有效（`f8ef94a`…`ab46a5b`），设计被新 body/toolbox 覆盖。→ `entries/2026-09-28-cogos-toolbox-*.md`
+- **system prompt 调研（10-09）**：控制配方三构件。→ `entries/2026-10-09-cogos-system-prompt-study.md`
+- **toolbox 呈现（09-28）**：落码有效，设计被新 body/toolbox 覆盖。→ `entries/2026-09-28-cogos-toolbox-*.md`
 - **screenlab 图形面（09-20~26）**：已收尾，tag `screenlab-v2-freeze`。→ `entries/2026-09-20/22/23-cogos-screen-*.md`
 
 ## 废弃
 
-- **v2.2 flow 子系统**（`consciousness.py`/`flow.py`/`experience.py` + `scripts/exp_*.py` + 3 测试）→ 已退役（10-24 `2f0c34c`）；agent 暂时 inert（收事件不推理），待上层编排/六步循环落地后重新接线。
+- **介入决策 `Resume`/`Switch`/`Sleep`** → 10-25 被四元 `Proceed`/`Relay`/`Switch`/`Stop` 取代（Sleep 降为 Stop 去向）。
+- **wake_version＝醒次数、随重启推进** → 10-25 改锚节律周期号（day）、full 档整理专属。
+- **v2.2 flow 子系统**（`consciousness.py`/`flow.py`/`experience.py` + 脚本 + 3 测试）→ 已退役（10-24 `2f0c34c`）。
 - **runtime 骨架七模块**（`6563b28`）→ freeze 删除（`23bff9f`）。
-- **工作方法：YZ 自推、kilo 退回编程手（10-15）** → 10-19 废止，回到一起推进（见 `worklog/README.md`）。
+- **工作方法：YZ 自推、kilo 退回编程手（10-15）** → 10-19 废止，回到一起推进。
 - **线性管道**「事件→装载→思考⇄动手→留痕」→ 被六步循环取代。
 - **意识层工具名 intent（对外）** → body（10-19）。
-- **用法缓存「条数上限，LRU」** → 当轮内修剪（tool-body-impl §4）。
-- **time/now/wait/remind 不进 body**（10-18 裁）→ 10-21 推翻，time 组进 body（now/wait/remind）。
+- **用法缓存「条数上限，LRU」** → 当轮内修剪。
+- **time/now/wait/remind 不进 body**（10-18 裁）→ 10-21 推翻，time 组进 body。
 
 ## 锚点
 

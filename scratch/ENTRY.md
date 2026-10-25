@@ -53,9 +53,10 @@
 - [x] start/stop 对称收敛（第 6 条）：stop 也走 sleep 收口 → `b716a06`
 - [x] 全量 1369 passed, 6 skipped（+2 新增：start 归一化 FALLING_ASLEEP、stop 收口）
 - [x] 对外属性 `cons` → `consciousness`（YZ 反馈，私有 `_cons`/参数 `cons` 保留）→ `54b9a7f`
-- [ ] LLM 接线（G2/G3/G7/on_tool_call）另起讨论
+- [x] 方向对齐讨论（10-25）：介入决策四元 + 内容组织三动作 + 日界推进 + 两层关系 + 方向来源 → 进 glossary/current/entry `2026-10-25-cogos-meta-layer-direction-alignment.md`
+- [ ] LLM 接线（G2/G3/G7/on_tool_call）
 - [ ] 删本草稿（LLM 接线讨论收口后）
 
 ## 下一步
 
-本轮检视 6 点全部收敛且已动手（`b716a06`，全量 1369 passed）；下一步 = LLM 接线（G2/G3/G7/on_tool_call）讨论。
+方向已对齐（10-25，结论进 `glossary.md`/`current.md`/`entries/2026-10-25-cogos-meta-layer-direction-alignment.md`）：介入决策四元 Proceed/Relay/Switch/Stop、内容组织三动作（组装/接续/卸载）、日界推进=full 档整理专属、两层关系=同 LLM 两职责、方向来源=持续存在(定)+环境(长)。下一步 = LLM 接线：G2 装载（组装原语 `load()`）、G3 整理（分级，先 full 档）、G7 介入形态（四元决策落地）、`on_tool_call`。IDLE medium 档后置。
