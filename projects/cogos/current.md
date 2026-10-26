@@ -4,13 +4,17 @@
 
 ## 活跃 · 当前口径
 
+### 意识文件版本方案 + 五元决策已落码（10-26）
+
+弃 `wake_version`，意识文件改 `<YYYYMMDD>.TZ<offset>.V<version>.jsonl`；`meta.json` 始终存在、只存 birth/current_day/next_version；上电恢复 = meta 定位上一份文件（存在→读末态、不存在→已归档→ASLEEP）；废 `settle_to_asleep`（`stop` 停当前状态不进 ASLEEP）；新增 `heartbeat.json`（进程生命周期观测，只埋不消费）。介入决策四元扩五元（Stop→IDLE / Sleep→入睡拆开），介入点改名 `tool_done`/`reasoning_done`。commit `2ae2e9d`/`9056050`。→ `entries/2026-10-26-cogos-context-versioning.md`
+
 ### 元层 = 校准层；两层关系（10-25）
 
 元层与意识层＝**同一 LLM 推理的两种职责**：意识层**前向推理**（怎么达成）、元层**对齐/校准**（偏没偏）。LLM 语义方向非唯一、有概率随机性、单层长程会漂，两层在介入点交替校准实现稳定。两层围绕**同一核心＝动机/方向/目标**（元层拿它判偏、意识层拿它推进）。→ `entries/2026-10-25-cogos-meta-layer-direction-alignment.md`
 
-### 介入决策四元 Proceed/Relay/Switch/Stop（10-25）
+### 介入决策五元 Proceed/Relay/Switch/Stop/Sleep（10-25，10-26 扩）
 
-元层介入点控制策略统一为四元，本质＝**下一轮输入从哪来**：**Proceed**（无助推继续，仅工具点，靠程序回灌）/ **Relay**（有助推继续，追加消息）/ **Switch**（重构上下文继续，替换内容）/ **Stop**（停止，去 unload→ASLEEP 或 idle）。换/不换＝内容「替换/追加」、非 cu；Sleep 降为 Stop 的去向、不再是决策。取代旧 `Resume`/`Switch`/`Sleep`。→ 同 entry
+元层介入点控制策略统一，本质＝**下一轮输入从哪来**：**Proceed**（无助推继续，仅工具点，靠程序回灌）/ **Relay**（有助推继续，追加消息）/ **Switch**（重构上下文继续，替换内容）/ **Stop**（停止本轮：settle cu + 转 IDLE）/ **Sleep**（入睡：settle cu + 元层走卸载）。换/不换＝内容「替换/追加」、非 cu。10-26 由四元扩五元（Sleep 从 Stop 去向回升为决策，Stop/Sleep 拆开去向歧义）；介入点 `tool`/`finish`→`tool_done`/`reasoning_done`。取代旧 `Resume`/`Switch`/`Sleep`。→ `entries/2026-10-25-cogos-meta-layer-direction-alignment.md`、`entries/2026-10-26-cogos-context-versioning.md`
 
 ### 意识内容组织三动作（10-25）
 
@@ -19,10 +23,6 @@
 ### 方向来源：持续存在（定）＋环境（长）（10-25）
 
 动机/方向/目标两来源：**持续存在＝基础条件（定）**＝本性/法则＋种子（每天醒睡、能想能动）；**所处环境＝决定形状（长）**＝人生初课＋根/倾向（人类社会、工具互动）。**方向定、内容长**：定**方向/张力**（持续存在、与人打交道、思考价值），不定**内容/结论**（价值是什么——必须自己长）；不让方向自己长出。→ 同 entry
-
-### 日界推进 = full 档整理专属（10-25）
-
-wake_version 改锚**节律周期号（day）**：**只在时间界点（24:00）的睡眠整理（full 档）时推进**，不靠时钟独立递增，进程重启/归一化不推进；"今天→昨天"＝full 档整理时的时间投射推进。is_first_wake＝day==1 且日内首醒。→ 同 entry
 
 ### 主线 = 六步循环 loop（10-15）
 
@@ -40,13 +40,13 @@ wake_version 改锚**节律周期号（day）**：**只在时间界点（24:00�
 
 body（6 组 20 能力 file/vision/chat/terminal/web/time）＋ memory（fold/unfold/mark）＋ 元层 file（read/write/edit，root=agent_root）**均已落码**。→ `entries/2026-10-19-cogos-tool-design.md`、`entries/2026-10-20-cogos-memory-tool.md`、`entries/2026-10-21-cogos-memory-tool-impl.md`、`entries/2026-10-21-cogos-meta-file-tool.md`、`entries/2026-10-21-cogos-body-time-tool.md`
 
-### 意识上下文 + 元层架子已落码（10-24，10-25 检视修复收口）
+### 意识上下文 + 元层架子已落码（10-24，10-26 版本方案收口）
 
-意识上下文（数据层+接口层，`consciousness.py`）＋ 元层架子 MetaLayer（Monitor+Control，`meta_layer.py`）已落码。**10-25 检视修复两轮已收口**（`b716a06`/`54b9a7f`，全量 1369 passed）：醒/睡 flow 内聚、`last_ts`、归一化=settle_to_asleep、start/stop 对称收口、`cons`→`consciousness`。→ `entries/2026-10-24-cogos-consciousness-context.md`、`entries/2026-10-24-cogos-meta-layer-scaffold.md`
+意识上下文（数据层+接口层，`consciousness.py`）＋ 元层架子 MetaLayer（Monitor+Control，`meta_layer.py`）已落码。10-25 检视修复两轮（`b716a06`/`54b9a7f`）、10-26 版本方案＋五元决策（`2ae2e9d`/`9056050`）已收口，全量 1369 passed。→ `entries/2026-10-24-cogos-consciousness-context.md`、`entries/2026-10-24-cogos-meta-layer-scaffold.md`、`entries/2026-10-26-cogos-context-versioning.md`
 
-## 下一步（10-25 定）
+## 下一步（10-26 定）
 
-方向已对齐（介入决策四元＋内容组织三动作＋方向来源）。下一步 = **LLM 接线**：G2 装载（组装原语）、G3 整理（分级，先只 full 档）、G7 介入形态（四元决策落地）、工具执行层 `on_tool_call`。**IDLE 整理（medium 档）后置**。
+架子已收口（介入决策五元＋意识文件版本方案＋废归一化已落码）。下一步 = **LLM 接线**：G2 装载（组装原语）、G3 整理（分级，先只 full 档）、G7 介入形态（五元决策落地，Relay 形状留白）、工具执行层 `on_tool_call`。**恢复判据 + 状态时间戳后置到 LLM 接线**（元层据恢复态＋时间戳决定 resume/switch/收口）。**IDLE 整理（medium 档）后置**。
 
 ## 开放问题（悬置，待讨论）
 
@@ -73,8 +73,10 @@ body（6 组 20 能力 file/vision/chat/terminal/web/time）＋ memory（fold/un
 
 ## 废弃
 
-- **介入决策 `Resume`/`Switch`/`Sleep`** → 10-25 被四元 `Proceed`/`Relay`/`Switch`/`Stop` 取代（Sleep 降为 Stop 去向）。
-- **wake_version＝醒次数、随重启推进** → 10-25 改锚节律周期号（day）、full 档整理专属。
+- **介入决策 `Resume`/`Switch`/`Sleep`** → 10-25 被 `Proceed`/`Relay`/`Switch`/`Stop` 取代（Sleep 降为 Stop 去向）；10-26 又扩为五元（Sleep 回升为决策，Stop/Sleep 拆开去向歧义）。
+- **wake_version＝醒次数、随重启推进** → 10-25 改锚 day；10-26 连同「日界推进＝full 档整理专属」一并废，由版本方案（birth/current_day/next_version）取代。
+- **settle_to_asleep（归一化：start 启动归一化 + stop 收口）** → 10-26 废，`stop` 停当前状态不进 ASLEEP，上电恢复 = meta 定位上一份文件。
+- **ACTIVE_STATES（状态过滤选文件）** → 10-26 删，改 meta 定位 + 存在性判据。
 - **v2.2 flow 子系统**（`consciousness.py`/`flow.py`/`experience.py` + 脚本 + 3 测试）→ 已退役（10-24 `2f0c34c`）。
 - **runtime 骨架七模块**（`6563b28`）→ freeze 删除（`23bff9f`）。
 - **工作方法：YZ 自推、kilo 退回编程手（10-15）** → 10-19 废止，回到一起推进。

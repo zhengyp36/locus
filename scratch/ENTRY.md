@@ -19,10 +19,12 @@
 
 1. **period 显式化** — 用 dict 每状态列明，不用 if/else。**可动手**。
 2. **取事件时机** — `take_all` 应在装载步取（消费），monitor 只 `has_events` 判信号；否则通知→装载间隙新事件漏/错位。**可动手**（只挪 drain 位置，G2 内容仍留白）。
-3. **决策压栈** — 澄清：`_decisions` 是测试注入钩子，非生产设计；生产语义 `on_intervening` 本就该即时决策。真难点 = `on_intervening` 是同步回调（`consciousness.py:448`）而真 LLM 异步。**随 G7，不动手**。
+3. **决策压栈** — 澄清：`_decisions` 是测试注入钩子，非生产设计；生产语义 `on_intervening` 本就该即时决策。决策**保持同步**：介入点 await LLM 拿决策后继续，不设计为异步（真 LLM 也可同步调用，「真 LLM 异步」是伪难点）。**随 G7，不动手**。
 4. **track cu 累积** — `_made_cus` 只增不减，泄漏。改活跃集合，cu settle 时移除。**可动手**。
 5. **归一化不是 reset** — `reset` 是 unlink 删文件，`start()` 用它归一化会丢内容；应归档不删。**已收敛（10-25）**：归一化两种处理——`reset`=忽略上一次醒（丢、wake 不加）；走 sleep/走完=认可上一次醒（归档、wake 按规则续）。`start()` 归一化改**补走 sleep 收口**，按残留态分两路：**AWAKE/IDLE/WAKING_UP → `fall_asleep`**（完整 `start_unload`+`unload_done`）；**FALLING_ASLEEP → `resume_fall_asleep`**（只 `unload_done` 走完过程，不重复 `start_unload`）。无 wake 歧义。**已动手（`b716a06`）**：实现为 `Control.settle_to_asleep`（机械收口、无 G3）+ `Control.resume_fall_asleep`。
 6. **start/stop 不对称** — **已收敛（10-25）**：收口职责不对称（start 补收口、stop 硬停不收口当前醒）。对称做法 = stop 也走 sleep 收口（当前醒归档 + wake+1），与 start 归位对称、可共用同一收口逻辑。**已动手（`b716a06`）**：`stop()` 末尾调 `settle_to_asleep`。
+
+> ⚠️ **第 5、6 条已被 10-26「废归一化」取代**：`settle_to_asleep` 全废（start 启动归一化 + stop 收口都废）；`stop` 停当前状态不进 ASLEEP；上电恢复 = meta 定位上一份文件。见 `entries/2026-10-26-cogos-context-versioning.md` 第 5-6 节。
 
 ## revoke 深入讨论（10-25，已收敛）
 
@@ -54,9 +56,30 @@
 - [x] 全量 1369 passed, 6 skipped（+2 新增：start 归一化 FALLING_ASLEEP、stop 收口）
 - [x] 对外属性 `cons` → `consciousness`（YZ 反馈，私有 `_cons`/参数 `cons` 保留）→ `54b9a7f`
 - [x] 方向对齐讨论（10-25）：介入决策四元 + 内容组织三动作 + 日界推进 + 两层关系 + 方向来源 → 进 glossary/current/entry `2026-10-25-cogos-meta-layer-direction-alignment.md`
+- [x] 意识文件版本 + 状态推导/恢复 + 五元决策（10-26 续）**已落码并进记忆层**（`2ae2e9d`/`9056050`）：弃 wake_version、meta 三字段、上电恢复=meta 定位、废归一化、删 ACTIVE_STATES、heartbeat.json → `entries/2026-10-26-cogos-context-versioning.md`（原 scratch `2026-10-26-cogos-context-versioning.md` 已删）
 - [ ] LLM 接线（G2/G3/G7/on_tool_call）
 - [ ] 删本草稿（LLM 接线讨论收口后）
 
-## 下一步
+## 执行计划（下一步，草稿，10-25 讨论后）
 
-方向已对齐（10-25，结论进 `glossary.md`/`current.md`/`entries/2026-10-25-cogos-meta-layer-direction-alignment.md`）：介入决策四元 Proceed/Relay/Switch/Stop、内容组织三动作（组装/接续/卸载）、日界推进=full 档整理专属、两层关系=同 LLM 两职责、方向来源=持续存在(定)+环境(长)。下一步 = LLM 接线：G2 装载（组装原语 `load()`）、G3 整理（分级，先 full 档）、G7 介入形态（四元决策落地）、`on_tool_call`。IDLE medium 档后置。
+先改架子（不碰真 LLM），再接线。三阶段：
+
+**阶段一：介入/决策语义改造**（**已落码 `2ae2e9d`**）
+- [x] 介入点类型名 `tool`/`finish` → `tool_done`/`reasoning_done`（代码内标识 + 引用 + 测试；回调名 `on_tool_done`/`on_done` 不动）
+- [x] 决策枚举 `Resume`/`Switch`/`Sleep` → `Proceed`/`Relay`/`Switch`/`Stop`/`Sleep`（五个）
+- [x] `_on_intervening` 决策处理：`Stop`→settle cu + `_cu=None` + 转 IDLE；`Sleep`→settle cu + `_cu=None` 不动状态（元层 `fall_asleep`→`start_unload` 改状态，已如此）
+- [x] 默认决策 `Resume` → `Proceed`
+- [x] 允许决策集按介入点裁剪的接口（`tool_done`→五元 / `reasoning_done`→四元，无 Proceed），渲染留白
+
+**阶段二：wake_version → day**（**已被 10-26 版本方案取代并落码 `9056050`**，见 `entries/2026-10-26-cogos-context-versioning.md`）
+- [x] 文件命名 `<YYYYMMDD>.TZ<offset>.V<version>.jsonl` + `meta.json` 持久化 birth/current_day/next_version
+- [x] `is_first_wake` → `Consciousness.birth`
+- [x] 废归一化 settle_to_asleep（stop 停当前状态）
+- [x] 上电恢复 = meta 定位上一份文件
+
+**阶段三：装载原语 `load()` 统一**
+- [ ] wake_up / revoke / switch 收敛到统一 `load()` 入口（接口形状，内容留白）
+
+验收：每阶段全量测试通过（基线 1369 passed），全程不调真 LLM。
+顺序：一 → 二 → 三（二相对独立）。
+之后才进 LLM 接线（G2/G3/G7/on_tool_call），IDLE medium 档后置。
