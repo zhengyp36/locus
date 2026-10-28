@@ -4,6 +4,14 @@
 
 ## 活跃 · 当前口径
 
+### 通用 vs 专用边界 + 方向流内涌现（10-28）
+
+推进＋控制是**通用结构**（cog_stream 已抽出）；**方向在流内涌现、连续 stream 聚合稳定**；**元层＝维护流内长出的方向不漂**（识别→钉住→回灌），维护回路才是「自驱 agent」与「很长聊天记录」的差别；**醒/睡降为长 stream 整理节律**（方向性、未落码）。改 10-25「方向定/内容长/不让方向自己长出」→「**初始设定＋流内聚合稳定**」；废「目标/方向＝外部锚」。通用层留的洞＝「方向被维护/回灌」动作的挂点。→ `entries/2026-10-28-cogos-generic-specialized-boundary.md`
+
+### LLM 接线：CogStream 机制 + 工具错误分类 + 挂接已落码（10-27~28）
+
+抽出通用连续推理流 **`CogStream`**（纯内存，unit 回调驱动、不变量＝advance 合法 ⟺ context 尾 role∈{user,tool}、软中断回滚、错误分同步 raise/异步 on_exception）；**持久化**（可选 `store_dir`、七态 builtin＋user note、restore、Switch 交叉链接）；**工具错误分类** `ToolResult` 四类（unknown_tool/bad_args/tool_bug/normal，落 executor 层，runtime 只透传）；**Consciousness/MetaLayer 挂接**（`_start_stream`/`_on_intervene`/`_checkpoint`，行为等价纯替换）。**双持久化分叉已拍**：意识层挂 stream 不传 `store_dir`（纯内存），store 是唯一持久化。commit `ca597be`→`e3f50b0`，全量 1408 passed＋真 LLM 冒烟跑通。→ `entries/2026-10-27-cogos-cogstream.md`、`entries/2026-10-28-cogos-tool-error-classification.md`
+
 ### 意识文件版本方案 + 五元决策已落码（10-26）
 
 弃 `wake_version`，意识文件改 `<YYYYMMDD>.TZ<offset>.V<version>.jsonl`；`meta.json` 始终存在、只存 birth/current_day/next_version；上电恢复 = meta 定位上一份文件（存在→读末态、不存在→已归档→ASLEEP）；废 `settle_to_asleep`（`stop` 停当前状态不进 ASLEEP）；新增 `heartbeat.json`（进程生命周期观测，只埋不消费）。介入决策四元扩五元（Stop→IDLE / Sleep→入睡拆开），介入点改名 `tool_done`/`reasoning_done`。commit `2ae2e9d`/`9056050`。→ `entries/2026-10-26-cogos-context-versioning.md`
@@ -14,15 +22,15 @@
 
 ### 介入决策五元 Proceed/Relay/Switch/Stop/Sleep（10-25，10-26 扩）
 
-元层介入点控制策略统一，本质＝**下一轮输入从哪来**：**Proceed**（无助推继续，仅工具点，靠程序回灌）/ **Relay**（有助推继续，追加消息）/ **Switch**（重构上下文继续，替换内容）/ **Stop**（停止本轮：settle cu + 转 IDLE）/ **Sleep**（入睡：settle cu + 元层走卸载）。换/不换＝内容「替换/追加」、非 cu。10-26 由四元扩五元（Sleep 从 Stop 去向回升为决策，Stop/Sleep 拆开去向歧义）；介入点 `tool`/`finish`→`tool_done`/`reasoning_done`。取代旧 `Resume`/`Switch`/`Sleep`。→ `entries/2026-10-25-cogos-meta-layer-direction-alignment.md`、`entries/2026-10-26-cogos-context-versioning.md`
+元层介入点控制策略统一，本质＝**下一轮输入从哪来**：**Proceed**（无助推继续，仅工具点，靠程序回灌）/ **Relay**（有助推继续，追加消息）/ **Switch**（重构上下文继续，替换内容）/ **Stop**（停止本轮：settle cu + 转 IDLE）/ **Sleep**（入睡：settle cu + 元层走卸载）。换/不换＝内容「替换/追加」、非 cu。10-26 由四元扩五元（Sleep 从 Stop 去向回升为决策，Stop/Sleep 拆开去向歧义）；介入点 `tool`/`finish`→`tool_done`/`reasoning_done`。取代旧 `Resume`/`Switch`/`Sleep`。10-28 落码：五元翻译成 stream Action 四元（Sleep 不进 Action）。→ 同上两个 entry
 
 ### 意识内容组织三动作（10-25）
 
-**组装（从无到有：醒＝出生模板 / 记忆＋事件）→ 接续（从有到有：Proceed/Relay/Switch）→ 卸载（从无到有：整合进记忆/经历）**。**未点明核心＝动机/方向/目标**（引力）：内容组织＝**管道**、动机/方向/目标＝**引力**，两维正交。→ 同 entry
+**组装（从无到有：醒＝出生模板 / 记忆＋事件）→ 接续（从有到有：Proceed/Relay/Switch）→ 卸载（从无到有：整合进记忆/经历）**。**未点明核心＝动机/方向/目标**（引力）：内容组织＝**管道**、动机/方向/目标＝**引力**，两维正交。→ 同 10-25 entry
 
-### 方向来源：持续存在（定）＋环境（长）（10-25）
+### 方向来源：持续存在（定）＋环境（长）（10-25，10-28 修订）
 
-动机/方向/目标两来源：**持续存在＝基础条件（定）**＝本性/法则＋种子（每天醒睡、能想能动）；**所处环境＝决定形状（长）**＝人生初课＋根/倾向（人类社会、工具互动）。**方向定、内容长**：定**方向/张力**（持续存在、与人打交道、思考价值），不定**内容/结论**（价值是什么——必须自己长）；不让方向自己长出。→ 同 entry
+动机/方向/目标两来源：**持续存在＝基础条件（定）**＝本性/法则＋种子（每天醒睡、能想能动）；**所处环境＝决定形状（长）**＝人生初课＋根/倾向（人类社会、工具互动）。**10-28 修订**：方向内容在上下文里、流内涌现＋连续 stream 聚合稳定；「持续活着、要想怎么活」只是**初始设定（种子）**，非「禁止方向长出」；元层＝维护方向不漂。→ `entries/2026-10-28-cogos-generic-specialized-boundary.md`
 
 ### 主线 = 六步循环 loop（10-15）
 
@@ -44,9 +52,9 @@ body（6 组 20 能力 file/vision/chat/terminal/web/time）＋ memory（fold/un
 
 意识上下文（数据层+接口层，`consciousness.py`）＋ 元层架子 MetaLayer（Monitor+Control，`meta_layer.py`）已落码。10-25 检视修复两轮（`b716a06`/`54b9a7f`）、10-26 版本方案＋五元决策（`2ae2e9d`/`9056050`）已收口，全量 1369 passed。→ `entries/2026-10-24-cogos-consciousness-context.md`、`entries/2026-10-24-cogos-meta-layer-scaffold.md`、`entries/2026-10-26-cogos-context-versioning.md`
 
-## 下一步（10-26 定）
+## 下一步（10-28 更新）
 
-架子已收口（介入决策五元＋意识文件版本方案＋废归一化已落码）。下一步 = **LLM 接线**：G2 装载（组装原语）、G3 整理（分级，先只 full 档）、G7 介入形态（五元决策落地，Relay 形状留白）、工具执行层 `on_tool_call`。**恢复判据 + 状态时间戳后置到 LLM 接线**（元层据恢复态＋时间戳决定 resume/switch/收口）。**IDLE 整理（medium 档）后置**。
+LLM 接线主体已完成（CogStream 机制＋持久化＋工具错误分类＋挂接）。下一步 = **通用机制接 LLM**：开场＝小的、可判定的落地验证（非自驱长任务，验证连续推理＋介入＋整理＋方向维护），非概念设计，防重蹈 10/19 前覆辙。**恢复判据 + 状态时间戳**、**IDLE 整理（medium 档）**仍后置。
 
 ## 开放问题（悬置，待讨论）
 
@@ -57,6 +65,7 @@ body（6 组 20 能力 file/vision/chat/terminal/web/time）＋ memory（fold/un
 - **P7 判"结"主体**、**P8 锚分类学**
 - 工具**待定项**：terminal.notify、web.format、toolbox 全集团组织、phone 异步作业、limit 去留、body/toolbox 暴露关系、render_overview 中文、记号表不统一
 - **生命周期机制层**：事件来源收窄**永久性**（暂定）；介入具体形态（审视措辞/清理时机/留痕形式，随 G7）；强制 sleep「极限」；SEQ 时间脉络；idle＋halt 张力机制
+- 通用接线开场验证的**具体形态**（第三步开场时定）
 
 ## 参考 · 历史结论（细节进 entries/，正文不铺）
 
@@ -73,6 +82,8 @@ body（6 组 20 能力 file/vision/chat/terminal/web/time）＋ memory（fold/un
 
 ## 废弃
 
+- **「方向定/内容长/不让方向自己长出」（10-25）** → 10-28 改「初始设定＋流内聚合稳定」（方向流内涌现＋元层维护）。
+- **「目标/方向＝外部锚」（10-28 临时说法）** → 否，方向内容在流内不在外部。
 - **介入决策 `Resume`/`Switch`/`Sleep`** → 10-25 被 `Proceed`/`Relay`/`Switch`/`Stop` 取代（Sleep 降为 Stop 去向）；10-26 又扩为五元（Sleep 回升为决策，Stop/Sleep 拆开去向歧义）。
 - **wake_version＝醒次数、随重启推进** → 10-25 改锚 day；10-26 连同「日界推进＝full 档整理专属」一并废，由版本方案（birth/current_day/next_version）取代。
 - **settle_to_asleep（归一化：start 启动归一化 + stop 收口）** → 10-26 废，`stop` 停当前状态不进 ASLEEP，上电恢复 = meta 定位上一份文件。
