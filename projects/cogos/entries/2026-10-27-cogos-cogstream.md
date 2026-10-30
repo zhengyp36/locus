@@ -25,7 +25,7 @@
 
 ## 挂接结论（`e3f50b0`）
 
-Consciousness 持一个活跃 CogStream 替代 `_cu`/`make_cu`：`_start_cu`→`_start_stream`（`runtime.stream`＋`act(Proceed)`）；两个介入点合并 `_on_intervene`（五元决策翻译成 stream Action，Sleep→StreamStop）；`_checkpoint(stream)` 同步 `stream.context`→意识层 store。**双持久化分叉拍掉**：挂 stream **不传 store_dir**（纯内存），意识层 store 是唯一持久化。MetaLayer 注入 runtime、删 tracked_make_cu/_made_cus/StubCu。行为等价（纯替换）：全量 1408 passed 基线不回归＋真 LLM 冒烟跑通。
+Consciousness 持一个活跃 CogStream 替代 `_cu`/`make_cu`：`_start_cu`→`_start_stream`（`runtime.stream`＋`act(Proceed)`）；两个介入点合并 `_on_intervene`（五元决策翻译成 stream Action，Sleep→StreamStop）。**双持久化分叉拍掉**：意识层要持久化就给 stream 传 `store_dir`（stream store 是唯一落点、不另做意识层独立持久化），不传则纯内存。MetaLayer 注入 runtime、删 tracked_make_cu/_made_cus/StubCu。行为等价（纯替换）：全量 1408 passed 基线不回归＋真 LLM 冒烟跑通。
 
 ## 被否 / 未采用
 

@@ -4,6 +4,26 @@
 
 ## 活跃 · 当前口径
 
+### 模型面向文本多语言资源库（10-30 选型·10-31 已落码收口，无尾巴）
+
+所有模型面向语言剥离为语言资源库：`texts/{lang}/` 分目录，英文 canonical + 中文全量，`--lang` 切换（默认 en），配 hash manifest 同步检查（scan/check/view/commit，测试 import check，不变量=manifest==文件非"全同步"）。范围全搬不留尾巴（prompts/body/memory/toolbox + impl 工具描述）；结构留代码、字符串叶子进库；catalog 改工厂函数收 TextBundle；翻译目的驱动+审核非字面。**3 步已全部执行完毕**（Step 3 含 `texts/en/impl.json` 167 key + `texts/zh/*` 全量 402 key；全量 1377 passed, 6 skipped；commit `ac3d449`），待 YZ 核验。→ `entries/2026-10-30-cogos-model-text-i18n.md`
+
+### 可视化调试工具（10-30，已落码）
+
+调试自驱 agent 的**推理过程**（非程序 bug）＝**看**（模型视角＝流本身，无第二落点）＋**控制**（运行中暂停/恢复）。唯一新增数据＝**schema 落盘＋hash 版本引用**（`schema_ref` note，ID=sha256 前 8 位，跨代码版本回看旧流对得上）；`StreamReader` 把 stream 串成跨 Switch 连续序列、`python -m cogos.debug`（stream/events/cursor/pause/resume/shutdown）；控制＝`CogStream.pause()/resume()`（挂介入点 checkpoint 后）+`control.sock`。commit `bb7a489`＋`c97a468`（console script），全量 1363 passed。TUI／多流暂缓。→ `entries/2026-10-30-cogos-debug-visualization.md`
+
+### body catalog 动态裁剪 + N2 启动校验 + 消息 ts（10-30，已落码）
+
+真实 LLM 验证（`--no-phone`＋事件注入，判据全过）暴露**chat 组 no-phone 接线缺口**（catalog 暴露了未接线 impl）。修复三处：**动态裁剪** `Catalog.available`（模型只见已接线能力树，丢未接线 capability＋空组＋note）＋**N2 启动断言** `assert_bound`（catalog↔registry fail-fast，vision/web/time＋无 phone 时 chat 显式 `allow_missing` 放行）＋**消息 ts 补全**（birth context 与事件注入补 `meta.ts`，事件用 `signal.at`）。commit `0c3c148`，全量 1363 passed。→ `entries/2026-10-30-cogos-body-catalog-pruning.md`
+
+### 目录结构规范化（10-30，已落码）
+
+agent_dir 规范三层：**配置**（`agent.json` 总入口＋`profile.json` 纯人设 JSON，取代 `memory/state/profile.md`）／**运行事实**（`runtime.json`/`last_runtime.json`：boot 归档旧 runtime、birth_ts 继承→出生只一次、shutdown 只写 clean、crash 靠缺失推断；Decider 经 `on_state` 在介入点更新 last_state/last_intervene，状态变迁即写＋5s 节流）／**内容**（`stream/`＝意识流 store_dir 落点、`memory/`＝II型平铺、`events/`、`phone/`、`work/`、`machine/<name>/`、`secrets/`）。意识流与记忆平级。commit `ce7ac7a`，全量 1351 passed。→ `entries/2026-10-30-cogos-agent-dir-layout.md`
+
+### 电脑独立 = 一等机器（10-30，已落码）
+
+电脑从"agent 进程内单台 ComputerManager"升为**按账户寻址、可命名、可切默认**的一等对象。隔离边界在**电脑账户身份**（不是 agent 进程降权）：agent 进程统一（管自己 agent_root），body 工具（terminal/fs）副作用发生在电脑账户下。`MachineSpec`+`MachineRegistry`（named machines + `current` 指针，add/remove 普通方法＝预埋 inbound 协助）；terminal/fs spec 接受 callable manager 走 `registry.current`；`DefaultSession` 按机器名切 session；`machine.list/switch` 进 body。本机账户＝`ssh tangyu@localhost`（专用 key，`SshTarget.identity_file`＋`SftpBackend.client_keys`），真机验隔离（tangyu 读不了 zhengyp 敏感目录）。commit `907fe23`，全量 1333+ passed。→ `entries/2026-10-30-cogos-computer-machines.md`
+
 ### 自驱 agent 骨架轮廓 + 正式落架子（10-30，已落码）
 
 从「最轻可对话架子」讨论出**终态轮廓**：意识层＝连续 context 流（`stream` 承载、可命名）；元层＝介入点登场的控制/校准功能（**概念非结构**、无单一载体、落 Decider＋State＋后台 LLM 三处）；完整 agent＝6 机制部件（CogStream/Decider/State/事件源/工具层/持久化）。CogStream 之外只两个对象——**State**（不可编辑 facts＋可编辑 policy 两层）＋**Decider**（`on_intervene` 宿主、只读 State＋`take_all()`→Action）；事件链两段＝源 push `EventStore.emit`＋agent pull `Decider.take_all`。术语拆三词（介入点/决策/干预）＋事件/张力/张力源＋上电/出生/恢复。**已落码**：第一刀 `stream_loop.py`（`594a762`）→ 正式骨架 `agent/{state,decide,assemble}.py`（`699012e`，skeleton_loop 离线＋feishu_loop 飞书真实收发 PASS）→ run entry `agent/run.py`（`f924140`）→ **第二刀删旧完成**（`3e05270`＋tag `selfdrive-skeleton-freeze`，删 app/consciousness/meta_layer＋旧测试）。→ `entries/2026-10-30-cogos-selfdrive-skeleton.md`
@@ -22,7 +42,7 @@ CogStream 从「`act()` 显式驱动」改为「构造即后台心跳 + `on_inte
 
 ### LLM 接线：CogStream 机制 + 工具错误分类 + 挂接已落码（10-27~28）
 
-抽出通用连续推理流 **`CogStream`**（纯内存，unit 回调驱动、不变量＝advance 合法 ⟺ context 尾 role∈{user,tool}、软中断回滚、错误分同步 raise/异步 on_exception）；**持久化**（可选 `store_dir`、七态 builtin＋user note、restore、Switch 交叉链接）；**工具错误分类** `ToolResult` 四类（unknown_tool/bad_args/tool_bug/normal，落 executor 层，runtime 只透传）；**Consciousness/MetaLayer 挂接**（`_start_stream`/`_on_intervene`/`_checkpoint`，行为等价纯替换）。**双持久化分叉已拍**：意识层挂 stream 不传 `store_dir`（纯内存），store 是唯一持久化。commit `ca597be`→`e3f50b0`，全量 1408 passed＋真 LLM 冒烟跑通。→ `entries/2026-10-27-cogos-cogstream.md`、`entries/2026-10-28-cogos-tool-error-classification.md`
+抽出通用连续推理流 **`CogStream`**（纯内存，unit 回调驱动、不变量＝advance 合法 ⟺ context 尾 role∈{user,tool}、软中断回滚、错误分同步 raise/异步 on_exception）；**持久化**（可选 `store_dir`、七态 builtin＋user note、restore、Switch 交叉链接）；**工具错误分类** `ToolResult` 四类（unknown_tool/bad_args/tool_bug/normal，落 executor 层，runtime 只透传）；**Consciousness/MetaLayer 挂接**（`_start_stream`/`_on_intervene`/`_checkpoint`，行为等价纯替换）。**双持久化分叉已拍**：意识层要持久化就给 stream 传 `store_dir`（stream store 是唯一落点），不另做意识层独立持久化；不传则纯内存。commit `ca597be`→`e3f50b0`，全量 1408 passed＋真 LLM 冒烟跑通。→ `entries/2026-10-27-cogos-cogstream.md`、`entries/2026-10-28-cogos-tool-error-classification.md`
 
 ### 意识文件版本方案 + 五元决策已落码（10-26，**已退役 10-30 第二刀删旧**）
 
@@ -66,7 +86,7 @@ body（6 组 20 能力 file/vision/chat/terminal/web/time）＋ memory（fold/un
 
 ## 下一步（10-30 更新）
 
-正式骨架已落（`699012e`）、run entry 已加（`f924140`）、**第二刀删旧已完成**（`3e05270`＋tag `selfdrive-skeleton-freeze`）。**下一步 = 续推（REASONING 有张力 Relay，首刀后置未做）→ 张力源 → 蒸馏**。待钉实现细节：assemble() 返回物（薄生命周期壳 vs 纯 dataclass）、State 持久化落盘格式（复用 persistence jsonl vs 独立文件）。
+正式骨架已落（`699012e`）、run entry 已加（`f924140`）、**第二刀删旧已完成**（`3e05270`＋tag `selfdrive-skeleton-freeze`）、**电脑独立已落**（`907fe23`）、**目录规范化已落**（`ce7ac7a`）、**可视化调试已落**（`bb7a489`＋`c97a468`）、**body catalog 裁剪＋N2＋ts 已落**（`0c3c148`）。**下一步 = 续推（REASONING 有张力 Relay，首刀后置未做）→ 张力源 → 蒸馏**。**并行支线 = 模型文本 i18n 已收口并 commit（`ac3d449`，3 步 + 尾巴补齐，1377 passed，en/zh 全量，mechanism 23 key，zh 冒烟纯中文）；遗留 2 条注册表级错误串（tool_base.py:113/:133，见 entry）待收**。待钉实现细节：assemble() 返回物（薄生命周期壳 vs 纯 dataclass）、State.policy 持久化落盘格式（runtime.json 只落了 facts，tension_sources 未落）。电脑面遗留：vision/screen resolver 化、body vision/web/time 接线（N2 已显式 `allow_missing` 放行，仍待接）、inbound 协助 transport（只预埋 registry add/remove）。恢复消费：读 last_runtime 判上次退出方式/状态的恢复流程未实现（本次只做记录）。调试面遗留：TUI 界面、多流/后台流/元层流。
 
 ## 开放问题（悬置，待讨论）
 
@@ -80,6 +100,7 @@ body（6 组 20 能力 file/vision/chat/terminal/web/time）＋ memory（fold/un
 - **质疑收敛**（10-30，四语义点唯一未讨论）：意识层质疑 → 元层再整理 → 再质疑的循环收敛规则；另三个已解方向＝元认知表达＋展开（工具结果清理/填充侧剥离）、调度优先级（后台 LLM）
 - **「State 叫记忆」语义**（10-30 悬置）：State 是程序记忆（元层字段、可持久化）vs agent 自己的记忆（memory 工具 fold/unfold 内容、经历），关系未定；落码用中性字段名、不绑「记忆」
 - **参数类悬置**（10-30）：张力源更新具体时机、元层三档（程序→裸 cu→CogStream）选型判据、恢复「间隔多长算长」、后台 LLM 触发时机（倾事件驱动＋周期兜底）；工具结果清理落点张力（`m.to_lm_dict` 处 vs 归 agent 层）
+- **目录整理遗留**（10-30）：签名身份（预留 `secrets/` 空位、用途未定）；I型/II型 附着关系（fold 平铺 vs 按主题分组降条数，先平铺）；恢复消费（读 last_runtime 判上次退出，未实现）；`machine/` 与 `work/` 并存未合并
 
 ## 参考 · 历史结论（细节进 entries/，正文不铺）
 

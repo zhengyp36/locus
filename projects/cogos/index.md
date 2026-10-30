@@ -4,6 +4,17 @@
 > **术语单一权威 → `glossary.md`**（09-30 立；新词/旧义/撞名当场钉，entry 与本表冲突以本表为准）。
 > `checkpoint/26-09-26-*` = 2026-09-26 归档线；`checkpoint/26-09-17-agent-theory/` = cogos 理论归档。
 
+## 最近收口 · 可视化调试工具 + body catalog 裁剪/N2/ts（10-30）
+
+- **可视化调试已落码（10-30 `bb7a489`＋`c97a468`）**：调试自驱 agent 推理过程＝看（流＝模型视角、无第二落点）＋控制（暂停/恢复）；唯一新增数据＝schema 落盘＋hash 版本引用（`schema_ref` note，ID=sha256 前 8 位）；`StreamReader` 串链跨 Switch、`python -m cogos.debug`（stream/events/cursor/pause/resume/shutdown）、`CogStream.pause/resume`＋`control.sock`；全量 1363 passed；TUI/多流暂缓 → `entries/2026-10-30-cogos-debug-visualization.md`
+- **body catalog 裁剪＋N2＋ts 已落码（10-30 `0c3c148`）**：真实 LLM 验证（`--no-phone`＋事件注入，判据全过）暴露 chat 组 no-phone 接线缺口，修三处——动态裁剪 `Catalog.available`（模型只见已接线能力树）＋N2 启动断言 `assert_bound`（catalog↔registry fail-fast，vision/web/time＋无 phone chat 显式 allow_missing）＋消息 ts 补全（birth/事件注入补 `meta.ts`） → `entries/2026-10-30-cogos-body-catalog-pruning.md`
+- 术语已钉 glossary：`schema_ref/schema 落盘（hash 版本引用）`·`body_catalog 一致性（N2 断言 + 动态裁剪）`
+
+## 最近收口 · agent 目录结构规范化（10-30）
+
+- **目录三层已落码（10-30 `ce7ac7a`）**：配置（`agent.json`＋`profile.json`，profile 自 memory/state/profile.md 迁出改 JSON）／运行事实（`runtime.json`/`last_runtime.json`：boot 归档、birth_ts 继承、shutdown 只写 clean、crash 靠缺失推断）／内容（`stream/` 意识流 store_dir 落点、`memory/` II型平铺、events/phone/work/machine/secrets）；意识流与记忆平级（方案 B 被否）；全量 1351 passed → `entries/2026-10-30-cogos-agent-dir-layout.md`
+- 术语已钉 glossary：`profile.json`·`runtime.json/last_runtime.json`·`stream 目录（stream_dir）`·`agent 目录布局（agent_dir）`；改 `stream 持久化`（双持久化分叉表述）
+
 ## 最近收口 · 自驱 agent 骨架轮廓 + 正式落架子（10-30）
 
 - **终态轮廓已对齐（10-29 讨论）**：意识层＝连续 context 流（`stream` 可命名）、元层＝介入点登场的控制/校准功能（**概念非结构**、无单一载体、落 Decider＋State＋后台 LLM 三处）；CogStream 之外只两对象 **State**（facts/policy 两层）＋**Decider**（`on_intervene` 宿主）；事件链两段＝源 push `EventStore.emit`＋agent pull `Decider.take_all`；术语拆三词（介入点/决策/干预）＋事件/张力/张力源＋上电/出生/恢复 → `entries/2026-10-30-cogos-selfdrive-skeleton.md`
@@ -22,7 +33,7 @@
 - **CogStream 连续推理流机制已落码（10-27~28 `ca597be`/`9996d19`/`456b231`）**：从 Consciousness 剥出「连续推理＋介入」成 cog_runtime 纯内存单元 `CogStream`（Action 四元 Proceed/Relay/Switch/Stop、不变量＝advance 合法 ⟺ 尾 role∈{user,tool}、软中断回滚、错误分同步 raise/异步 on_exception）；裸 cu→unit、`on_done` 补 unit、executor 归 runtime、`Meta.round` 累计；真 LLM 冒烟跑通 → `entries/2026-10-27-cogos-cogstream.md`
 - **CogStream 持久化已落码（10-28 `333ce9f`）**：可选 `store_dir`（七态 builtin＋user note、restore、Switch 交叉链接）；meta=`{date,next_version}`（无 birth）；抽通用 `ContextStore` → 同 entry
 - **工具错误分类已落码（10-28 `7ed3667`）**：`ToolResult` 四类 unknown_tool/bad_args/tool_bug/normal，落 executor 层、runtime 透传；tool_bug 走元层决策不再硬 raise → `entries/2026-10-28-cogos-tool-error-classification.md`
-- **Consciousness/MetaLayer 挂 CogStream 已落码（10-28 `e3f50b0`）**：`_start_stream`/`_on_intervene`/`_checkpoint`，行为等价纯替换；**双持久化分叉已拍**（stream 不传 store_dir、store 唯一持久化）；全量 1408 passed → 同 entry
+- **Consciousness/MetaLayer 挂 CogStream 已落码（10-28 `e3f50b0`）**：`_start_stream`/`_on_intervene`，行为等价纯替换；**双持久化分叉已拍**（意识层要持久化就给 stream 传 store_dir，stream store 是唯一落点）；全量 1408 passed → 同 entry
 - **通用 vs 专用边界＋方向流内涌现（10-28 讨论）**：推进+控制通用、方向流内涌现＋元层维护、醒/睡降为整理节律；改 10-25「方向定/内容长」→「初始设定＋流内聚合稳定」 → `entries/2026-10-28-cogos-generic-specialized-boundary.md`
 - 术语已钉 glossary：`CogStream（连续推理流）`/`stream 持久化`/`ToolResult·工具错误分类`/`通用 vs 专用边界`；改 `方向来源`/`醒/睡状态机`/`介入决策（五元）`
 

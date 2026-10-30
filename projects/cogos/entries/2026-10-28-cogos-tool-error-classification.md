@@ -26,4 +26,4 @@
 
 ## 下一步
 
-~~Consciousness 挂 CogStream~~（已落码 `e3f50b0`，10-28）：`_start_stream`/`_on_intervene`/`_checkpoint`，行为等价纯替换；**双持久化分叉已拍**（意识层挂 stream 不传 `store_dir`，store 是唯一持久化）。→ `entries/2026-10-27-cogos-cogstream.md`
+~~Consciousness 挂 CogStream~~（已落码 `e3f50b0`，10-28）：`_start_stream`/`_on_intervene`，行为等价纯替换；**双持久化分叉已拍**（意识层要持久化就给 stream 传 `store_dir`，stream store 是唯一落点）。→ `entries/2026-10-27-cogos-cogstream.md`
