@@ -65,6 +65,13 @@
 - ④ **`granted` 撤销 / consent 未实现**：与 P3 的 `stop` 同源。
 - 细节 → `checkpoint/26-09-26-screenlab/checkpoint-6.md`（P4 决议）、`handoff-screen-08.md` §B。
 
+### lm-service calls.jsonl 无轮转机制（10-30）
+
+- 现象：`CallRecorder.append` 每次调用追加一行、含完整 `messages`（system prompt + 上下文 + 工具结果），无轮转/上限 → 8-29 起累积 5507 行 / 541MB。
+- 已处置（治标）：10-30 截断留最近 50 条（190K）。
+- 根治（未做）：给 `recorder.py` 加轮转/上限（按条数或大小 rotate），或 messages 落盘改引用/裁剪。属 lm-service 独立改进，不在「第二刀」范围。
+- 锚点：`cogos/lm_service/recorder.py`、`cogos/lm_service/config.py`（calls_path）。
+
 ## 封存 / 暂停
 
 ### 认知图设计 + 4K 聊天机器人 MVP（08-30 晚 ~ 09-01 凌晨）

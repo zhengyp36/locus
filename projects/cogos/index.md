@@ -4,6 +4,19 @@
 > **术语单一权威 → `glossary.md`**（09-30 立；新词/旧义/撞名当场钉，entry 与本表冲突以本表为准）。
 > `checkpoint/26-09-26-*` = 2026-09-26 归档线；`checkpoint/26-09-17-agent-theory/` = cogos 理论归档。
 
+## 最近收口 · 自驱 agent 骨架轮廓 + 正式落架子（10-30）
+
+- **终态轮廓已对齐（10-29 讨论）**：意识层＝连续 context 流（`stream` 可命名）、元层＝介入点登场的控制/校准功能（**概念非结构**、无单一载体、落 Decider＋State＋后台 LLM 三处）；CogStream 之外只两对象 **State**（facts/policy 两层）＋**Decider**（`on_intervene` 宿主）；事件链两段＝源 push `EventStore.emit`＋agent pull `Decider.take_all`；术语拆三词（介入点/决策/干预）＋事件/张力/张力源＋上电/出生/恢复 → `entries/2026-10-30-cogos-selfdrive-skeleton.md`
+- **已落码（10-30）**：第一刀 `594a762` → 正式骨架 `699012e`（`agent/{state,decide,assemble}.py`，skeleton_loop 离线＋feishu_loop 飞书真实收发 PASS）→ run entry `f924140` → **第二刀删旧** `3e05270`＋tag `selfdrive-skeleton-freeze`
+- **悬置**：质疑收敛（四语义点唯一未讨论）、「State 叫记忆」语义、参数类（张力源更新时机/元层三档判据/恢复间隔/后台 LLM 触发时机）；工具结果清理（填充侧剥离）落点张力待钉
+- 术语已钉 glossary：`介入点/决策/干预`·`事件/张力/张力源`·`上电/出生/恢复`·`State/Decider`·`意识层/元层（概念非结构）`；改 `元层 MetaLayer`（退役）·`介入决策（五元）`·`CogStream`（去 act、介入点改名）
+
+## 最近收口 · body 工具验证 + 内部英文化（10-29）
+
+- **body 工具验证已落码（10-29）**：裸 cu harness `cogos/experiment/body_verify.py` 证「LLM↔body/memory meta 工具↔实现工具」链路通（只暴露 body+memory 两 schema、实现工具靠 help 发现、判据=副作用落盘+痕迹）；**11/11 任务全过**，已验 12 能力（file.read/write/edit、terminal.run+observe、time.now/remind、memory.fold/unfold/mark、chat.speak 桩、web.search+browse 真跑）；跳过 vision.*+chat.browse；未验 terminal.send/interrupt、time.wait、web.fetch/cancel/close → `entries/2026-10-29-cogos-body-tool-verification.md`
+- **内部英文化已落码（10-29）**：`memory_catalog.py`/`memory.py`（_DESCRIPTION/_PROMPT）/`tools.py` make_memory_specs（schema+返回 message）/`config.py` render_system_prompt persona → 英文，人名唐钰保留；后置（impl 异常/web header/vision @原图/events 渲染）未动；全量 1407 passed → 同 entry
+- **遗留**：最轻对话驱动要补两处接线（app.py 传 tools + CogRuntime 接 tool_executor）
+
 ## 最近收口 · LLM 接线——CogStream 通用连续推理流（10-27~28）
 
 - **CogStream 连续推理流机制已落码（10-27~28 `ca597be`/`9996d19`/`456b231`）**：从 Consciousness 剥出「连续推理＋介入」成 cog_runtime 纯内存单元 `CogStream`（Action 四元 Proceed/Relay/Switch/Stop、不变量＝advance 合法 ⟺ 尾 role∈{user,tool}、软中断回滚、错误分同步 raise/异步 on_exception）；裸 cu→unit、`on_done` 补 unit、executor 归 runtime、`Meta.round` 累计；真 LLM 冒烟跑通 → `entries/2026-10-27-cogos-cogstream.md`
