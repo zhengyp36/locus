@@ -4,6 +4,10 @@
 
 ## 活跃 · 当前口径
 
+### 使用收口 CLI（10-31，已落码）
+
+把「从零创建并运行一个自驱 agent」收口成一套 CLI，主线＝**程序/语义分离**（代码=程序架子、texts=通用文案库、实例内容=agent 目录文件）。顶层 `cogos` 编排入口（`up/down/status` + `agent create/template/run/stream/stop`），保留 5 个细粒度 console script；`create` 按 name 生成目录＋声明 `agent.yaml` 展开 `agent.json`+`profile.json`＋`birth.yaml` 声明=运行（占位符白名单 `{name}/{phone_number}/{contacts}`）；`up/down/status` 走服务清单（lm-service 编排层 PID 自管＋feishu 复用）；`run` 不携带属性参数（属性在 create 固定进 agent.json，run 派生）。三段落码 `31267e3`→`abeee16`→`48708e3`，全量 1445 passed，公开入口 `cogos agent run` 真跑 PASS。→ `entries/2026-10-31-cogos-usage-cli.md`
+
 ### 模型面向文本多语言资源库（10-30 选型·10-31 已落码收口，无尾巴）
 
 所有模型面向语言剥离为语言资源库：`texts/{lang}/` 分目录，英文 canonical + 中文全量，`--lang` 切换（默认 en），配 hash manifest 同步检查（scan/check/view/commit，测试 import check，不变量=manifest==文件非"全同步"）。范围全搬不留尾巴（prompts/body/memory/toolbox + impl 工具描述）；结构留代码、字符串叶子进库；catalog 改工厂函数收 TextBundle；翻译目的驱动+审核非字面。**3 步已全部执行完毕**（Step 3 含 `texts/en/impl.json` 167 key + `texts/zh/*` 全量 402 key；全量 1377 passed, 6 skipped；commit `ac3d449`），待 YZ 核验。→ `entries/2026-10-30-cogos-model-text-i18n.md`
@@ -84,9 +88,9 @@ body（6 组 20 能力 file/vision/chat/terminal/web/time）＋ memory（fold/un
 
 意识上下文（数据层+接口层，`consciousness.py`）＋ 元层架子 MetaLayer（Monitor+Control，`meta_layer.py`）已落码。10-25 检视修复两轮（`b716a06`/`54b9a7f`）、10-26 版本方案＋五元决策（`2ae2e9d`/`9056050`）已收口，全量 1369 passed。→ `entries/2026-10-24-cogos-consciousness-context.md`、`entries/2026-10-24-cogos-meta-layer-scaffold.md`、`entries/2026-10-26-cogos-context-versioning.md`
 
-## 下一步（10-30 更新）
+## 下一步（10-31 更新）
 
-正式骨架已落（`699012e`）、run entry 已加（`f924140`）、**第二刀删旧已完成**（`3e05270`＋tag `selfdrive-skeleton-freeze`）、**电脑独立已落**（`907fe23`）、**目录规范化已落**（`ce7ac7a`）、**可视化调试已落**（`bb7a489`＋`c97a468`）、**body catalog 裁剪＋N2＋ts 已落**（`0c3c148`）。**下一步 = 续推（REASONING 有张力 Relay，首刀后置未做）→ 张力源 → 蒸馏**。**并行支线 = 模型文本 i18n 已收口并 commit（`ac3d449`，3 步 + 尾巴补齐，1377 passed，en/zh 全量，mechanism 23 key，zh 冒烟纯中文）；遗留 2 条注册表级错误串（tool_base.py:113/:133，见 entry）待收**。待钉实现细节：assemble() 返回物（薄生命周期壳 vs 纯 dataclass）、State.policy 持久化落盘格式（runtime.json 只落了 facts，tension_sources 未落）。电脑面遗留：vision/screen resolver 化、body vision/web/time 接线（N2 已显式 `allow_missing` 放行，仍待接）、inbound 协助 transport（只预埋 registry add/remove）。恢复消费：读 last_runtime 判上次退出方式/状态的恢复流程未实现（本次只做记录）。调试面遗留：TUI 界面、多流/后台流/元层流。
+正式骨架已落（`699012e`）、run entry 已加（`f924140`）、**第二刀删旧已完成**（`3e05270`＋tag `selfdrive-skeleton-freeze`）、**电脑独立已落**（`907fe23`）、**目录规范化已落**（`ce7ac7a`）、**可视化调试已落**（`bb7a489`＋`c97a468`）、**body catalog 裁剪＋N2＋ts 已落**（`0c3c148`）、**使用收口 CLI 已落码（10-31 `31267e3`→`abeee16`→`48708e3`，待 YZ 核验）**。**下一步 = 续推（REASONING 有张力 Relay，首刀后置未做）→ 张力源 → 蒸馏**。**并行支线 = 模型文本 i18n 已收口并 commit（`ac3d449`，3 步 + 尾巴补齐，1377 passed，en/zh 全量，mechanism 23 key，zh 冒烟纯中文）；遗留 2 条注册表级错误串（tool_base.py:113/:133，见 entry）待收**。待钉实现细节：assemble() 返回物（薄生命周期壳 vs 纯 dataclass）、State.policy 持久化落盘格式（runtime.json 只落了 facts，tension_sources 未落）。电脑面遗留：vision/screen resolver 化、body vision/web/time 接线（N2 已显式 `allow_missing` 放行，仍待接）、inbound 协助 transport（只预埋 registry add/remove）。恢复消费：读 last_runtime 判上次退出方式/状态的恢复流程未实现（本次只做记录）。调试面遗留：TUI 界面、多流/后台流/元层流。
 
 ## 开放问题（悬置，待讨论）
 
